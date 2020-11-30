@@ -1,0 +1,50 @@
+[
+  {
+    "model": "api.field",
+    "pk": 1,
+    "fields": {
+      "name": "UpperSalym",
+      "type": "oil",
+      "location": "XMAO"
+    }
+  },
+  {
+    "model": "api.field",
+    "pk": 2,
+    "fields": {
+      "name": "Carichan",
+      "type": "oil",
+      "location": "Orenburg"
+    }
+  },
+  {
+    "model": "api.well",
+    "pk": 1,
+    "fields": {
+      "name": "99R",
+      "type": "exploratory",
+      "bottom": 3200.3,
+      "field_id": 1
+    }
+  },
+  {
+    "model": "api.well",
+    "pk": 2,
+    "fields": {
+      "name": "3028",
+      "type": "water",
+      "bottom": 1650.25,
+      "field_id": 1
+    }
+  },
+  {
+    "model": "api.well",
+    "pk": 3,
+    "fields": {
+      "name": "160R",
+      "type": "exploratory",
+      "bottom": 2850.5,
+      "field_id": 2
+    }
+  }
+]

@@ -1,0 +1,9 @@
+venv
+__pycache__
+config/.env
+
+node_modules
+dist
+
+.idea
+.vscode
