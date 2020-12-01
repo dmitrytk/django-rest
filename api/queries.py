@@ -13,7 +13,7 @@ MER_LOAD = """INSERT INTO mer
      work_days = EXCLUDED.work_days
 """
 
-RATES_LOAD = """INSERT INTO rates
+RATE_LOAD = """INSERT INTO rates
     (well_id, date, rate, dynamic_level, static_level, pressure) VALUES
     ((SELECT id FROM wells w WHERE w.field_id=%s and w.name=%s),%s,%s,%s,%s,%s)
 """

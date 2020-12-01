@@ -46,5 +46,61 @@
       "bottom": 2850.5,
       "field_id": 2
     }
+  },
+  {
+    "model": "api.inclinometry",
+    "pk": 1,
+    "fields": {
+      "md": 10,
+      "inc": 20.5,
+      "azi": 65.23,
+      "well_id": 1
+    }
+  },
+  {
+    "model": "api.inclinometry",
+    "pk": 2,
+    "fields": {
+      "md": 20,
+      "inc": 20.5,
+      "azi": 65.23,
+      "well_id": 1
+    }
+  },
+  {
+    "model": "api.mer",
+    "pk": 1,
+    "fields": {
+      "date": "2020-01-01",
+      "rate": 450.26,
+      "well_id": 1
+    }
+  },
+  {
+    "model": "api.mer",
+    "pk": 2,
+    "fields": {
+      "date": "2020-02-01",
+      "rate": 820.36,
+      "well_id": 1
+    }
+  },
+  {
+    "model": "api.rate",
+    "pk": 1,
+    "fields": {
+      "date": "2020-02-01",
+      "rate": 1500.26,
+      "well_id": 1
+    }
+  },
+  {
+    "model": "api.rate",
+    "pk": 2,
+    "fields": {
+      "date": "2020-02-01",
+      "rate": 1500.26,
+      "well_id": 1
+    }
   }
 ]

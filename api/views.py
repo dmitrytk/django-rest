@@ -1,13 +1,10 @@
-from django.db import connection, transaction
 from django.http.response import JsonResponse
 from rest_framework import status, mixins, generics
 from rest_framework.decorators import api_view
 
-from api import queries
 from api.models import Field
-from api.serializers import FieldSerializer, TestSerializer
+from api.serializers import FieldSerializer
 from api.services import field_service
-from api.utils.validators import validate_batch_data
 
 
 class FieldList(mixins.ListModelMixin,
@@ -59,21 +56,17 @@ def field_inclinometry(request, pk):
         return field_service.delete_field_inclinometry(pk)
 
 
-# SANDBOX
-def execute(data):
-    with connection.cursor() as cursor:
-        cursor.executemany(queries.INCLINOMETRY_LOAD, data)
+@api_view(['GET', 'DELETE'])
+def field_mer(request, pk):
+    if request.method == 'GET':
+        return field_service.get_field_mer(pk)
+    elif request.method == 'DELETE':
+        return field_service.delete_field_mer(pk)
 
 
-@transaction.atomic
-@api_view(['POST'])
-def sandbox(request):
-    if not validate_batch_data(request.data):
-        return JsonResponse({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-
-    field_id = request.data['field_id']
-    serializer = TestSerializer(data=request.data['data'], many=True)
-    if serializer.is_valid():
-        print(serializer.instance)
-        return JsonResponse(serializer.validated_data, safe=False)
-    return JsonResponse({'message': 'Invalid'})
+@api_view(['GET', 'DELETE'])
+def field_rates(request, pk):
+    if request.method == 'GET':
+        return field_service.get_field_rates(pk)
+    elif request.method == 'DELETE':
+        return field_service.delete_field_rates(pk)
