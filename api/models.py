@@ -15,6 +15,18 @@ class Field(models.Model):
         db_table = 'fields'
 
 
+class FieldCoordinate(models.Model):
+    field = models.ForeignKey(
+        Field, related_name='coordinates', on_delete=models.CASCADE)
+    lat = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
+    lng = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
+    x = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    y = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+
+    class Meta:
+        db_table = 'field_coordinates'
+
+
 class Well(models.Model):
     """Well model"""
     name = models.CharField(max_length=70)
@@ -84,3 +96,22 @@ class Rate(AbstractRateModel):
 
     class Meta:
         db_table = 'rates'
+
+
+class Zone(models.Model):
+    """Geological Zone/Layer model"""
+
+    well = models.ForeignKey(Well, on_delete=models.CASCADE)
+    name = models.CharField(max_length=70)
+    top_md = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    bot_md = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    top_tvd = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    bot_tvd = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    h = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+
+    class Meta:
+        db_table = 'zones'
+        unique_together = ('name', 'well',)
+
+    def __str__(self):
+        return self.name

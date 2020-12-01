@@ -102,5 +102,60 @@
       "rate": 1500.26,
       "well_id": 1
     }
+  },
+  {
+    "model": "api.fieldcoordinate",
+    "pk": 1,
+    "fields": {
+      "lat": 60.25,
+      "lng": 58.46,
+      "x": 8745454,
+      "y": 89784545,
+      "field_id": 1
+    }
+  },
+  {
+    "model": "api.fieldcoordinate",
+    "pk": 2,
+    "fields": {
+      "lat": 60.235,
+      "lng": 58.416,
+      "x": 874512354,
+      "y": 8978412345,
+      "field_id": 1
+    }
+  },
+  {
+    "model": "api.fieldcoordinate",
+    "pk": 3,
+    "fields": {
+      "lat": 60.35,
+      "lng": 58.41,
+      "x": 874512358,
+      "y": 8978412347,
+      "field_id": 1
+    }
+  },
+  {
+    "model": "api.zone",
+    "pk": 1,
+    "fields": {
+      "name": "Uvat",
+      "top_md": 900,
+      "bot_md": 1000,
+      "h": 100,
+      "well_id": 1
+    }
+  },
+  {
+    "model": "api.zone",
+    "pk": 2,
+    "fields": {
+      "name": "Vikulovka",
+      "top_md": 1000,
+      "bot_md": 1050,
+      "h": 50,
+      "well_id": 1
+    }
   }
 ]

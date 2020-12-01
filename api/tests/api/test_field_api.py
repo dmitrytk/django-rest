@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from api.models import Field, Inclinometry, Mer, Rate
+from api.models import Field, Inclinometry, Mer, Rate, FieldCoordinate, Zone
 
 
 class TestFieldRoutes(APITestCase):
@@ -13,6 +13,8 @@ class TestFieldRoutes(APITestCase):
     field_inc_url = '/api/fields/1/inclinometry'
     field_mer_url = '/api/fields/1/mer'
     field_rates_url = '/api/fields/1/rates'
+    field_coordinates_url = '/api/fields/1/coordinates'
+    field_zones_url = '/api/fields/1/zones'
 
     def test_field_list(self):
         # Post field
@@ -70,3 +72,21 @@ class TestFieldRoutes(APITestCase):
         # Delete rate
         response = self.client.delete(self.field_rates_url)
         self.assertEqual(Rate.objects.count(), 0)
+
+    def test_field_coordinates(self):
+        # Get coordinates
+        response = self.client.get(self.field_coordinates_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Delete coordinates
+        response = self.client.delete(self.field_coordinates_url)
+        self.assertEqual(FieldCoordinate.objects.count(), 0)
+
+    def test_field_zones(self):
+        # Get rate
+        response = self.client.get(self.field_zones_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Delete rate
+        response = self.client.delete(self.field_zones_url)
+        self.assertEqual(Zone.objects.count(), 0)

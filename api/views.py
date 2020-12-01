@@ -70,3 +70,19 @@ def field_rates(request, pk):
         return field_service.get_field_rates(pk)
     elif request.method == 'DELETE':
         return field_service.delete_field_rates(pk)
+
+
+@api_view(['GET', 'DELETE'])
+def field_coordinates(request, pk):
+    if request.method == 'GET':
+        return field_service.get_field_coordinates(pk)
+    elif request.method == 'DELETE':
+        return field_service.delete_field_coordinates(pk)
+
+
+@api_view(['GET', 'DELETE'])
+def field_zones(request, pk):
+    if request.method == 'GET':
+        return field_service.get_field_zones(pk)
+    elif request.method == 'DELETE':
+        return field_service.delete_field_zones(pk)

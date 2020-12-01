@@ -17,4 +17,4 @@ class TestMappers(SimpleTestCase):
     def test_map_rate(self):
         data = {'well': '99R', 'date': '2020-01-01', 'dynamic_level': 45.35}
         print(Field._meta.fields)
-        self.assertListEqual(map_rate(data), ['99R', '2020-01-01', None, 45.35, None, None])
+        self.assertListEqual(map_rate(data), ['99R', '2020-01-01', None, None, 45.35, None, None])

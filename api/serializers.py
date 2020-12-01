@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.models import Field, Well, Inclinometry, Mer, Rate
+from api.models import Field, Well, Inclinometry, Mer, Rate, FieldCoordinate, Zone
 
 
 class FieldSerializer(serializers.ModelSerializer):
@@ -39,11 +39,17 @@ class RateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TestSerializer(serializers.Serializer):
-    well = serializers.CharField()
-    md = serializers.DecimalField(max_digits=20, decimal_places=2)
-    inc = serializers.DecimalField(max_digits=20, decimal_places=2, required=False)
-    azi = serializers.DecimalField(max_digits=20, decimal_places=2, required=False)
+class FieldCoordinateSerializer(serializers.ModelSerializer):
+    field = serializers.CharField()
 
     class Meta:
+        model = FieldCoordinate
+        fields = '__all__'
+
+
+class ZoneSerializer(serializers.ModelSerializer):
+    well = serializers.CharField()
+
+    class Meta:
+        model = Zone
         fields = '__all__'

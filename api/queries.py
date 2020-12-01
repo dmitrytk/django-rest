@@ -14,6 +14,6 @@ MER_LOAD = """INSERT INTO mer
 """
 
 RATE_LOAD = """INSERT INTO rates
-    (well_id, date, rate, dynamic_level, static_level, pressure) VALUES
-    ((SELECT id FROM wells w WHERE w.field_id=%s and w.name=%s),%s,%s,%s,%s,%s)
+    (well_id, date, status, rate, dynamic_level, static_level, pressure) VALUES
+    ((SELECT id FROM wells w WHERE w.field_id=%s and w.name=%s),%s,%s,%s,%s,%s,%s)
 """

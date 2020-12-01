@@ -9,5 +9,5 @@ def map_mer(data: dict) -> list:
 
 
 def map_rate(data: dict) -> list:
-    keys = ['well', 'date', 'rate', 'dynamic_level', 'static_level', 'production', ]
+    keys = ['well', 'date', 'status', 'rate', 'dynamic_level', 'static_level', 'production', ]
     return [data.get(key, None) for key in keys]
