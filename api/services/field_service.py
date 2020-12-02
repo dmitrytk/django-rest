@@ -49,6 +49,13 @@ def get_field_zones(pk):
     return Response(serializer.data)
 
 
+# /fields/{id}/wells DELETE
+def delete_field_wells(pk):
+    count = Well.objects.filter(field_id=pk)
+    return Response({'message': '{} Inc were deleted successfully!'.format(count[0])},
+                    status=status.HTTP_204_NO_CONTENT)
+
+
 # /fields/{id}/inclinometry DELETE
 def delete_field_inclinometry(pk):
     count = Inclinometry.objects.filter(well__field_id=pk).delete()

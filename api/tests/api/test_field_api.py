@@ -9,29 +9,25 @@ class TestFieldApi(APITestCase):
     fixtures = ['api.json']
     field_name = 'Filat'
     new_field_name = 'New Filat'
-    field_list_url = '/api/fields'
+    field_list_url = '/api/fields/'
     field_detail_url = '/api/fields/1/'
-    field_inc_url = '/api/fields/1/inclinometry'
-    field_mer_url = '/api/fields/1/mer'
-    field_rates_url = '/api/fields/1/rates'
-    field_coordinates_url = '/api/fields/1/coordinates'
-    field_zones_url = '/api/fields/1/zones'
+    field_inc_url = '/api/fields/1/inclinometry/'
+    field_mer_url = '/api/fields/1/mer/'
+    field_rates_url = '/api/fields/1/rates/'
+    field_coordinates_url = '/api/fields/1/coordinates/'
+    field_zones_url = '/api/fields/1/zones/'
 
     def test_field_list(self):
         # Post field
         response = self.client.post(self.field_list_url, {'name': self.field_name}, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data['name'], self.field_name)
+        print("Done")
 
         # Get all fields
         response = self.client.get(self.field_list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 3)
-
-        # Delete all fields
-        response = self.client.delete(self.field_list_url)
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Field.objects.all().count(), 0)
 
     def test_field_detail(self):
         # Get field
