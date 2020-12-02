@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase, APIClient
 from api.models import Field, Inclinometry, Mer, Rate, FieldCoordinate, Zone
 
 
-class TestFieldRoutes(APITestCase):
+class TestFieldApi(APITestCase):
     client = APIClient()
     fixtures = ['api.json']
     field_name = 'Filat'
@@ -28,7 +28,7 @@ class TestFieldRoutes(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 3)
 
-        # Delete all field
+        # Delete all fields
         response = self.client.delete(self.field_list_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Field.objects.all().count(), 0)
