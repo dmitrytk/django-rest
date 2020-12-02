@@ -1,46 +1,25 @@
-from django.http.response import JsonResponse
-from rest_framework import status, mixins, generics
+from rest_framework import status, generics
 from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from api.models import Field
 from api.serializers import FieldSerializer
 from api.services import field_service
 
 
-class FieldList(mixins.ListModelMixin,
-                mixins.CreateModelMixin,
-                mixins.UpdateModelMixin,
-                generics.GenericAPIView):
+class FieldList(generics.ListCreateAPIView):
     queryset = Field.objects.all()
     serializer_class = FieldSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
     def delete(self, request, *args, **kwargs):
-        count = self.queryset.delete()
-        return JsonResponse({'message': '{} Fields were deleted successfully!'.format(count[0])},
-                            status=status.HTTP_204_NO_CONTENT)
+        _, deleted = self.queryset.delete()
+        return Response({'message': f'{deleted["api.Field"]} Fields were deleted successfully!'},
+                        status=status.HTTP_204_NO_CONTENT)
 
 
-class FieldDetail(mixins.RetrieveModelMixin,
-                  mixins.UpdateModelMixin,
-                  mixins.DestroyModelMixin,
-                  generics.GenericAPIView):
+class FieldDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Field.objects.all()
     serializer_class = FieldSerializer
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
 
 
 @api_view(['GET'])

@@ -1,55 +1,91 @@
-from typing import List, Callable, Type
+from typing import List
 
-from django.http import JsonResponse
+from django.db import transaction
 from rest_framework import status
-from rest_framework.serializers import ModelSerializer
+from rest_framework.response import Response
 
 from api import queries
-from api.models import Inclinometry, Well
-from api.serializers import IncSerializer, MerSerializer
+from api.models import Inclinometry, Well, FieldCoordinate
+from api.serializers import IncSerializer, MerSerializer, RateSerializer, ZoneSerializer, FieldCoordinateSerializer
 from api.services.raw_sql_service import batch_load
 from api.utils import mappers
 from api.utils.validators import validate_batch_data
 
 
-def load_inclinometry(data) -> JsonResponse:
+@transaction.atomic
+def load_inclinometry(data: dict) -> Response:
     if not validate_batch_data(data):
-        return JsonResponse({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     field_id = data['field_id']
     serializer = IncSerializer(data=data['data'], many=True)
     if serializer.is_valid():
         wells = _get_well_names(data['data'])
+        _create_new_wells(field_id, wells)
         _delete_old_inc(field_id, wells)
         batch_load(queries.INCLINOMETRY_LOAD, [(field_id, *mappers.map_inc(row)) for row in serializer.validated_data])
-        return JsonResponse(serializer.validated_data, safe=False)
+        return Response(serializer.validated_data)
     else:
-        return JsonResponse({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
-def load_mer(data) -> JsonResponse:
+@transaction.atomic
+def load_mer(data: dict) -> Response:
     if not validate_batch_data(data):
-        return JsonResponse({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     field_id = data['field_id']
     serializer = MerSerializer(data=data['data'], many=True)
     if serializer.is_valid():
         wells = _get_well_names(data['data'])
+        _create_new_wells(field_id, wells)
         batch_load(queries.MER_LOAD, [(field_id, *mappers.map_mer(row)) for row in serializer.validated_data])
-        return JsonResponse(serializer.validated_data, safe=False)
+        return Response(serializer.validated_data)
     else:
-        return JsonResponse({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
-def load_data(data: dict, serializer: Type[ModelSerializer], query: str, mapper: Callable) -> JsonResponse:
+@transaction.atomic
+def load_rates(data: dict) -> Response:
     if not validate_batch_data(data):
-        return JsonResponse({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     field_id = data['field_id']
-    ser = serializer(data=data, many=True)
-    if ser.is_valid():
+    serializer = RateSerializer(data=data['data'], many=True)
+    if serializer.is_valid():
         wells = _get_well_names(data['data'])
-        batch_load(query, [(field_id, *mapper(row)) for row in ser.validated_data])
-        return JsonResponse(ser.validated_data, safe=False)
+        _create_new_wells(field_id, wells)
+        batch_load(queries.RATE_LOAD, [(field_id, *mappers.map_rate(row)) for row in serializer.validated_data])
+        return Response(serializer.validated_data)
     else:
-        return JsonResponse({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+
+@transaction.atomic
+def load_zones(data: dict) -> Response:
+    if not validate_batch_data(data):
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    field_id = data['field_id']
+    serializer = ZoneSerializer(data=data['data'], many=True)
+    if serializer.is_valid():
+        wells = _get_well_names(data['data'])
+        _create_new_wells(field_id, wells)
+        batch_load(queries.ZONE_LOAD, [(field_id, *mappers.map_zone(row)) for row in serializer.validated_data])
+        return Response(serializer.validated_data)
+    else:
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+
+@transaction.atomic
+def load_coordinates(data: dict) -> Response:
+    if not validate_batch_data(data):
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    field_id = data['field_id']
+    serializer = FieldCoordinateSerializer(data=data['data'], many=True)
+    if serializer.is_valid():
+        _delete_old_coordinates(field_id)
+        batch_load(queries.COORDINATE_LOAD,
+                   [(field_id, *mappers.map_coordinate(row)) for row in serializer.validated_data])
+        return Response(serializer.validated_data)
+    else:
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 def _get_well_names(data: List[dict]) -> List[str]:
@@ -66,3 +102,7 @@ def _delete_old_inc(field_id: int, well_name_list: List[str]) -> None:
     return Inclinometry.objects \
         .filter(well__field_id=field_id, well__name__in=well_name_list) \
         .delete()
+
+
+def _delete_old_coordinates(field_id: int) -> None:
+    return FieldCoordinate.objects.filter(field_id=field_id).delete()

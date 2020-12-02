@@ -1,10 +1,11 @@
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
 
 from api.models import Field, Inclinometry, Mer, Rate, FieldCoordinate, Zone
 
 
 class TestFieldRoutes(APITestCase):
+    client = APIClient()
     fixtures = ['api.json']
     field_name = 'Filat'
     new_field_name = 'New Filat'

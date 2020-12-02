@@ -40,11 +40,9 @@ class RateSerializer(serializers.ModelSerializer):
 
 
 class FieldCoordinateSerializer(serializers.ModelSerializer):
-    field = serializers.CharField()
-
     class Meta:
         model = FieldCoordinate
-        fields = '__all__'
+        exclude = ('field',)
 
 
 class ZoneSerializer(serializers.ModelSerializer):
