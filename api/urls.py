@@ -1,14 +1,18 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from rest_framework_nested import routers
 
 from api.views import field_views, batch_views, well_views
 
-router = DefaultRouter()
+router = routers.SimpleRouter()
 router.register(r'fields', field_views.FieldViewSet)
+field_router = routers.NestedSimpleRouter(router, r'fields', lookup='fields')
+field_router.register(r'wells', well_views.WellViewSet, basename='fields-wells')
 
 urlpatterns = [
     # Field URLs
+    # path('api/', include(router.urls)),
     path('api/', include(router.urls)),
+    path('api/', include(field_router.urls)),
 
     # Batch URLs
     path('api/batch/inclinometry', batch_views.load_inclinometry),
@@ -17,7 +21,4 @@ urlpatterns = [
     path('api/batch/zones', batch_views.load_zones),
     path('api/batch/coordinates', batch_views.load_coordinates),
 
-    # Well URLs
-    path('api/wells', well_views.WellList.as_view()),
-    path('api/wells/<int:pk>/', well_views.WellDetail.as_view()),
 ]

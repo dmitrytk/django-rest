@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
 
-from api.models import Field, Inclinometry, Mer, Rate, FieldCoordinate, Zone
+from api.models import Field, Inclinometry, Mer, Rate, FieldCoordinate, Zone, Well
 
 
 class TestFieldApi(APITestCase):
@@ -11,6 +11,7 @@ class TestFieldApi(APITestCase):
     new_field_name = 'New Filat'
     field_list_url = '/api/fields/'
     field_detail_url = '/api/fields/1/'
+    field_wells_url = '/api/fields/1/wells/'
     field_inc_url = '/api/fields/1/inclinometry/'
     field_mer_url = '/api/fields/1/mer/'
     field_rates_url = '/api/fields/1/rates/'
@@ -42,6 +43,15 @@ class TestFieldApi(APITestCase):
         response = self.client.delete(self.field_detail_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Field.objects.all().count(), 1)
+
+    def test_field_wells(self):
+        # Get wells
+        response = self.client.get(self.field_wells_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        # Delete wells
+        response = self.client.delete(self.field_wells_url)
+        self.assertEqual(Well.objects.count(), 1)
 
     def test_field_inc(self):
         # Get inc

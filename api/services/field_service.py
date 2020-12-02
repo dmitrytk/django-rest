@@ -6,10 +6,10 @@ from api.serializers import IncSerializer, WellSerializer, MerSerializer, RateSe
     ZoneSerializer
 
 
-# CHILD OBJECTS
+# GET CHILD OBJECTS
 # /fields/{id}/wells GET
 def get_field_wells(pk):
-    wells = Well.objects.filter(well__field_id=pk)
+    wells = Well.objects.filter(field_id=pk)
     serializer = WellSerializer(wells, many=True)
     return Response(serializer.data)
 
@@ -49,43 +49,44 @@ def get_field_zones(pk):
     return Response(serializer.data)
 
 
+# DELETE CHILD OBJECTS
 # /fields/{id}/wells DELETE
 def delete_field_wells(pk):
-    count = Well.objects.filter(field_id=pk)
-    return Response({'message': '{} Inc were deleted successfully!'.format(count[0])},
+    _, deleted = Well.objects.filter(field_id=pk).delete()
+    return Response({'message': f'{deleted["api.Well"]} Wells were deleted successfully!'},
                     status=status.HTTP_204_NO_CONTENT)
 
 
 # /fields/{id}/inclinometry DELETE
 def delete_field_inclinometry(pk):
     count = Inclinometry.objects.filter(well__field_id=pk).delete()
-    return Response({'message': '{} Inc were deleted successfully!'.format(count[0])},
+    return Response({'message': f'{[count[0]]} Inc were deleted successfully!'},
                     status=status.HTTP_204_NO_CONTENT)
 
 
 # /fields/{id}/mer DELETE
 def delete_field_mer(pk):
     count = Mer.objects.filter(well__field_id=pk).delete()
-    return Response({'message': '{} Mer were deleted successfully!'.format(count[0])},
+    return Response({'message': f'{[count[0]]} Mer were deleted successfully!'},
                     status=status.HTTP_204_NO_CONTENT)
 
 
 # /fields/{id}/rates DELETE
 def delete_field_rates(pk):
     count = Rate.objects.filter(well__field_id=pk).delete()
-    return Response({'message': '{} Rates were deleted successfully!'.format(count[0])},
+    return Response({'message': f'{[count[0]]} Rates were deleted successfully!'},
                     status=status.HTTP_204_NO_CONTENT)
 
 
 # /fields/{id}/coordinates DELETE
 def delete_field_coordinates(pk):
     count = FieldCoordinate.objects.filter(field_id=pk).delete()
-    return Response({'message': '{} Coordinates were deleted successfully!'.format(count[0])},
+    return Response({'message': f'{[count[0]]} Coordinates were deleted successfully!'},
                     status=status.HTTP_204_NO_CONTENT)
 
 
 # /fields/{id}/zones DELETE
 def delete_field_zones(pk):
     count = Zone.objects.filter(well__field_id=pk).delete()
-    return Response({'message': '{} Zones were deleted successfully!'.format(count[0])},
+    return Response({'message': f'{[count[0]]} Zones were deleted successfully!'},
                     status=status.HTTP_204_NO_CONTENT)
