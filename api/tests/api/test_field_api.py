@@ -42,7 +42,7 @@ class TestFieldApi(APITestCase):
         # Delete one field
         response = self.client.delete(self.field_detail_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Field.objects.all().count(), 1)
+        self.assertEqual(Field.objects.count(), 1)
 
     def test_field_wells(self):
         # Get wells

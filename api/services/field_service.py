@@ -6,6 +6,14 @@ from api.serializers import IncSerializer, WellSerializer, MerSerializer, RateSe
     ZoneSerializer
 
 
+# CREATE WELL
+# /fields/{id}/wells POST
+def create_well(pk, data):
+    well = Well.objects.create(field_id=pk, **data)
+    serializer = WellSerializer(well)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
 # GET CHILD OBJECTS
 # /fields/{id}/wells GET
 def get_field_wells(pk):

@@ -5,7 +5,7 @@ from api.views import field_views, batch_views, well_views
 
 router = routers.SimpleRouter()
 router.register(r'fields', field_views.FieldViewSet)
-field_router = routers.NestedSimpleRouter(router, r'fields', lookup='fields')
+field_router = routers.NestedSimpleRouter(router, r'fields', lookup='field')
 field_router.register(r'wells', well_views.WellViewSet, basename='fields-wells')
 
 urlpatterns = [

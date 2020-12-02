@@ -11,10 +11,12 @@ class FieldViewSet(viewsets.ModelViewSet):
     serializer_class = FieldSerializer
 
     # Child objects
-    @action(detail=True, methods=['get', 'delete'])
+    @action(detail=True, methods=['get', 'delete', 'post'])
     def wells(self, request, *args, **kwargs):
         if request.method == 'GET':
             return field_service.get_field_wells(self.get_object().id)
+        elif request.method == 'POST':
+            return field_service.create_well(self.get_object().id, request.data)
         elif request.method == 'DELETE':
             return field_service.delete_field_wells(self.get_object().id)
 
