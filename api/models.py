@@ -32,9 +32,9 @@ class Well(models.Model):
     name = models.CharField(max_length=70)
     field = models.ForeignKey(
         Field, related_name='wells', on_delete=models.CASCADE)
-    pad = models.CharField(max_length=70, null=True, blank=True, default='')
-    type = models.CharField(max_length=200, null=True, blank=True, default='')
-    status = models.CharField(max_length=200, null=True, blank=True, default='')
+    pad = models.CharField(max_length=70, null=True, blank=True)
+    type = models.CharField(max_length=200, null=True, blank=True)
+    status = models.CharField(max_length=200, null=True, blank=True)
     alt = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     bottom = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     lat = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)

@@ -13,6 +13,11 @@ from api.utils.validators import validate_batch_data
 
 
 @transaction.atomic
+def load_wells(data: dict) -> Response:
+    return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+
+@transaction.atomic
 def load_inclinometry(data: dict) -> Response:
     if not validate_batch_data(data):
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)

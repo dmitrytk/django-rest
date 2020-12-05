@@ -10,6 +10,10 @@ class FieldSerializer(serializers.ModelSerializer):
 
 
 class WellSerializer(serializers.ModelSerializer):
+
+    def get_unique_together_validators(self):
+        return []
+
     class Meta:
         model = Well
         fields = '__all__'
