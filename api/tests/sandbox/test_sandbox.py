@@ -1,6 +1,10 @@
+import time
+from random import random
+
 from rest_framework.test import APITestCase
 
-from api.serializers import WellSerializer, IncSerializer
+from api.models import Well, Mer
+from api.serializers import WellSerializer
 
 
 class TestBatchApi(APITestCase):
@@ -9,15 +13,22 @@ class TestBatchApi(APITestCase):
     def test_sandbox(self):
         data = {
             'field': 1,
-            'data': [
-                {'name': 1},
-                {'name': '99R'},
+            'rows': [
+                {'name': f'Well{random()}'} for _ in range(1000)
             ]
         }
-        for row in data['data']:
+        start = time.time()
+        for row in data['rows']:
             row['field'] = data['field']
-        well_serializer = WellSerializer(data=data['data'], many=True)
-        inc_serializer = IncSerializer(data=[{'md': 20}], many=True)
-        print(well_serializer.is_valid())
-        print(inc_serializer.is_valid())
-        self.assertEqual(1, 1)
+
+        serializer = WellSerializer(data=data['rows'], many=True)
+        if serializer.is_valid():
+            well_names = set([well['name'] for well in data['rows']])
+            old_wells = Well.objects.filter(field_id=data['field'], name__in=well_names)
+            result = serializer.update(old_wells, serializer.validated_data)
+            print(result)
+        else:
+            print(serializer.errors)
+        print(f'Done in {time.time() - start} sec.')
+        self.assertEqual(Well.objects.count(), 1003)
+        self.assertEqual(Mer.objects.count(), 2)

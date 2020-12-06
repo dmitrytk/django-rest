@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from api.models import Inclinometry, Mer, Rate, Well, Zone, FieldCoordinate
 from api.services.batch_service import load_inclinometry, load_mer, load_rates, _create_new_wells, _delete_old_inc, \
-    load_zones, _delete_old_coordinates, load_coordinates
+    load_zones, _delete_old_coordinates, load_coordinates, load_wells
 
 
 class TestBatchService(TestCase):
@@ -21,10 +21,23 @@ class TestBatchService(TestCase):
         _create_new_wells(1, [self.well_name, '1P', '999'])
         self.assertEqual(Well.objects.count(), 5)  # 3 + 2 = 5
 
+    def test_load_wells(self):
+        data = {
+            'field_id': 1,
+            'rows': [
+                {'name': self.well_name, 'bottom': 3000},
+                {'name': '1P'},
+            ]
+        }
+        load_wells(data)
+        self.assertEqual(Well.objects.count(), 4)  # 3 + 1 = 4  old wells will be updated
+        self.assertEqual(Well.objects.filter(name=self.well_name).first().bottom, 3000)
+        self.assertEqual(Well.objects.last().name, '1P')
+
     def test_load_inclinometry(self):
         data = {
             'field_id': 1,
-            'data': [
+            'rows': [
                 {'well': self.well_name, 'md': 10, 'inc': None, 'azi': 78.23},
                 {'well': self.well_name, 'md': 20},
                 {'well': '1P', 'md': 1},  # add new well
@@ -36,7 +49,7 @@ class TestBatchService(TestCase):
     def test_load_mer(self):
         data = {
             'field_id': 1,
-            'data': [
+            'rows': [
                 {'well': self.well_name, 'date': '01.01.2000'},
                 {'well': self.well_name, 'date': '01.01.2000'},  # duplicate date will be overwritten
                 {'well': '1P', 'date': '01.01.2000'},  # add new well
@@ -48,7 +61,7 @@ class TestBatchService(TestCase):
     def test_load_rates(self):
         data = {
             'field_id': 1,
-            'data': [
+            'rows': [
                 {'well': self.well_name, 'date': '01.01.2000', 'rate': 256.78, 'status': 'work'},
                 {'well': self.well_name, 'date': '01.01.2000'},
                 {'well': '1P', 'date': '01.01.2000'},  # add new well
@@ -60,7 +73,7 @@ class TestBatchService(TestCase):
     def test_load_zones(self):
         data = {
             'field_id': 1,
-            'data': [
+            'rows': [
                 {'well': self.well_name, 'name': 'pk1', 'top_md': 1500.25},
                 {'well': self.well_name, 'name': 'pk2', 'top_md': 1550.26},
                 {'well': '1P', 'name': 'uvat', 'top_md': 860.25},  # add new well
@@ -72,7 +85,7 @@ class TestBatchService(TestCase):
     def test_load_coordinates(self):
         data = {
             'field_id': 1,
-            'data': [
+            'rows': [
                 {'lat': 60.23, 'lng': 50.28},
                 {'lat': 60.28, 'lng': 50.29},
             ]
