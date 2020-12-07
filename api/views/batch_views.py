@@ -4,6 +4,11 @@ from api.services import batch_service
 
 
 @api_view(['POST'])
+def load_wells(request):
+    return batch_service.load_wells(request.data)
+
+
+@api_view(['POST'])
 def load_inclinometry(request):
     return batch_service.load_inclinometry(request.data)
 

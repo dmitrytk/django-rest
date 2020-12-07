@@ -6,10 +6,29 @@ from rest_framework.response import Response
 
 from api import queries
 from api.models import Inclinometry, Well, FieldCoordinate
-from api.serializers import IncSerializer, MerSerializer, RateSerializer, ZoneSerializer, FieldCoordinateSerializer
+from api.serializers import IncSerializer, MerSerializer, RateSerializer, ZoneSerializer, FieldCoordinateSerializer, \
+    WellSerializer
 from api.services.raw_sql_service import batch_load
 from api.utils import mappers
 from api.utils.validators import validate_batch_data
+
+
+@transaction.atomic
+def load_wells(data: dict) -> Response:
+    if not validate_batch_data(data):
+        return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    for row in data['rows']:
+        row['field'] = data['field_id']
+
+    serializer = WellSerializer(data=data['rows'], many=True)
+    if serializer.is_valid():
+        well_names = set([well['name'] for well in data['rows']])
+        old_wells = Well.objects.filter(field_id=data['field_id'], name__in=well_names)
+        serializer.update(old_wells, serializer.validated_data)
+        return Response({'message': f'{len(serializer.validated_data)} wells loaded'},
+                        status=status.HTTP_200_OK)
+    else:
+        return Response({'message': f'Invalid data\n{serializer.errors}'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 @transaction.atomic
@@ -17,9 +36,9 @@ def load_inclinometry(data: dict) -> Response:
     if not validate_batch_data(data):
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     field_id = data['field_id']
-    serializer = IncSerializer(data=data['data'], many=True)
+    serializer = IncSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
-        wells = _get_well_names(data['data'])
+        wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         _delete_old_inc(field_id, wells)
         batch_load(queries.INCLINOMETRY_LOAD, [(field_id, *mappers.map_inc(row)) for row in serializer.validated_data])
@@ -33,9 +52,9 @@ def load_mer(data: dict) -> Response:
     if not validate_batch_data(data):
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     field_id = data['field_id']
-    serializer = MerSerializer(data=data['data'], many=True)
+    serializer = MerSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
-        wells = _get_well_names(data['data'])
+        wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         batch_load(queries.MER_LOAD, [(field_id, *mappers.map_mer(row)) for row in serializer.validated_data])
         return Response(serializer.validated_data)
@@ -48,9 +67,9 @@ def load_rates(data: dict) -> Response:
     if not validate_batch_data(data):
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     field_id = data['field_id']
-    serializer = RateSerializer(data=data['data'], many=True)
+    serializer = RateSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
-        wells = _get_well_names(data['data'])
+        wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         batch_load(queries.RATE_LOAD, [(field_id, *mappers.map_rate(row)) for row in serializer.validated_data])
         return Response(serializer.validated_data)
@@ -63,9 +82,9 @@ def load_zones(data: dict) -> Response:
     if not validate_batch_data(data):
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     field_id = data['field_id']
-    serializer = ZoneSerializer(data=data['data'], many=True)
+    serializer = ZoneSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
-        wells = _get_well_names(data['data'])
+        wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         batch_load(queries.ZONE_LOAD, [(field_id, *mappers.map_zone(row)) for row in serializer.validated_data])
         return Response(serializer.validated_data)
@@ -78,7 +97,7 @@ def load_coordinates(data: dict) -> Response:
     if not validate_batch_data(data):
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     field_id = data['field_id']
-    serializer = FieldCoordinateSerializer(data=data['data'], many=True)
+    serializer = FieldCoordinateSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
         _delete_old_coordinates(field_id)
         batch_load(queries.COORDINATE_LOAD,
