@@ -10,9 +10,6 @@ class WellViewSet(viewsets.ModelViewSet):
     queryset = Well.objects.filter()
     serializer_class = WellSerializer
 
-    def get_queryset(self):
-        return Well.objects.filter(field=self.kwargs['field_pk'])
-    
     # Child objects
     @action(detail=True, methods=['get', 'delete'])
     def inclinometry(self, request, *args, **kwargs):
