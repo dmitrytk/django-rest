@@ -34,32 +34,26 @@ const wells = [
   {
     label: 'Куст',
     key: 'pad',
-    sortable: true,
 
   },
   {
     label: 'Тип',
     key: 'type',
-    sortable: true,
 
   },
   {
     label: 'Состояние',
     key: 'status',
-    sortable: true,
 
   },
   {
     label: 'Забой',
     key: 'bottom',
-    sortable: true,
 
   },
   {
     label: 'Альтитуда',
     key: 'alt',
-    sortable: true,
-
   },
   {
     label: 'X',

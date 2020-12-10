@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import DB from '@/views/DB.vue';
 import Home from '@/views/Home.vue';
 import Sandbox from '@/views/Sandbox.vue';
+import Import from '@/views/Import.vue';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/sandbox',
     name: 'Sandbox',
     component: Sandbox,
+  },
+  {
+    path: '/import',
+    name: 'Import',
+    component: Import,
   },
 ];
 
