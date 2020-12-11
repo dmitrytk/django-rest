@@ -45,6 +45,7 @@
 <script>
 import FieldService from '@/service/FieldService';
 import WellForm from '@/component/form/WellForm.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'DB',
@@ -63,7 +64,17 @@ export default {
       this.loadFields();
     }
   },
+  computed: {
+    ...mapGetters('fields', [
+      'field',
+      'fields',
+      'isLoading',
+    ]),
+  },
   methods: {
+    ...mapActions('fields', [
+      'fetchFields',
+    ]),
     loadFields() {
       FieldService.findAll()
         .then((res) => {
