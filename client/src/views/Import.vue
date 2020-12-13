@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <h2 class="text-center my-3">Импорт данных</h2>
+    <h2 class="text-center my-3">Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С…</h2>
     <b-card v-if="loaded">
       <b-form inline>
-        <label class="mr-sm-2">Тип данных</label>
+        <label class="mr-sm-2">РўРёРї РґР°РЅРЅС‹С…</label>
         <b-form-select
           v-model="selectedDataType"
           :options="dataTypes"
@@ -14,12 +14,12 @@
         v-model="content"
         class="mt-3"
         max-rows="10"
-        placeholder="Введите данные"
+        placeholder="Р’СЃС‚Р°РІСЊС‚Рµ РґР°РЅРЅС‹Рµ"
         rows="10"
         @keyup="parse"
       ></b-form-textarea>
-      <b-button class="mt-3 mr-3" variant="primary" @click="load">Загрузить</b-button>
-      <b-button class="mt-3 mr-3" variant="danger" @click="clear">Очистить</b-button>
+      <b-button class="mt-3 mr-3" variant="primary" @click="load">Р—Р°РіСЂСѓР·РёС‚СЊ</b-button>
+      <b-button class="mt-3 mr-3" variant="danger" @click="clear">РћС‡РёСЃС‚РёС‚СЊ</b-button>
     </b-card>
   </div>
 </template>
@@ -32,11 +32,11 @@ export default {
       loaded: true,
       content: '',
       dataTypes: [
-        { value: 'wells', text: 'Скважины' },
-        { value: 'rates', text: 'Режимы' },
-        { value: 'mer', text: 'МЭР' },
-        { value: 'zones', text: 'Пласты' },
-        { value: 'inclinometry', text: 'Инклинометрия' },
+        { value: 'wells', text: 'РЎРєРІР°Р¶РёРЅС‹' },
+        { value: 'zones', text: 'РџР»Р°СЃС‚С‹' },
+        { value: 'inclinometry', text: 'РРЅРєР»РёРЅРѕРјРµС‚СЂРёСЏ' },
+        { value: 'rates', text: 'Р РµР¶РёРјС‹' },
+        { value: 'mer', text: 'РњР­Р ' },
       ],
       selectedDataType: 'wells',
     };

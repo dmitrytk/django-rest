@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import fields from './fields.module';
-import load from './load.module';
-import wells from './wells.module';
+import fields from './modules/fields';
+import load from './modules/load';
+import wells from './modules/wells';
 
 Vue.use(Vuex);
 

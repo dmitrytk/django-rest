@@ -4,17 +4,17 @@ const fields = [
     key: 'id',
   },
   {
-    label: 'Месторождение',
+    label: 'РќР°Р·РІР°РЅРёРµ',
     key: 'name',
     required: true,
     sortable: true,
   },
   {
-    label: 'Тип',
+    label: 'РўРёРї',
     key: 'type',
   },
   {
-    label: 'Расположение',
+    label: 'РњРµСЃС‚РѕРЅР°С…РѕР¶РґРµРЅРёРµ',
     key: 'location',
   },
 ];
@@ -25,34 +25,34 @@ const wells = [
     key: 'id',
   },
   {
-    label: 'Скважина',
+    label: 'РќРѕРјРµСЂ',
     key: 'well',
     required: true,
     sortable: true,
 
   },
   {
-    label: 'Куст',
+    label: 'РљСѓСЃС‚',
     key: 'pad',
 
   },
   {
-    label: 'Тип',
+    label: 'РўРёРї',
     key: 'type',
 
   },
   {
-    label: 'Состояние',
+    label: 'РЎРѕСЃС‚РѕСЏРЅРёРµ',
     key: 'status',
 
   },
   {
-    label: 'Забой',
+    label: 'Р—Р°Р±РѕР№',
     key: 'bottom',
 
   },
   {
-    label: 'Альтитуда',
+    label: 'РђР»СЊС‚РёС‚СѓРґР°',
     key: 'alt',
   },
   {
@@ -64,119 +64,119 @@ const wells = [
     key: 'y',
   },
   {
-    label: 'Широта',
+    label: 'РЁРёСЂРѕС‚Р°',
     key: 'lat',
   },
   {
-    label: 'Долгота',
+    label: 'Р”РѕР»РіРѕС‚Р°',
     key: 'lng',
   },
 ];
 
 const inclinometry = [
   {
-    label: 'Скважина',
+    label: 'РЎРєРІР°Р¶РёРЅР°',
     key: 'well',
   },
   {
-    label: 'Глубина',
+    label: 'Р“Р»СѓР±РёРЅР°',
     key: 'md',
     required: true,
   },
   {
-    label: 'Угол',
+    label: 'РЈРіРѕР»',
     key: 'inc',
   },
   {
-    label: 'Азимут',
+    label: 'РђР·РёРјСѓС‚',
     key: 'azi',
   },
 ];
 
 const mer = [
   {
-    label: 'Скважина',
+    label: 'РЎРєРІР°Р¶РёРЅР°',
     key: 'well',
   },
   {
-    label: 'Дата',
+    label: 'Р”Р°С‚Р°',
     key: 'date',
     required: true,
   },
   {
-    label: 'Состояние',
+    label: 'РЎРѕСЃС‚РѕСЏРЅРёРµ',
     key: 'status',
   },
   {
-    label: 'Дебет',
+    label: 'Р”РµР±РёС‚',
     key: 'rate',
   },
   {
-    label: 'Добыча',
+    label: 'Р”РѕР±С‹С‡Р°',
     key: 'production',
   },
   {
-    label: 'Суток работы',
+    label: 'РЎСѓС‚РѕРє СЂР°Р±РѕС‚С‹',
     key: 'work_days',
   },
 ];
 
 const rates = [
   {
-    label: 'Скважина',
+    label: 'РЎРєРІР°Р¶РёРЅР°',
     key: 'well',
   },
   {
-    label: 'Дата',
+    label: 'Р”Р°С‚Р°',
     key: 'date',
     required: true,
   },
   {
-    label: 'Добыча',
+    label: 'Р”РµР±РёС‚',
     key: 'rate',
   },
   {
-    label: 'Динамика',
+    label: 'Р”РёРЅР°РјРёС‡РµСЃРєРёР№ СѓСЂРѕРІРµРЅСЊ',
     key: 'dynamic',
   },
   {
-    label: 'Статика',
+    label: 'РЎС‚Р°С‚РёС‡РµСЃРєРёР№ СѓСЂРѕРІРµРЅСЊ',
     key: 'static',
   },
   {
-    label: 'Давление',
+    label: 'Р”Р°РІР»РµРЅРёРµ',
     key: 'pressure',
   },
 ];
 
 const zones = [
   {
-    label: 'Скважина',
+    label: 'РЎРєРІР°Р¶РёРЅР°',
     key: 'well',
   },
   {
-    label: 'Название',
+    label: 'РќР°Р·РІР°РЅРёРµ',
     key: 'name',
     required: true,
   },
   {
-    label: 'Кровля',
+    label: 'РљСЂРѕРІР»СЏ',
     key: 'top_md',
   },
   {
-    label: 'Подошва',
+    label: 'РџРѕРґРѕС€РІР°',
     key: 'bot_md',
   },
   {
-    label: 'Кровля АО',
+    label: 'РљСЂРѕРІР»СЏ РђРћ',
     key: 'top_tvd',
   },
   {
-    label: 'Подошва АО',
+    label: 'РџРѕРґРѕС€РІР° РђРћ',
     key: 'bot_tvd',
   },
   {
-    label: 'Мощность',
+    label: 'РўРѕР»С‰РёРЅР°',
     key: 'h',
   },
 ];
