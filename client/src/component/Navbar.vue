@@ -22,8 +22,8 @@
           <b-form-input class="mr-sm-2" placeholder=" " size="sm"></b-form-input>
           <b-button class="my-2 my-sm-0" size="sm" type="submit">Искать</b-button>
         </b-nav-form>
-        <b-nav-item v-if="this.$store.state.field" class="font-italic" to="/db">
-          <ins>{{ $store.state.field.name }}</ins>
+        <b-nav-item v-if="this.field" class="font-italic" to="/db">
+          <ins>{{ this.field.name }}</ins>
         </b-nav-item>
         <b-nav-item-dropdown right>
           <template v-slot:button-content>
@@ -38,7 +38,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Navbar',
+  computed: {
+    ...mapGetters('fields', [
+      'field',
+      'fields',
+    ]),
+  },
 };
+
 </script>

@@ -9,7 +9,6 @@ class TestFieldApi(APITestCase):
     new_well_name = '1P'
     well_list_url = '/api/wells/'
     well_detail_url = '/api/wells/1/'
-    well_wells_url = '/api/wells/1/wells/'
     well_inc_url = '/api/wells/1/inclinometry/'
     well_mer_url = '/api/wells/1/mer/'
     well_rates_url = '/api/wells/1/rates/'

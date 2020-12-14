@@ -1,4 +1,5 @@
-import WellService from '@/service/FieldService';
+import WellService from '../../service/WellService';
+import FieldService from '../../service/FieldService';
 
 export default {
   namespaced: true,
@@ -31,11 +32,18 @@ export default {
       commit('setWell', well.data);
       commit('setWellLoading', false);
     },
-    async fetchWells({ commit }) {
+    async fetchWells({ commit }, fieldId) {
       commit('setWellsLoading', true);
-      const wells = await WellService.findAll();
+      const wells = await FieldService.getWells(fieldId);
       commit('setWells', wells.data);
       commit('setWellsLoading', false);
+    },
+    async updateWell(context, data) {
+      context.commit('setWellLoading', true);
+      const well = await WellService.update(data.id, data);
+      context.commit('setWell', well.data);
+      context.commit('setWellLoading', false);
+      await context.dispatch('fetchWells', well.data.field);
     },
   },
   getters: {
