@@ -8,6 +8,7 @@ export default {
       fields: null,
       fieldLoading: false,
       fieldsLoading: false,
+      selectionVisible: false,
     }
   ),
   mutations: {
@@ -23,6 +24,9 @@ export default {
     setFields(state, payload) {
       state.fields = payload;
     },
+    setSelectionVisible(state, payload) {
+      state.selectionVisible = payload;
+    },
   },
   actions: {
     async fetchFields({ commit }) {
@@ -36,6 +40,10 @@ export default {
       const field = await FieldService.findOne(id);
       commit('setField', field.data);
       commit('setFieldLoading', false);
+      commit('setSelectionVisible', false);
+    },
+    setSelectionVisible({ commit }, payload) {
+      commit('setSelectionVisible', payload);
     },
   },
   getters: {
@@ -43,5 +51,6 @@ export default {
     fields: (state) => state.fields,
     fieldLoading: (state) => state.fieldLoading,
     fieldsLoading: (state) => state.fieldsLoading,
+    selectionVisible: (state) => state.selectionVisible,
   },
 };

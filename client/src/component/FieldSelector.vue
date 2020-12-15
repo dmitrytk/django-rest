@@ -17,10 +17,7 @@
         </template>
       </b-form-select>
     </b-modal>
-    <b-button class="mt-3" @click="changeDB">Change DB</b-button>
-
   </div>
-
 </template>
 
 <script>
@@ -31,29 +28,38 @@ export default {
   name: 'FieldSelector',
   data() {
     return {
-      visible: false,
       selectedFieldId: null,
     };
   },
   mounted() {
     if (!this.fields) {
       this.fetchFields();
-      this.visible = true;
     }
   },
   computed: {
     ...mapGetters('fields', [
       'field',
       'fields',
+      'selectionVisible',
     ]),
     fieldList() {
       return this.fields.map((field) => ({ text: field.name, value: field.id }));
     },
+    visible: {
+      get() {
+        return this.selectionVisible;
+      },
+      set(value) {
+        this.setSelectionVisible(value);
+      },
+    },
+
   },
   methods: {
     ...mapActions('fields', [
       'fetchFields',
       'fetchField',
+      'setSelectionVisible',
     ]),
     ...mapActions('wells', [
       'fetchWells',

@@ -22,8 +22,10 @@ export default {
     };
   },
   mounted() {
-    const well = this.wells.find((w) => w.id === this.well.id);
-    if (well) this.selectedWellId = well.id;
+    if (this.well) {
+      const well = this.wells.find((w) => w.id === this.well.id);
+      if (well) this.selectedWellId = well.id;
+    }
   },
   computed: {
     ...mapGetters('wells', [
