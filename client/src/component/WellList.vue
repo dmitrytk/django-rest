@@ -21,9 +21,14 @@ export default {
       selectedWellId: null,
     };
   },
+  mounted() {
+    const well = this.wells.find((w) => w.id === this.well.id);
+    if (well) this.selectedWellId = well.id;
+  },
   computed: {
     ...mapGetters('wells', [
       'wells',
+      'well',
     ]),
   },
   methods: {

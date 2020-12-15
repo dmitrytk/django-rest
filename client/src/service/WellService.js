@@ -15,6 +15,21 @@ class WellService {
   }
 
   // GET CHILD OBJECTS
+  static getInclinometry(id) {
+    return http.get(`/wells/${id}/inclinometry/`);
+  }
+
+  static getMer(id) {
+    return http.get(`/wells/${id}/mer/`);
+  }
+
+  static getRates(id) {
+    return http.get(`/wells/${id}/rates/`);
+  }
+
+  static getZones(id) {
+    return http.get(`/wells/${id}/zones/`);
+  }
 }
 
 export default WellService;

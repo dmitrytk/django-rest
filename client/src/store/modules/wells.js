@@ -9,6 +9,10 @@ export default {
       wells: null,
       wellLoading: false,
       wellsLoading: false,
+      inclinometry: null,
+      mer: null,
+      rates: null,
+      zones: null,
     }
   ),
   mutations: {
@@ -24,13 +28,26 @@ export default {
     setWells(state, payload) {
       state.wells = payload;
     },
+    setInclinometry(state, payload) {
+      state.inclinometry = payload;
+    },
+    setMer(state, payload) {
+      state.mer = payload;
+    },
+    setRates(state, payload) {
+      state.rates = payload;
+    },
+    setZones(state, payload) {
+      state.zones = payload;
+    },
   },
   actions: {
-    async fetchWell({ commit }, id) {
-      commit('setWellLoading', true);
+    async fetchWell(context, id) {
+      context.commit('setWellLoading', true);
       const well = await WellService.findOne(id);
-      commit('setWell', well.data);
-      commit('setWellLoading', false);
+      context.dispatch('fetchWellData', id);
+      context.commit('setWell', well.data);
+      context.commit('setWellLoading', false);
     },
     async fetchWells({ commit }, fieldId) {
       commit('setWellsLoading', true);
@@ -38,8 +55,29 @@ export default {
       commit('setWells', wells.data);
       commit('setWellsLoading', false);
     },
+    async fetchWellData(context, id) {
+      context.dispatch('fetchInclinometry', id);
+      context.dispatch('fetchMer', id);
+      context.dispatch('fetchRates', id);
+      context.dispatch('fetchZones', id);
+    },
+    async fetchInclinometry({ commit }, id) {
+      const res = await WellService.getInclinometry(id);
+      commit('setInclinometry', res.data);
+    },
+    async fetchMer({ commit }, id) {
+      const res = await WellService.getMer(id);
+      commit('setMer', res.data);
+    },
+    async fetchRates({ commit }, id) {
+      const res = await WellService.getRates(id);
+      commit('setRates', res.data);
+    },
+    async fetchZones({ commit }, id) {
+      const res = await WellService.getZones(id);
+      commit('setZones', res.data);
+    },
     async updateWell(context, data) {
-      context.commit('setWellLoading', true);
       const well = await WellService.update(data.id, data);
       context.commit('setWell', well.data);
       context.commit('setWellLoading', false);
@@ -51,5 +89,10 @@ export default {
     wells: (state) => state.wells,
     wellLoading: (state) => state.wellLoading,
     wellsLoading: (state) => state.wellsLoading,
+    inclinometry: (state) => state.inclinometry,
+    mer: (state) => state.mer,
+    rates: (state) => state.rates,
+    zones: (state) => state.zones,
+
   },
 };
