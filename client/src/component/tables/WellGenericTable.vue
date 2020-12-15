@@ -1,12 +1,14 @@
 <template>
   <div>
-    <b-table v-if="inclinometry && inclinometry.length>0" ref="table"
-             :fields="fields" :items="inclinometry"
+    <b-table v-if="data &&
+    data.length>0" ref="table"
+             :fields="fields" :items="data"
              head-variant="dark"
              responsive
              sticky-header>
     </b-table>
     <p v-else>No data</p>
+    <b-button variant="danger" @click="log">Delete</b-button>
   </div>
 </template>
 
@@ -15,16 +17,27 @@ import { mapGetters } from 'vuex';
 import tables from '../../util/databaseTables';
 
 export default {
-  name: 'InclinometryTable',
+  name: 'WellGenericTable',
+  props: ['tableName'],
   data() {
     return {
-      fields: tables.inclinometry,
+      fields: tables[this.tableName],
     };
   },
   computed: {
     ...mapGetters('wells', [
+      'mer',
       'inclinometry',
+      'rates',
     ]),
+    data() {
+      return this.$store.getters[`wells/${this.tableName}`];
+    },
+  },
+  methods: {
+    log() {
+      console.log('Delete');
+    },
   },
 };
 </script>

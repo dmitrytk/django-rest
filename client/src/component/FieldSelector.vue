@@ -67,10 +67,8 @@ export default {
     loadField() {
       this.fetchField(this.selectedFieldId);
       this.fetchWells(this.selectedFieldId);
+      this.$store.commit('wells/setWell', null);
       this.visible = false;
-    },
-    changeDB() {
-      this.visible = true;
     },
   },
 };

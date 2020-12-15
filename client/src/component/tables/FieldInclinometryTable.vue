@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-table v-if="mer && mer.length>0" ref="table"
-             :fields="fields" :items="mer"
+    <b-table v-if="inclinometry && inclinometry.length>0" ref="table"
+             :fields="fields" :items="inclinometry"
              head-variant="dark"
              responsive
              sticky-header>
@@ -15,15 +15,15 @@ import { mapGetters } from 'vuex';
 import tables from '../../util/databaseTables';
 
 export default {
-  name: 'MerTable',
+  name: 'FieldInclinometryTable',
   data() {
     return {
-      fields: tables.mer,
+      fields: tables.inclinometry,
     };
   },
   computed: {
-    ...mapGetters('wells', [
-      'mer',
+    ...mapGetters('fields', [
+      'inclinometry',
     ]),
   },
 };

@@ -14,10 +14,10 @@
               <WellForm/>
             </b-tab>
             <b-tab title="Inclinometry">
-              <InclinometryTable/>
+              <WellGenericTable tableName="inclinometry"/>
             </b-tab>
             <b-tab title="MER">
-              <MerTable/>
+              <WellGenericTable tableName="mer"/>
             </b-tab>
             <b-tab title="Zones"></b-tab>
           </b-tabs>
@@ -30,16 +30,14 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import MerTable from '@/component/tables/MerTable.vue';
-import InclinometryTable from '@/component/tables/InclinometryTable.vue';
 import WellList from '@/component/WellList.vue';
 import WellForm from '@/component/form/WellForm.vue';
+import WellGenericTable from '@/component/tables/WellGenericTable.vue';
 
 export default {
   name: 'Wells',
   components: {
-    MerTable,
-    InclinometryTable,
+    WellGenericTable,
     WellList,
     WellForm,
   },

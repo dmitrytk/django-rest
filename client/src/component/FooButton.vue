@@ -1,5 +1,5 @@
 <template>
-  <b-button @click="foo">Сменить базу</b-button>
+  <b-button @click="foo">Change DB</b-button>
 </template>
 
 <script>

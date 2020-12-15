@@ -4,13 +4,13 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item to="/db/wells">База данных</b-nav-item>
-        <b-nav-item to="/import">Импорт</b-nav-item>
+        <b-nav-item to="/db/wells">Database</b-nav-item>
+        <b-nav-item to="/import">Import</b-nav-item>
         <b-nav-item to="/sandbox">Sandbox</b-nav-item>
 
         <b-nav-item-dropdown>
           <template v-slot:button-content>
-            Инструменты
+            Tools
           </template>
           <b-dropdown-item to="/csv_to_sql">SQL generator</b-dropdown-item>
           <b-dropdown-item to="/converter">Coordinate converter</b-dropdown-item>
@@ -20,7 +20,7 @@
       <b-navbar-nav class="ml-auto">
         <b-nav-form>
           <b-form-input class="mr-sm-2" placeholder=" " size="sm"></b-form-input>
-          <b-button class="my-2 my-sm-0" size="sm" type="submit">Искать</b-button>
+          <b-button class="my-2 my-sm-0" size="sm" type="submit">Search</b-button>
         </b-nav-form>
         <b-nav-item v-if="this.field" class="font-italic" to="/db/wells">
           <ins>{{ this.field.name }}</ins>

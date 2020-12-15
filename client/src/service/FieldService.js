@@ -22,6 +22,22 @@ class FieldService {
   static getWells(id) {
     return http.get(`/fields/${id}/wells/`);
   }
+
+  static getInclinometry(id) {
+    return http.get(`/fields/${id}/inclinometry/`);
+  }
+
+  static getMer(id) {
+    return http.get(`/fields/${id}/mer/`);
+  }
+
+  static getRates(id) {
+    return http.get(`/fields/${id}/rates/`);
+  }
+
+  static getCoordinates(id) {
+    return http.get(`/fields/${id}/coordinates/`);
+  }
 }
 
 export default FieldService;

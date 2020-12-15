@@ -2,17 +2,20 @@
   <b-container>
     <div v-if="this.field">
       <h1 class="text-center my-3">
-        {{ this.field.name }} месторождение
+        {{ this.field.name }} {{ this.field.type }} field
         <b-icon class="clickable" icon="arrow-repeat" @click="changeDB()"></b-icon>
       </h1>
-      <b-card class="mb-3">
-        <b-nav>
-          <b-nav-item active to="/db/wells">Wells</b-nav-item>
-          <b-nav-item to="/db/map">Map</b-nav-item>
-          <b-nav-item to="/db/field">Field data</b-nav-item>
-        </b-nav>
-      </b-card>
-
+      <b-nav class="my-3" pills>
+        <b-nav-item :active="this.$route.path.includes('wells')" to="/db/wells">
+          Wells
+        </b-nav-item>
+        <b-nav-item :active="this.$route.path.includes('map')"
+                    to="/db/map">Map
+        </b-nav-item>
+        <b-nav-item :active="this.$route.path.includes('field')"
+                    to="/db/field">Field data
+        </b-nav-item>
+      </b-nav>
       <router-view/>
     </div>
     <FieldSelector/>

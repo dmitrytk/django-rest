@@ -1,10 +1,10 @@
 <template>
+
   <b-list-group>
-    <b-list-group-item
-      v-for="well in this.wells"
-      :key="well.id"
-      :active="well.id===selectedWellId"
-      @click="selectWell(well.id)"
+    <b-list-group-item v-for="well in this.wells"
+                       :key="well.id"
+                       :active="well.id===selectedWellId"
+                       @click="selectWell(well.id)"
     >
       {{ well.name }}
     </b-list-group-item>
