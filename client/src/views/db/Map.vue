@@ -1,8 +1,12 @@
 <template>
-  <h3 class="text-center">Map</h3>
+  <b-container>
+    <h3 class="text-center my-3">Map</h3>
+  </b-container>
+
 </template>
 
 <script>
+
 export default {
   name: 'Map',
 };

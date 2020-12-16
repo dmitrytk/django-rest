@@ -73,9 +73,6 @@ export default {
     selectField() {
       this.setSelectionVisible(true);
     },
-    parse() {
-      console.log('parse');
-    },
     load() {
       console.log('load');
     },
