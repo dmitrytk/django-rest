@@ -1,65 +1,30 @@
 <template>
   <div>
     <b-container>
-      <h3 class="text-center my-3">Sandbox</h3>
-      <GmapMap
-        ref="mmm"
-        :center="center"
-        :zoom="12"
-        map-type-id="terrain"
-        style="width: 100%; height: 50vh"
-      >
-        <GmapMarker v-for="(marker, index) in markers"
-                    :key="index"
-                    :clickable="true"
-                    :draggable="true"
-                    :position="marker.position" @click="center=marker.position">
-        </GmapMarker>
-      </GmapMap>
     </b-container>
   </div>
 </template>
 
 <script>
-import { gmapApi } from 'gmap-vue';
+import getTableData from '@/util/table';
+
+const mockData = `скважина\tx\ty
+331R\t13566588.5\t6739251.165
+335R\t13561534.8\t6734774.297
+337R\t13566221.62\t6744041.206
+340R\t13562965.11\t6743459.514
+341R\t13564186.93\t6748381.851
+342R\t13555210.76\t6741187.011
+`;
 
 export default {
   name: 'Sandbox',
   data() {
-    return {
-      center: {
-        lat: 50,
-        lng: 50,
-      },
-      markers: [{
-        position: {
-          lat: 10.0,
-          lng: 10.0,
-        },
-      }, {
-        position: {
-          lat: 11.0,
-          lng: 11.0,
-        },
-      }],
-    };
-  },
-  computed: {
-    google: gmapApi,
+    return {};
   },
   mounted() {
-    this.fitBounds();
+    console.log(getTableData(mockData));
   },
-  methods: {
-    fitBounds() {
-      this.$refs.mmm.$mapPromise.then((map) => {
-        const bounds = new this.google.maps.LatLngBounds();
-        this.markers.forEach((m) => {
-          bounds.extend(m.position);
-        });
-        map.fitBounds(bounds);
-      });
-    },
-  },
+
 };
 </script>

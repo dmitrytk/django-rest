@@ -10,7 +10,11 @@ export default {
       tables,
     }
   ),
-  mutations: {},
+  mutations: {
+    setContent(state, payload) {
+      state.content = payload;
+    },
+  },
   actions: {},
   getters: {},
 };
