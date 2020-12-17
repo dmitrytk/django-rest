@@ -12,7 +12,7 @@
           <template v-slot:button-content>
             Tools
           </template>
-          <b-dropdown-item to="/csv_to_sql">SQL generator</b-dropdown-item>
+          <b-dropdown-item to="/sql">SQL generator</b-dropdown-item>
           <b-dropdown-item to="/converter">Coordinate converter</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>

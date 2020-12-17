@@ -7,6 +7,8 @@ import Import from '@/views/Import.vue';
 import Wells from '@/views/db/Wells.vue';
 import Map from '@/views/db/Map.vue';
 import FieldData from '@/views/db/FieldData.vue';
+import SQLGenerator from '@/views/SQLGenerator.vue';
+import CoordinateConverter from '@/views/CoordinateConverter.vue';
 
 Vue.use(VueRouter);
 
@@ -48,6 +50,17 @@ const routes = [
     name: 'Import',
     component: Import,
   },
+  {
+    path: '/sql',
+    name: 'SQLGenerator',
+    component: SQLGenerator,
+  },
+  {
+    path: '/converter',
+    name: 'CoordinateConverter',
+    component: CoordinateConverter,
+  },
+
 ];
 
 const router = new VueRouter({
