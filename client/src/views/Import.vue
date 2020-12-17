@@ -38,8 +38,11 @@
             </b-form-select>
           </b-form-group>
         </div>
-
-        <b-button class="mt-3 mr-3" variant="primary" @click="load">Load</b-button>
+        <b-button :disabled="!valid"
+                  class="mt-3 mr-3"
+                  variant="primary"
+                  @click="load">Load
+        </b-button>
         <b-button class="mt-3 mr-3" variant="danger" @click="clear">Clear</b-button>
       </b-card>
     </div>
@@ -57,8 +60,9 @@ import { mapActions, mapGetters } from 'vuex';
 import FieldSelector from '@/component/FieldSelector.vue';
 import getTableData from '@/util/table';
 import tables from '@/util/databaseTables';
+import { validateNotEmptyColumns, validateRequiredColumn } from '../util/validator';
 
-const mockData = `well\tx\tY
+const mockData = `well\tx\ty
 331R\t13566588.5\t6739251.165
 335R\t13561534.8\t6734774.297
 337R\t13566221.62\t6744041.206
@@ -82,12 +86,11 @@ export default {
         { value: 'inclinometry', text: 'Inclinometry' },
         { value: 'rates', text: 'Rates' },
         { value: 'mer', text: 'MER' },
-        { value: 'coordinates', text: ' Field Coordinates' },
+        { value: 'coordinates', text: 'Field Coordinates' },
       ],
       selectedDataType: 'wells',
     };
   },
-
   mounted() {
     if (!this.field) {
       this.setSelectionVisible(true);
@@ -105,6 +108,11 @@ export default {
         value: row.key,
       }));
     },
+    valid() {
+      return this.selectedColumns.length > 0
+        && validateNotEmptyColumns(this.selectedColumns)
+        && validateRequiredColumn(this.selectedColumns, tables[this.selectedDataType]);
+    },
   },
   methods: {
     ...mapActions('fields', [
@@ -116,22 +124,22 @@ export default {
     matchColumns() {
       this.selectedColumns = this.rawColumns.map((col) => {
         const matched = tables[this.selectedDataType].find((el) => el.regex.test(col));
-        return matched ? matched.key : col;
+        return matched ? matched.key : '';
       });
+      console.log(this.selectedColumns);
     },
     load() {
       console.log(this.selectedColumns);
     },
     parse() {
-      const { header, content } = getTableData(mockData);
-      console.log(content);
+      const { header } = getTableData(mockData);
       this.rawColumns = header;
       this.selectedColumns = new Array(header.length);
     },
     clear() {
       this.content = '';
       this.rawColumns = [];
-      this.selectedColumn = [];
+      this.selectedColumns = [];
     },
   },
 };

@@ -2,24 +2,24 @@ const fields = [
   {
     label: 'Id',
     key: 'id',
-    regex: /(id|)/i,
+    regex: /(id|иден)/i,
   },
   {
     label: 'Название',
     key: 'name',
     required: true,
     sortable: true,
-    regex: /(name|)/i,
+    regex: /(name|назавние)/i,
   },
   {
     label: 'Тип',
     key: 'type',
-    regex: /(type|)/i,
+    regex: /(type|тип)/i,
   },
   {
     label: 'Местонахождение',
     key: 'location',
-    regex: /(loc|)/i,
+    regex: /(loc|распол|местона)/i,
   },
 ];
 
@@ -79,7 +79,7 @@ const wells = [
   {
     label: 'Широта',
     key: 'lat',
-    regex: /(lat|широ)/i,
+    regex: /(lat|шир)/i,
   },
   {
     label: 'Долгота',
@@ -92,23 +92,24 @@ const inclinometry = [
   {
     label: 'Скважина',
     key: 'well',
-    regex: /(well|)/i,
+    required: true,
+    regex: /(well|скв)/i,
   },
   {
     label: 'Глубина',
     key: 'md',
     required: true,
-    regex: /(md|depth|)/i,
+    regex: /(md|depth|глуб)/i,
   },
   {
     label: 'Угол',
     key: 'inc',
-    regex: /(inc|)/i,
+    regex: /(inc|угол)/i,
   },
   {
     label: 'Азимут',
     key: 'azi',
-    regex: /(azi|)/i,
+    regex: /(azi|азим)/i,
   },
 ];
 
@@ -116,33 +117,34 @@ const mer = [
   {
     label: 'Скважина',
     key: 'well',
-    regex: /(well|)/i,
+    required: true,
+    regex: /(well|скв)/i,
   },
   {
     label: 'Дата',
     key: 'date',
     required: true,
-    regex: /(date|)/i,
+    regex: /(date|дата)/i,
   },
   {
     label: 'Состояние',
     key: 'status',
-    regex: /(stat|)/i,
+    regex: /(stat|сост|стат)/i,
   },
   {
     label: 'Дебит',
     key: 'rate',
-    regex: /(rate|)/i,
+    regex: /(rate|дебит|закач)/i,
   },
   {
     label: 'Добыча',
     key: 'production',
-    regex: /(prod|)/i,
+    regex: /(prod|добыча)/i,
   },
   {
     label: 'Суток работы',
     key: 'work_days',
-    regex: /(days|work|)/i,
+    regex: /(days|work|суток|дней)/i,
   },
 ];
 
@@ -150,33 +152,34 @@ const rates = [
   {
     label: 'Скважина',
     key: 'well',
-    regex: /(well|)/i,
+    required: true,
+    regex: /(well|скв)/i,
   },
   {
     label: 'Дата',
     key: 'date',
     required: true,
-    regex: /(date|)/i,
+    regex: /(date|дата)/i,
   },
   {
     label: 'Дебит',
     key: 'rate',
-    regex: /(rate|)/i,
+    regex: /(rate|дебит|закач)/i,
   },
   {
     label: 'Динамический уровень',
     key: 'dynamic',
-    regex: /(dynam|)/i,
+    regex: /(dynam|дин)/i,
   },
   {
     label: 'Статический уровень',
     key: 'static',
-    regex: /(stat|)/i,
+    regex: /(stat|стат)/i,
   },
   {
     label: 'Давление',
     key: 'pressure',
-    regex: /(press|^p$|)/i,
+    regex: /(press|^p$|давл|^р$)/i,
   },
 ];
 
@@ -184,38 +187,66 @@ const zones = [
   {
     label: 'Скважина',
     key: 'well',
-    regex: /(well|)/i,
+    required: true,
+    regex: /(well|скв)/i,
   },
   {
     label: 'Название',
     key: 'name',
     required: true,
-    regex: /(name|zone|plast)/i,
+    regex: /(name|zone|plast|пласт|свита|ярус)/i,
   },
   {
     label: 'Кровля',
     key: 'top_md',
-    regex: /(top|)/i,
+    regex: /(top|кровл)/i,
   },
   {
     label: 'Подошва',
     key: 'bot_md',
-    regex: /(bot|)/i,
+    regex: /(bot|подошв)/i,
   },
   {
     label: 'Кровля АО',
     key: 'top_tvd',
-    regex: /(toptvd|top_tvd)/i,
+    regex: /(toptvd|top_tvd|ао)/i,
   },
   {
     label: 'Подошва АО',
     key: 'bot_tvd',
-    regex: /(bottvd|bot_tvd|)/i,
+    regex: /(bottvd|bot_tvd|ао)/i,
   },
   {
     label: 'Толщина',
     key: 'h',
-    regex: /(^h|)/i,
+    regex: /(^h|толщ|мощн)/i,
+  },
+];
+
+const coordinates = [
+  {
+    label: 'X',
+    key: 'x',
+    required: true,
+    regex: /(^x|^х)/i,
+  },
+  {
+    label: 'Y',
+    key: 'y',
+    required: true,
+    regex: /(^y|^у)/i,
+  },
+  {
+    label: 'Широта',
+    key: 'lat',
+    required: true,
+    regex: /(lat|шир)/i,
+  },
+  {
+    label: 'Долгота',
+    key: 'lng',
+    required: true,
+    regex: /(lng|long|долг)/i,
   },
 ];
 
@@ -226,6 +257,7 @@ const tables = {
   mer,
   rates,
   zones,
+  coordinates,
 };
 
 export default tables;
