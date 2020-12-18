@@ -30,6 +30,23 @@ class WellService {
   static getZones(id) {
     return http.get(`/wells/${id}/zones/`);
   }
+
+  // DELETE CHILD OBJECTS
+  static deleteInclinometry(id) {
+    return http.delete(`/wells/${id}/inclinometry/`);
+  }
+
+  static deleteMer(id) {
+    return http.delete(`/wells/${id}/mer/`);
+  }
+
+  static deleteRates(id) {
+    return http.delete(`/wells/${id}/rates/`);
+  }
+
+  static deleteZones(id) {
+    return http.delete(`/wells/${id}/zones/`);
+  }
 }
 
 export default WellService;

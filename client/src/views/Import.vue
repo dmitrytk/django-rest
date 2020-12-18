@@ -1,12 +1,12 @@
 <template>
   <div>
     <div v-if="this.field" class="container">
-      <h2 class="text-center my-3">Import data to {{ this.field.name }} field</h2>
+      <h2 class="text-center my-3">Импорт данных</h2>
       <b-card v-if="loaded">
 
         <!--        Datatype selector     -->
         <b-form inline>
-          <label class="mr-sm-2">Data type</label>
+          <label class="mr-sm-2">Тип данных</label>
           <b-form-select
             v-model="selectedDataType"
             :options="dataTypes"
@@ -19,7 +19,7 @@
           v-model="content"
           class="mt-3"
           max-rows="10"
-          placeholder="Insert data here"
+          placeholder="Вставьте данные"
           rows="10"
           @keyup="parse"
         ></b-form-textarea>
@@ -41,14 +41,14 @@
         <b-button :disabled="!valid"
                   class="mt-3 mr-3"
                   variant="primary"
-                  @click="load">Load
+                  @click="load">Загрузить
         </b-button>
-        <b-button class="mt-3 mr-3" variant="danger" @click="clear">Clear</b-button>
+        <b-button class="mt-3 mr-3" variant="danger" @click="clear">Очистить</b-button>
       </b-card>
     </div>
     <div v-else>
-      <h3 class="text-center my-3">No field Selected
-        <b-button @click="selectField">Select field</b-button>
+      <h3 class="text-center my-3">Месторождение не выбрано
+        <b-button @click="selectField">Выбрать</b-button>
       </h3>
     </div>
     <FieldSelector/>
@@ -58,45 +58,40 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import FieldSelector from '@/component/FieldSelector.vue';
-import getTableData from '@/util/table';
+import { getTableData, parseStringTable } from '@/util/table';
 import tables from '@/util/databaseTables';
 import { validateNotEmptyColumns, validateRequiredColumn } from '../util/validator';
 
-const mockData = `well\tx\ty
-331R\t13566588.5\t6739251.165
-335R\t13561534.8\t6734774.297
-337R\t13566221.62\t6744041.206
-340R\t13562965.11\t6743459.514
-341R\t13564186.93\t6748381.851
-342R\t13555210.76\t6741187.011
-`;
-
 export default {
   name: 'Import',
+  title: 'Импорт данных',
   components: { FieldSelector },
   data() {
     return {
       loaded: true,
       content: '',
+      body: [],
       rawColumns: [],
       selectedColumns: [],
       dataTypes: [
-        { value: 'wells', text: 'Wells' },
-        { value: 'zones', text: 'Zones' },
-        { value: 'inclinometry', text: 'Inclinometry' },
-        { value: 'rates', text: 'Rates' },
-        { value: 'mer', text: 'MER' },
-        { value: 'coordinates', text: 'Field Coordinates' },
+        { value: 'wells', text: 'Скважины' },
+        { value: 'zones', text: 'Пласты' },
+        { value: 'inclinometry', text: 'Инклинометрия' },
+        { value: 'rates', text: 'Режимы' },
+        { value: 'mer', text: 'МЭР' },
+        { value: 'coordinates', text: 'Координта месторождения' },
       ],
       selectedDataType: 'wells',
     };
   },
   mounted() {
     if (!this.field) {
-      this.setSelectionVisible(true);
+      if (localStorage.getItem('lastFieldId')) {
+        this.fetchField(localStorage.getItem('lastFieldId'));
+      } else {
+        this.setSelectionVisible(true);
+      }
     }
-    this.parse();
-    this.matchColumns();
   },
   computed: {
     ...mapGetters('fields', [
@@ -116,6 +111,7 @@ export default {
   },
   methods: {
     ...mapActions('fields', [
+      'fetchField',
       'setSelectionVisible',
     ]),
     selectField() {
@@ -129,12 +125,15 @@ export default {
       console.log(this.selectedColumns);
     },
     load() {
-      console.log(this.selectedColumns);
+      const data = getTableData(this.selectedColumns, this.body);
+      console.log(data);
     },
     parse() {
-      const { header } = getTableData(mockData);
+      const { header, body } = parseStringTable(this.content);
       this.rawColumns = header;
+      this.body = body;
       this.selectedColumns = new Array(header.length);
+      this.matchColumns();
     },
     clear() {
       this.content = '';

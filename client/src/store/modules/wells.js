@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import WellService from '../../service/WellService';
 import FieldService from '../../service/FieldService';
 
@@ -61,6 +62,8 @@ export default {
       context.dispatch('fetchRates', id);
       context.dispatch('fetchZones', id);
     },
+
+    // GET CHILD OBJECTS
     async fetchInclinometry({ commit }, id) {
       const res = await WellService.getInclinometry(id);
       commit('setInclinometry', res.data);
@@ -77,11 +80,35 @@ export default {
       const res = await WellService.getZones(id);
       commit('setZones', res.data);
     },
+
+    // DELETE CHILD OBJECTS
+    async deleteInclinometry({ dispatch }, id) {
+      await WellService.deleteInclinometry(id);
+      dispatch('fetchInclinometry');
+    },
+    async deleteMer({ dispatch }, id) {
+      await WellService.deleteMer(id);
+      dispatch('fetchMer');
+    },
+    async deleteRates({ dispatch }, id) {
+      await WellService.deleteRates(id);
+      dispatch('fetchRates');
+    },
+    async deleteZones({ dispatch }, id) {
+      await WellService.deleteZones(id);
+      dispatch('fetchZones');
+    },
+
     async updateWell(context, data) {
-      const well = await WellService.update(data.id, data);
-      context.commit('setWell', well.data);
-      context.commit('setWellLoading', false);
-      await context.dispatch('fetchWells', well.data.field);
+      try {
+        const well = await WellService.update(data.id, data);
+        Vue.toasted.show('Сохранено');
+        context.commit('setWell', well.data);
+        context.commit('setWellLoading', false);
+        await context.dispatch('fetchWells', well.data.field);
+      } catch (e) {
+        Vue.toasted.show('Ошибка!');
+      }
     },
   },
   getters: {

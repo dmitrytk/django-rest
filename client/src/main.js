@@ -8,6 +8,7 @@ import router from './router';
 import store from './store';
 import './scss/custom.scss';
 import './scss/style.scss';
+import titleMixin from './mixins/titleMixin';
 
 // Install BootstrapVue
 Vue.use(BootstrapVue);
@@ -16,6 +17,8 @@ Vue.use(IconsPlugin);
 Vue.use(Toasted, { position: 'top-center', duration: 2000 });
 Vue.use(Clipboard);
 Vue.config.productionTip = false;
+
+Vue.mixin(titleMixin);
 
 Vue.use(GmapVue, {
   load: {

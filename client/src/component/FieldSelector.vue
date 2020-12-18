@@ -12,7 +12,7 @@
         :options="fieldList">
         <template #first>
           <b-form-select-option :value="null" disabled>
-            -- Select field --
+            -- Выберите месторождение --
           </b-form-select-option>
         </template>
       </b-form-select>

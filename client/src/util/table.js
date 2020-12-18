@@ -12,20 +12,17 @@ const parseStringTable = (data) => {
 };
 
 /**
- * Get array of row objects from string table data
- * @param {String} data
+ * Get array of row objects from header and body
+ * @param {String[]} header
+ * @param {String[][]} body
  * @return {Object[]}
  * */
-const getTableData = (data) => {
-  const { header, body } = parseStringTable(data);
-  const content = body.map((row) => {
-    const obj = {};
-    row.forEach((cell, index) => {
-      obj[header[index]] = cell;
-    });
-    return obj;
+const getTableData = (header, body) => body.map((row) => {
+  const obj = {};
+  row.forEach((cell, index) => {
+    obj[header[index]] = cell;
   });
-  return { header, content };
-};
+  return obj;
+});
 
-export default getTableData;
+export { parseStringTable, getTableData };

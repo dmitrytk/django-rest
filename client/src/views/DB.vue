@@ -1,21 +1,22 @@
 <template>
   <b-container>
     <div v-if="this.field">
-      <h1 class="text-center my-3">
-        {{ this.field.name }} {{ this.field.type }} field
-        <b-icon class="clickable" icon="arrow-repeat" @click="changeDB()"></b-icon>
-      </h1>
-      <b-nav class="my-3" pills>
-        <b-nav-item :active="this.$route.path.includes('wells')" to="/db/wells">
-          Wells
-        </b-nav-item>
-        <b-nav-item :active="this.$route.path.includes('map')"
-                    to="/db/map">Map
-        </b-nav-item>
-        <b-nav-item :active="this.$route.path.includes('field')"
-                    to="/db/field">Field data
-        </b-nav-item>
-      </b-nav>
+      <h2 class="text-center my-3">
+        {{ this.field.name }} {{ this.field.type }} месторождение
+      </h2>
+      <b-card class="mb-3">
+        <b-nav class="my-0" pills>
+          <b-nav-item :active="this.$route.path.includes('wells')" to="/db/wells">
+            Скважины
+          </b-nav-item>
+          <b-nav-item :active="this.$route.path.includes('map')"
+                      to="/db/map">Карта
+          </b-nav-item>
+          <b-nav-item :active="this.$route.path.includes('field')"
+                      to="/db/field">Данные месторождения
+          </b-nav-item>
+        </b-nav>
+      </b-card>
       <router-view/>
     </div>
     <FieldSelector/>
@@ -28,6 +29,7 @@ import FieldSelector from '@/component/FieldSelector.vue';
 
 export default {
   name: 'DB',
+  title: 'База данных',
   components: {
     FieldSelector,
   },
@@ -38,7 +40,11 @@ export default {
   },
   mounted() {
     if (!this.field) {
-      this.setSelectionVisible(true);
+      if (localStorage.getItem('lastFieldId')) {
+        this.fetchField(localStorage.getItem('lastFieldId'));
+      } else {
+        this.setSelectionVisible(true);
+      }
     }
   },
   computed: {
@@ -59,13 +65,9 @@ export default {
   methods: {
     ...mapActions('fields', [
       'fetchFields',
+      'fetchField',
       'setSelectionVisible',
     ]),
-    changeDB() {
-      console.log(this.selectionVisible);
-      this.setSelectionVisible(true);
-    },
-
   },
 };
 </script>

@@ -2,7 +2,7 @@ import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 
 // eslint-disable-next-line no-unused-vars
-const parseDate = (dateString) => format(parse(dateString, 'dd.MM.yyyy'), 'yyyy-MM-dd');
+const parseDate = (dateString) => format(parse(dateString, 'dd.MM.yyyy', new Date()), 'yyyy-MM-dd');
 
 const types = {
   t: {
@@ -11,7 +11,7 @@ const types = {
   },
   d: {
     pgtype: 'DATE',
-    parse: (val) => `'${val}'`,
+    parse: (val) => `'${parseDate(val)}'`,
   },
   n: {
     pgtype: 'NUMERIC(40,5)',

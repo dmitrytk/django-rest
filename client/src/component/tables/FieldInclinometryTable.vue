@@ -6,7 +6,7 @@
              responsive
              sticky-header>
     </b-table>
-    <p v-else>No data</p>
+    <p v-else>Нет данных</p>
   </div>
 </template>
 

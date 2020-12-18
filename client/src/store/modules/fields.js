@@ -51,6 +51,7 @@ export default {
     },
     async fetchField(context, id) {
       const field = await FieldService.findOne(id);
+      localStorage.setItem('lastFieldId', field.data.id);
       context.commit('setField', field.data);
       context.commit('setSelectionVisible', false);
       context.dispatch('fetchFieldData', id);

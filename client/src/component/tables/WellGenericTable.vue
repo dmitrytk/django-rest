@@ -7,17 +7,22 @@
              responsive
              sticky-header>
     </b-table>
-    <p v-else>No data</p>
-    <b-button variant="danger" @click="log">Delete</b-button>
+    <p v-else>Нет данных</p>
+    <DeleteButton v-if="data && data.length"
+                  :parentId="well.id"
+                  :resource="tableName"
+                  parent="wells"></DeleteButton>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import tables from '../../util/databaseTables';
+import DeleteButton from '../DeleteButton.vue';
 
 export default {
   name: 'WellGenericTable',
+  components: { DeleteButton },
   props: ['tableName'],
   data() {
     return {
@@ -26,6 +31,7 @@ export default {
   },
   computed: {
     ...mapGetters('wells', [
+      'well',
       'mer',
       'inclinometry',
       'rates',
@@ -34,11 +40,7 @@ export default {
       return this.$store.getters[`wells/${this.tableName}`];
     },
   },
-  methods: {
-    log() {
-      console.log('Delete');
-    },
-  },
+  methods: {},
 };
 </script>
 

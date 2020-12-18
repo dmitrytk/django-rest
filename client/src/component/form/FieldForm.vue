@@ -11,7 +11,7 @@
       <b-form-input v-model="currentField.location">
       </b-form-input>
     </b-form-group>
-    <b-button variant="primary" @click="saveField">Save</b-button>
+    <b-button variant="primary" @click="saveField">Сохранить</b-button>
   </b-card-text>
 </template>
 

@@ -38,9 +38,18 @@
         </b-form-checkbox>
       </b-form>
       <b-form inline>
-        <b-button class="mr-3" variant="primary" @click="generate">Генерировать SQL</b-button>
-        <b-button class="mr-3" variant="secondary">Копировать</b-button>
-        <b-button class="mr-3" variant="danger" @click="clear">Очистить</b-button>
+        <b-button :disabled="input.length===0"
+                  class="mr-3"
+                  variant="primary"
+                  @click="generate">
+          Генерировать SQL
+        </b-button>
+        <CopyButton
+          v-clipboard:copy="output"
+          v-clipboard:success="onCopy"
+          class="mr-3"/>
+        <ClearButton @click="clear"/>
+        <!--        <b-button class="mr-3" variant="danger" @click="clear">Очистить</b-button>-->
       </b-form>
 
     </b-card>
@@ -49,10 +58,15 @@
 
 <script>
 
+import CopyButton from '@/component/buttons/CopyButton.vue';
+import ClearButton from '@/component/buttons/ClearButton.vue';
 import { csv } from '../util/mock';
 import generateSQL from '../util/sql';
 
 export default {
+  name: 'SQLGenerator',
+  title: 'SQL генератор',
+  components: { ClearButton, CopyButton },
   data() {
     return {
       input: csv,
@@ -78,7 +92,7 @@ export default {
       this.output = '';
     },
     onCopy() {
-
+      this.$toasted.show('Скопировано в буфер');
     },
   },
 };

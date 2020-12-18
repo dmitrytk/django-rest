@@ -113,16 +113,18 @@
 
       <!-- BUTTONS -->
       <div class="text-left">
-        <button class="btn btn-primary" @click="convert">
-          Ковертировать
-        </button>
-        <button
+        <b-button :disabled="inData.length===0"
+                  variant="primary"
+                  @click="convert">
+          Конвертировать
+        </b-button>
+        <b-button
           v-clipboard:copy="outData"
           v-clipboard:success="onCopy"
-          class="btn btn-info ml-2"
+          class="ml-2"
         >
           Копировать
-        </button>
+        </b-button>
         <button class="btn btn-danger ml-2" @click="clear">
           Очистить
         </button>
@@ -137,6 +139,8 @@ import systems from '../util/coordinate/systems';
 import convert from '../util/coordinate/convert';
 
 export default {
+  name: 'CoordinateConverter',
+  title: 'Конвертер координат',
   data() {
     return {
       syst: Object.keys(systems),
@@ -192,10 +196,7 @@ export default {
       }
     },
     onCopy() {
-      this.$toasted.show('Скопировано в буфер', {
-        duration: 3000,
-        position: 'top-center',
-      });
+      this.$toasted.show('Скопировано в буфер');
     },
     clear() {
       this.inData = '';
