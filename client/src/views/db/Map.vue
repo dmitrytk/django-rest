@@ -5,7 +5,7 @@
              :center="center"
              :max-bounds="maxBounds"
              style="height: 500px">
-        <l-tile-layer :url="url"></l-tile-layer>
+        <l-tile-layer :url="doubleGisUrl"></l-tile-layer>
         <l-polygon :color="polygon.color" :lat-lngs="polygon.latlngs"></l-polygon>
       </l-map>
     </b-card>
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { latLngBounds } from 'leaflet';
 import { LMap, LPolygon, LTileLayer } from 'vue2-leaflet';
 
 export default {
@@ -25,7 +24,9 @@ export default {
   },
   data() {
     return {
-      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      openStreetMapUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      satelliteUrl: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      doubleGisUrl: 'http://tile2.maps.2gis.com/tiles?x={x}&y={y}&z={z}',
       center: [57.2, 65.6],
       polygon: {
         latlngs: [
@@ -39,7 +40,7 @@ export default {
     };
   },
   mounted() {
-    this.$refs.leafmap.mapObject.fitBounds(latLngBounds(this.polygon.latlngs));
+    this.$refs.leafmap.mapObject.fitBounds(this.polygon.latlngs);
   },
 };
 </script>
