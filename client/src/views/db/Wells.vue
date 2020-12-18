@@ -19,6 +19,9 @@
             <b-tab title="МЭР">
               <WellGenericTable tableName="mer"/>
             </b-tab>
+            <b-tab title="Режимы">
+              <WellGenericTable tableName="rates"/>
+            </b-tab>
             <b-tab title="Пласты">
               <WellGenericTable tableName="zones"/>
             </b-tab>

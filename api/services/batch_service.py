@@ -16,6 +16,7 @@ from api.utils.validators import validate_batch_data
 @transaction.atomic
 def load_wells(data: dict) -> Response:
     if not validate_batch_data(data):
+        print('not valid')
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     for row in data['rows']:
         row['field'] = data['field_id']
@@ -28,6 +29,7 @@ def load_wells(data: dict) -> Response:
         return Response({'message': f'{len(serializer.validated_data)} wells loaded'},
                         status=status.HTTP_200_OK)
     else:
+        print(serializer.errors)
         return Response({'message': f'Invalid data\n{serializer.errors}'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
@@ -42,7 +44,8 @@ def load_inclinometry(data: dict) -> Response:
         _create_new_wells(field_id, wells)
         _delete_old_inc(field_id, wells)
         batch_load(queries.INCLINOMETRY_LOAD, [(field_id, *mappers.map_inc(row)) for row in serializer.validated_data])
-        return Response(serializer.validated_data)
+        return Response({'message': f'{len(serializer.validated_data)} inclinometry loaded'},
+                        status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -57,7 +60,8 @@ def load_mer(data: dict) -> Response:
         wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         batch_load(queries.MER_LOAD, [(field_id, *mappers.map_mer(row)) for row in serializer.validated_data])
-        return Response(serializer.validated_data)
+        return Response({'message': f'{len(serializer.validated_data)} mer loaded'},
+                        status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -72,7 +76,8 @@ def load_rates(data: dict) -> Response:
         wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         batch_load(queries.RATE_LOAD, [(field_id, *mappers.map_rate(row)) for row in serializer.validated_data])
-        return Response(serializer.validated_data)
+        return Response({'message': f'{len(serializer.validated_data)} rates loaded'},
+                        status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -87,7 +92,8 @@ def load_zones(data: dict) -> Response:
         wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         batch_load(queries.ZONE_LOAD, [(field_id, *mappers.map_zone(row)) for row in serializer.validated_data])
-        return Response(serializer.validated_data)
+        return Response({'message': f'{len(serializer.validated_data)} zones loaded'},
+                        status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -102,7 +108,8 @@ def load_coordinates(data: dict) -> Response:
         _delete_old_coordinates(field_id)
         batch_load(queries.COORDINATE_LOAD,
                    [(field_id, *mappers.map_coordinate(row)) for row in serializer.validated_data])
-        return Response(serializer.validated_data)
+        return Response({'message': f'{len(serializer.validated_data)} coordinates loaded'},
+                        status=status.HTTP_200_OK)
     else:
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 

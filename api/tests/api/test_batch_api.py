@@ -6,12 +6,12 @@ from api.models import Inclinometry, Mer, Rate, Zone, FieldCoordinate, Well
 class TestBatchApi(APITestCase):
     fixtures = ['api.json']
     well_name = '99R'
-    wells_url = '/api/batch/wells'
-    inclinometry_url = '/api/batch/inclinometry'
-    mer_url = '/api/batch/mer'
-    rates_url = '/api/batch/rates'
-    zones_url = '/api/batch/zones'
-    coordinates_url = '/api/batch/coordinates'
+    wells_url = '/api/batch/wells/'
+    inclinometry_url = '/api/batch/inclinometry/'
+    mer_url = '/api/batch/mer/'
+    rates_url = '/api/batch/rates/'
+    zones_url = '/api/batch/zones/'
+    coordinates_url = '/api/batch/coordinates/'
 
     def test_load_wells(self):
         data = {

@@ -11,11 +11,11 @@ urlpatterns = [
     path('api/', include(router.urls)),
 
     # Batch URLs
-    path('api/batch/wells', batch_views.load_wells),
-    path('api/batch/inclinometry', batch_views.load_inclinometry),
-    path('api/batch/mer', batch_views.load_mer),
-    path('api/batch/rates', batch_views.load_rates),
-    path('api/batch/zones', batch_views.load_zones),
-    path('api/batch/coordinates', batch_views.load_coordinates),
+    path('api/batch/wells/', batch_views.load_wells),
+    path('api/batch/inclinometry/', batch_views.load_inclinometry),
+    path('api/batch/mer/', batch_views.load_mer),
+    path('api/batch/rates/', batch_views.load_rates),
+    path('api/batch/zones/', batch_views.load_zones),
+    path('api/batch/coordinates/', batch_views.load_coordinates),
 
 ]

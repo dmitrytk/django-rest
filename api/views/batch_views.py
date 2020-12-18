@@ -5,6 +5,7 @@ from api.services import batch_service
 
 @api_view(['POST'])
 def load_wells(request):
+    print(request.data)
     return batch_service.load_wells(request.data)
 
 

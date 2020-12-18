@@ -1,23 +1,21 @@
 <template>
   <div>
-    <b-container>
-      <b-card>
-        <GmapMap
-          ref="mmm"
-          :center="center"
-          :zoom="12"
-          map-type-id="terrain"
-          style="width: 100%; height: 50vh"
-        >
-          <GmapMarker v-for="(marker, index) in markers"
-                      :key="index"
-                      :clickable="true"
-                      :draggable="true"
-                      :position="marker.position" @click="center=marker.position">
-          </GmapMarker>
-        </GmapMap>
-      </b-card>
-    </b-container>
+    <b-card>
+      <GmapMap
+        ref="mmm"
+        :center="center"
+        :zoom="12"
+        map-type-id="terrain"
+        style="width: 100%; height: 50vh"
+      >
+        <GmapMarker v-for="(marker, index) in markers"
+                    :key="index"
+                    :clickable="true"
+                    :draggable="true"
+                    :position="marker.position" @click="center=marker.position">
+        </GmapMarker>
+      </GmapMap>
+    </b-card>
   </div>
 </template>
 

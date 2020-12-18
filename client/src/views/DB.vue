@@ -42,6 +42,7 @@ export default {
     if (!this.field) {
       if (localStorage.getItem('lastFieldId')) {
         this.fetchField(localStorage.getItem('lastFieldId'));
+        this.fetchWells(localStorage.getItem('lastFieldId'));
       } else {
         this.setSelectionVisible(true);
       }
@@ -67,6 +68,9 @@ export default {
       'fetchFields',
       'fetchField',
       'setSelectionVisible',
+    ]),
+    ...mapActions('wells', [
+      'fetchWells',
     ]),
   },
 };

@@ -31,10 +31,10 @@ const wells = [
   },
   {
     label: 'Номер',
-    key: 'well',
+    key: 'name',
     required: true,
     sortable: true,
-    regex: /(well|номер|скв)/i,
+    regex: /(well|name|номер|скв)/i,
 
   },
   {

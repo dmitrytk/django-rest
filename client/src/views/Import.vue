@@ -61,6 +61,7 @@ import FieldSelector from '@/component/FieldSelector.vue';
 import { getTableData, parseStringTable } from '@/util/table';
 import tables from '@/util/databaseTables';
 import { validateNotEmptyColumns, validateRequiredColumn } from '../util/validator';
+import BatchService from '../service/BatchService';
 
 export default {
   name: 'Import',
@@ -114,6 +115,9 @@ export default {
       'fetchField',
       'setSelectionVisible',
     ]),
+    ...mapActions('wells', [
+      'fetchWells',
+    ]),
     selectField() {
       this.setSelectionVisible(true);
     },
@@ -126,7 +130,20 @@ export default {
     },
     load() {
       const data = getTableData(this.selectedColumns, this.body);
-      console.log(data);
+      const payload = {
+        field_id: this.field.id,
+        rows: data,
+      };
+      console.log(payload);
+      BatchService.load(this.selectedDataType, payload)
+        .then((res) => {
+          this.$toasted.show(res.data.message);
+          this.fetchField(this.field.id);
+          this.fetchWells(this.field.id);
+        })
+        .catch(() => {
+          this.$toasted.show('Ошибка загрузки данных');
+        });
     },
     parse() {
       const { header, body } = parseStringTable(this.content);
