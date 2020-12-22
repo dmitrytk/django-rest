@@ -227,25 +227,21 @@ const coordinates = [
   {
     label: 'X',
     key: 'x',
-    required: true,
     regex: /(^x|^х)/i,
   },
   {
     label: 'Y',
     key: 'y',
-    required: true,
     regex: /(^y|^у)/i,
   },
   {
     label: 'Широта',
     key: 'lat',
-    required: true,
     regex: /(lat|шир)/i,
   },
   {
     label: 'Долгота',
     key: 'lng',
-    required: true,
     regex: /(lng|long|долг)/i,
   },
 ];

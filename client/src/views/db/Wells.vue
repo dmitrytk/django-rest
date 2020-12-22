@@ -10,7 +10,7 @@
       <b-col lg="9">
         <b-card v-if="well">
           <b-tabs content-class="mt-3">
-            <b-tab active title="Данные скважины">
+            <b-tab active title="Общие данные">
               <WellForm/>
             </b-tab>
             <b-tab title="Инклинометрия">

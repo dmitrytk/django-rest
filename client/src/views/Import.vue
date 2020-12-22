@@ -133,15 +133,15 @@ export default {
         field_id: this.field.id,
         rows: data,
       };
-      console.log(payload);
       BatchService.load(this.selectedDataType, payload)
         .then((res) => {
           this.$toasted.show(res.data.message);
           this.fetchField(this.field.id);
           this.fetchWells(this.field.id);
         })
-        .catch(() => {
+        .catch((err) => {
           this.$toasted.show('Ошибка загрузки данных');
+          console.log(err.response.data.errors);
         });
     },
     parse() {
