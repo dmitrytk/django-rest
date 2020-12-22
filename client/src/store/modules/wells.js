@@ -74,6 +74,7 @@ export default {
     },
     async fetchRates({ commit }, id) {
       const res = await WellService.getRates(id);
+      console.log(res.data);
       commit('setRates', res.data);
     },
     async fetchZones({ commit }, id) {

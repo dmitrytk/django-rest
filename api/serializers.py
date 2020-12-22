@@ -53,6 +53,7 @@ class IncSerializer(serializers.ModelSerializer):
 
 class MerSerializer(serializers.ModelSerializer):
     well = serializers.CharField()
+    date = serializers.DateField(format='%d.%m.%Y')
 
     class Meta:
         model = Mer
@@ -61,6 +62,7 @@ class MerSerializer(serializers.ModelSerializer):
 
 class RateSerializer(serializers.ModelSerializer):
     well = serializers.CharField()
+    date = serializers.DateField(format='%d.%m.%Y')
 
     class Meta:
         model = Rate
