@@ -126,7 +126,6 @@ export default {
         const matched = tables[this.selectedDataType].find((el) => el.regex.test(col));
         return matched ? matched.key : '';
       });
-      console.log(this.selectedColumns);
     },
     load() {
       const data = getTableData(this.selectedColumns, this.body);

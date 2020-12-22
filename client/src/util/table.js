@@ -20,7 +20,7 @@ const parseStringTable = (data) => {
 const getTableData = (header, body) => body.map((row) => {
   const obj = {};
   row.forEach((cell, index) => {
-    obj[header[index]] = cell;
+    obj[header[index]] = cell === '' ? null : cell;
   });
   return obj;
 });

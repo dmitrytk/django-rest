@@ -78,9 +78,9 @@ class TestBatchApi(APITestCase):
         data = {
             'field_id': 1,
             'rows': [
-                {'lat': 60.23, 'lng': 50.28},
-                {'lat': 60.28, 'lng': 50.29},
+                {'lat': 60.2345, 'lng': 50.28, 'x': 312312323, 'y': 4423424234},
+                {'lat': 60.28, 'lng': 50.29, 'x': 312312323, 'y': 4423424234},
             ]
         }
         response = self.client.post(self.coordinates_url, data, format='json')
-        self.assertEqual(FieldCoordinate.objects.all().count(), 2)
+        self.assertEqual(FieldCoordinate.objects.all().count(), 2)  # 0 + 2 = 2

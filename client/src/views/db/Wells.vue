@@ -25,6 +25,8 @@
             <b-tab title="Пласты">
               <WellGenericTable tableName="zones"/>
             </b-tab>
+            <!--Диграммы-->
+            <ChartTab/>
           </b-tabs>
         </b-card>
       </b-col>
@@ -41,10 +43,12 @@ import WellList from '@/component/WellList.vue';
 import WellForm from '@/component/form/WellForm.vue';
 import WellGenericTable from '@/component/tables/WellGenericTable.vue';
 import ImportButton from '@/component/buttons/ImportButton.vue';
+import ChartTab from '@/component/ChartTab.vue';
 
 export default {
   name: 'Wells',
   components: {
+    ChartTab,
     ImportButton,
     WellGenericTable,
     WellList,
@@ -56,7 +60,7 @@ export default {
     };
   },
   mounted() {
-
+    console.log(this.rates);
   },
   computed: {
     ...mapGetters('fields', [
@@ -70,6 +74,8 @@ export default {
       'wells',
       'wellLoading',
       'wellsLoading',
+      'mer',
+      'rates',
     ]),
   },
   methods: {

@@ -18,10 +18,10 @@ class Field(models.Model):
 class FieldCoordinate(models.Model):
     field = models.ForeignKey(
         Field, related_name='coordinates', on_delete=models.CASCADE)
-    lat = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
-    lng = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
-    x = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    y = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    lat = models.DecimalField(max_digits=15, decimal_places=8, null=True, blank=True)
+    lng = models.DecimalField(max_digits=15, decimal_places=8, null=True, blank=True)
+    x = models.DecimalField(max_digits=25, decimal_places=7, null=True, blank=True)
+    y = models.DecimalField(max_digits=25, decimal_places=7, null=True, blank=True)
 
     class Meta:
         db_table = 'field_coordinates'
@@ -35,12 +35,12 @@ class Well(models.Model):
     pad = models.CharField(max_length=70, null=True, blank=True)
     type = models.CharField(max_length=200, null=True, blank=True)
     status = models.CharField(max_length=200, null=True, blank=True)
-    alt = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    bottom = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    lat = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
-    lng = models.DecimalField(max_digits=10, decimal_places=4, null=True, blank=True)
-    x = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    y = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    alt = models.DecimalField(max_digits=14, decimal_places=6, null=True, blank=True)
+    bottom = models.DecimalField(max_digits=14, decimal_places=6, null=True, blank=True)
+    lat = models.DecimalField(max_digits=15, decimal_places=8, null=True, blank=True)
+    lng = models.DecimalField(max_digits=15, decimal_places=8, null=True, blank=True)
+    x = models.DecimalField(max_digits=25, decimal_places=7, null=True, blank=True)
+    y = models.DecimalField(max_digits=25, decimal_places=7, null=True, blank=True)
 
     class Meta:
         db_table = 'wells'

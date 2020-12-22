@@ -47,6 +47,7 @@ def load_inclinometry(data: dict) -> Response:
         return Response({'message': f'{len(serializer.validated_data)} inclinometry loaded'},
                         status=status.HTTP_200_OK)
     else:
+        print(serializer.errors)
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
@@ -63,6 +64,7 @@ def load_mer(data: dict) -> Response:
         return Response({'message': f'{len(serializer.validated_data)} mer loaded'},
                         status=status.HTTP_200_OK)
     else:
+        print(serializer.errors)
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
@@ -79,6 +81,7 @@ def load_rates(data: dict) -> Response:
         return Response({'message': f'{len(serializer.validated_data)} rates loaded'},
                         status=status.HTTP_200_OK)
     else:
+        print(serializer.errors)
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
@@ -95,6 +98,7 @@ def load_zones(data: dict) -> Response:
         return Response({'message': f'{len(serializer.validated_data)} zones loaded'},
                         status=status.HTTP_200_OK)
     else:
+        print(serializer.errors)
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
@@ -111,6 +115,7 @@ def load_coordinates(data: dict) -> Response:
         return Response({'message': f'{len(serializer.validated_data)} coordinates loaded'},
                         status=status.HTTP_200_OK)
     else:
+        print(serializer.errors)
         return Response({'message': 'Invalid data'}, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
