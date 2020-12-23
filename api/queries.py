@@ -33,3 +33,36 @@ COORDINATE_LOAD = """INSERT INTO field_coordinates
     (field_id, lat, lng, x, y) VALUES
     (%s,%s,%s,%s,%s)
 """
+
+RATES_RANGE = """WITH r AS (SELECT * FROM rates r WHERE r.well_id = %s)
+SELECT
+    TO_CHAR(rng.date, 'dd.mm.yyyy') as date,
+    r.status,
+    r.rate,
+    r.dynamic_level,
+    r.static_level,
+    r.pressure
+FROM r
+RIGHT JOIN
+(SELECT date_trunc('day', dd):: DATE AS date
+FROM GENERATE_SERIES(
+    (SELECT min(DATE) FROM r),
+    (SELECT MAX(date) FROM r),
+    '1 day'::INTERVAL) dd) AS rng
+ON rng.date = r.date"""
+
+MER_RANGE = """WITH m AS (SELECT * FROM mer m WHERE m.well_id = %s)
+SELECT
+    TO_CHAR(rng.date, 'dd.mm.yyyy') as date,
+    m.status,
+    m.rate,
+    m.production,
+    m.work_days
+FROM m
+RIGHT JOIN
+(SELECT date_trunc('day', dd):: DATE AS date
+FROM GENERATE_SERIES(
+    (SELECT min(DATE) FROM m),
+    (SELECT MAX(date) FROM m),
+    '1 month'::INTERVAL) dd) AS rng
+ON rng.date = m.date"""

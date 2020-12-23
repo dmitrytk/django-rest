@@ -98,6 +98,9 @@ export default {
     ...mapGetters('fields', [
       'field',
     ]),
+    ...mapGetters('wells', [
+      'well',
+    ]),
     options() {
       return tables[this.selectedDataType].map((row) => ({
         text: row.label,
@@ -117,6 +120,7 @@ export default {
     ]),
     ...mapActions('wells', [
       'fetchWells',
+      'fetchWell',
     ]),
     selectField() {
       this.setSelectionVisible(true);
@@ -138,6 +142,9 @@ export default {
           this.$toasted.show(res.data.message);
           this.fetchField(this.field.id);
           this.fetchWells(this.field.id);
+          if (this.well.id) {
+            this.fetchWell(this.well.id);
+          }
         })
         .catch((err) => {
           this.$toasted.show('Ошибка загрузки данных');

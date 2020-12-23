@@ -21,3 +21,14 @@ def map_zone(data: dict) -> list:
 def map_coordinate(data: dict) -> list:
     keys = ['lat', 'lng', 'x', 'y']
     return [data.get(key, None) for key in keys]
+
+
+# Map ranged Views
+def map_mer_view(data: tuple) -> dict:
+    keys = ['date', 'status', 'rate', 'production', 'work_days']
+    return {key: data[index] for index, key in enumerate(keys)}
+
+
+def map_rates_view(data: tuple) -> dict:
+    keys = ['date', 'status', 'rate', 'dynamic_level', 'static_level', 'pressure']
+    return {key: data[index] for index, key in enumerate(keys)}

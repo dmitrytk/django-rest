@@ -50,12 +50,12 @@ class TestFieldApi(APITestCase):
     def test_get_well_mer(self):
         response = self.client.get(self.well_mer_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data), 4)
 
     def test_get_well_rates(self):
         response = self.client.get(self.well_rates_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data), 5)
 
     def test_get_well_zones(self):
         response = self.client.get(self.well_zones_url)

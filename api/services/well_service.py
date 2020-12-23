@@ -1,12 +1,15 @@
 from rest_framework import status
 from rest_framework.response import Response
 
+from api import queries
 from api.models import Inclinometry, Mer, Rate, Zone
-from api.serializers import IncSerializer, MerSerializer, RateSerializer, ZoneSerializer
-
-
+from api.serializers import IncSerializer, ZoneSerializer
 # GET CHILD OBJECTS
 # /wells/{id}/inclinometry GET
+from api.services.raw_sql_service import get_raw_view
+from api.utils import mappers
+
+
 def get_well_inclinometry(pk):
     inc = Inclinometry.objects.filter(well_id=pk)
     serializer = IncSerializer(inc, many=True)
@@ -15,16 +18,14 @@ def get_well_inclinometry(pk):
 
 # /wells/{id}/mer GET
 def get_well_mer(pk):
-    mer = Mer.objects.filter(well_id=pk)
-    serializer = MerSerializer(mer, many=True)
-    return Response(serializer.data)
+    data = get_raw_view(queries.MER_RANGE, [pk], mappers.map_mer_view)
+    return Response(data)
 
 
 # /wells/{id}/rates GET
 def get_well_rates(pk):
-    rate = Rate.objects.filter(well_id=pk)
-    serializer = RateSerializer(rate, many=True)
-    return Response(serializer.data)
+    data = get_raw_view(queries.RATES_RANGE, [pk], mappers.map_rates_view)
+    return Response(data)
 
 
 # /wells/{id}/zones GET

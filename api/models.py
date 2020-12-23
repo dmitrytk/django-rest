@@ -18,10 +18,10 @@ class Field(models.Model):
 class FieldCoordinate(models.Model):
     field = models.ForeignKey(
         Field, related_name='coordinates', on_delete=models.CASCADE)
-    lat = models.DecimalField(max_digits=15, decimal_places=8, null=True, blank=True)
-    lng = models.DecimalField(max_digits=15, decimal_places=8, null=True, blank=True)
-    x = models.DecimalField(max_digits=25, decimal_places=7, null=True, blank=True)
-    y = models.DecimalField(max_digits=25, decimal_places=7, null=True, blank=True)
+    lat = models.FloatField(null=True, blank=True)
+    lng = models.FloatField(null=True, blank=True)
+    x = models.FloatField(null=True, blank=True)
+    y = models.FloatField(null=True, blank=True)
 
     class Meta:
         db_table = 'field_coordinates'
@@ -32,15 +32,15 @@ class Well(models.Model):
     name = models.CharField(max_length=70)
     field = models.ForeignKey(
         Field, related_name='wells', on_delete=models.CASCADE)
-    pad = models.CharField(max_length=70, null=True, blank=True)
-    type = models.CharField(max_length=200, null=True, blank=True)
-    status = models.CharField(max_length=200, null=True, blank=True)
-    alt = models.DecimalField(max_digits=14, decimal_places=6, null=True, blank=True)
-    bottom = models.DecimalField(max_digits=14, decimal_places=6, null=True, blank=True)
-    lat = models.DecimalField(max_digits=15, decimal_places=8, null=True, blank=True)
-    lng = models.DecimalField(max_digits=15, decimal_places=8, null=True, blank=True)
-    x = models.DecimalField(max_digits=25, decimal_places=7, null=True, blank=True)
-    y = models.DecimalField(max_digits=25, decimal_places=7, null=True, blank=True)
+    pad = models.CharField(max_length=70, null=True)
+    type = models.CharField(max_length=200, null=True)
+    status = models.CharField(max_length=200, null=True)
+    alt = models.FloatField(null=True)
+    bottom = models.FloatField(null=True)
+    lat = models.FloatField(null=True)
+    lng = models.FloatField(null=True)
+    x = models.FloatField(null=True)
+    y = models.FloatField(null=True)
 
     class Meta:
         db_table = 'wells'
@@ -55,9 +55,9 @@ class Inclinometry(models.Model):
 
     well = models.ForeignKey(
         Well, related_name='inc', on_delete=models.CASCADE)
-    md = models.DecimalField(max_digits=20, decimal_places=2)
-    inc = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    azi = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    md = models.FloatField()
+    inc = models.FloatField(null=True)
+    azi = models.FloatField(null=True)
 
     class Meta:
         db_table = 'inclinometry'
@@ -70,7 +70,7 @@ class AbstractRateModel(models.Model):
         Well, on_delete=models.CASCADE)
     date = models.DateField()
     status = models.CharField(max_length=50, null=True)
-    rate = models.DecimalField(max_digits=30, decimal_places=2, null=True)
+    rate = models.FloatField(null=True)
 
     class Meta:
         abstract = True
@@ -79,7 +79,7 @@ class AbstractRateModel(models.Model):
 class Mer(AbstractRateModel):
     """Month production report model"""
 
-    production = models.DecimalField(max_digits=30, decimal_places=2, null=True)
+    production = models.FloatField(null=True)
     work_days = models.IntegerField(null=True)
 
     class Meta:
@@ -90,9 +90,9 @@ class Mer(AbstractRateModel):
 class Rate(AbstractRateModel):
     """Daily production model"""
 
-    pressure = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    dynamic_level = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    static_level = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    pressure = models.FloatField(null=True)
+    dynamic_level = models.FloatField(null=True)
+    static_level = models.FloatField(null=True)
 
     class Meta:
         db_table = 'rates'
@@ -103,11 +103,11 @@ class Zone(models.Model):
 
     well = models.ForeignKey(Well, on_delete=models.CASCADE)
     name = models.CharField(max_length=70)
-    top_md = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    bot_md = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    top_tvd = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    bot_tvd = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    h = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    top_md = models.FloatField(null=True)
+    bot_md = models.FloatField(null=True)
+    top_tvd = models.FloatField(null=True)
+    bot_tvd = models.FloatField(null=True)
+    h = models.FloatField(null=True)
 
     class Meta:
         db_table = 'zones'

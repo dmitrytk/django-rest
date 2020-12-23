@@ -80,7 +80,7 @@
     "model": "api.mer",
     "pk": 2,
     "fields": {
-      "date": "2020-02-01",
+      "date": "2020-04-01",
       "rate": 820.36,
       "well_id": 1
     }
@@ -98,7 +98,7 @@
     "model": "api.rate",
     "pk": 2,
     "fields": {
-      "date": "2020-02-01",
+      "date": "2020-02-05",
       "rate": 1500.26,
       "well_id": 1
     }
