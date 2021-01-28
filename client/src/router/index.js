@@ -9,6 +9,7 @@ import Map from '@/views/db/Map.vue';
 import FieldData from '@/views/db/FieldData.vue';
 import SQLGenerator from '@/views/SQLGenerator.vue';
 import CoordinateConverter from '@/views/CoordinateConverter.vue';
+import WaterCalculator from '@/views/WaterCalculator.vue';
 
 Vue.use(VueRouter);
 
@@ -59,6 +60,11 @@ const routes = [
     path: '/converter',
     name: 'CoordinateConverter',
     component: CoordinateConverter,
+  },
+  {
+    path: '/calculator',
+    name: 'WaterCalculator',
+    component: WaterCalculator,
   },
 
 ];
