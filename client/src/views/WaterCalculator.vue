@@ -5,7 +5,6 @@
     <b-card>
       <!--      Salinity      -->
       <b-form-group
-
         label-for="input-default">
         <label for="salinity">Минерализация, г/л</label>
         <b-form-input
@@ -18,7 +17,6 @@
 
       <!--      Temperature      -->
       <b-form-group
-
         label-for="input-default">
         <label for="temperature">Температура, &deg;C</label>
         <b-form-input
@@ -31,7 +29,6 @@
 
       <!--      Viscosity      -->
       <b-form-group
-
         label-for="input-default">
         <label for="viscosity">Вязкость, сПз</label>
         <b-form-input id="viscosity" v-model="viscosity" type="number">
@@ -40,7 +37,6 @@
 
       <!--      Density      -->
       <b-form-group
-
         label-for="input-default">
         <label for="density">Плотность, г/см<sup>3</sup></label>
         <b-form-input id="density" v-model="density" type="number">

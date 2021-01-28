@@ -48,8 +48,10 @@
           v-clipboard:copy="output"
           v-clipboard:success="onCopy"
           class="mr-3"/>
-        <ClearButton @click="clear"/>
-        <!--        <b-button class="mr-3" variant="danger" @click="clear">Очистить</b-button>-->
+        <b-button variant="danger" @click="clear">
+          <b-icon aria-hidden="true" icon="trash"></b-icon>
+          Очистить
+        </b-button>
       </b-form>
 
     </b-card>
@@ -59,14 +61,13 @@
 <script>
 
 import CopyButton from '@/component/buttons/CopyButton.vue';
-import ClearButton from '@/component/buttons/ClearButton.vue';
 import { csv } from '../util/mock';
 import generateSQL from '../util/sql';
 
 export default {
   name: 'SQLGenerator',
   title: 'SQL генератор',
-  components: { ClearButton, CopyButton },
+  components: { CopyButton },
   data() {
     return {
       input: csv,
