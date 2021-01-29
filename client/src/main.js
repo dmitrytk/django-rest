@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import VueClipboard from 'vue-clipboard2';
 import Toasted from 'vue-toasted';
-import Clipboard from 'v-clipboard';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -15,7 +15,7 @@ import titleMixin from './mixins/titleMixin';
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(Toasted, { position: 'top-center', duration: 2000 });
-Vue.use(Clipboard);
+Vue.use(VueClipboard);
 Vue.mixin(titleMixin);
 
 Vue.config.productionTip = false;

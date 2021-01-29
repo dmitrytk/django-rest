@@ -1,8 +1,6 @@
 <template>
-  <div class="container">
-    <div class="page-header">
-      <h2 class="text-center my-3">Конвертер координат</h2>
-    </div>
+  <b-container>
+    <h2 class="text-center my-3">Конвертер координат</h2>
     <b-card>
       <b-row>
         <!-- INPUT -->
@@ -113,33 +111,30 @@
 
       <!-- BUTTONS -->
       <div class="text-left">
-        <b-button :disabled="inData.length===0"
+        <b-button :disabled="inData.length===0" class="mr-3"
                   variant="primary"
                   @click="convert">
+          <b-icon icon="chevron-double-right"></b-icon>
           Конвертировать
         </b-button>
-        <b-button
-          v-clipboard:copy="outData"
-          v-clipboard:success="onCopy"
-          class="ml-2"
-        >
-          Копировать
-        </b-button>
-        <button class="btn btn-danger ml-2" @click="clear">
-          Очистить
-        </button>
+
+        <CopyButton :target="outData"/>
+        <ClearButton :callback="clear"/>
       </div>
     </b-card>
-  </div>
+  </b-container>
 </template>
 
 <script>
+import CopyButton from '@/component/buttons/CopyButton.vue';
+import ClearButton from '@/component/buttons/ClearButton.vue';
 import { coordinates } from '../util/mock';
 import systems from '../util/coordinate/systems';
 import convert from '../util/coordinate/convert';
 
 export default {
   name: 'CoordinateConverter',
+  components: { ClearButton, CopyButton },
   title: 'Конвертер координат',
   data() {
     return {

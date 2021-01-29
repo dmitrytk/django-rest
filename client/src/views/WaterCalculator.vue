@@ -31,7 +31,7 @@
       <b-form-group
         label-for="input-default">
         <label for="viscosity">Вязкость, сПз</label>
-        <b-form-input id="viscosity" v-model="viscosity" type="number">
+        <b-form-input id="viscosity" v-model="viscosity" disabled type="number">
         </b-form-input>
       </b-form-group>
 
@@ -39,7 +39,7 @@
       <b-form-group
         label-for="input-default">
         <label for="density">Плотность, г/см<sup>3</sup></label>
-        <b-form-input id="density" v-model="density" type="number">
+        <b-form-input id="density" v-model="density" disabled type="number">
         </b-form-input>
       </b-form-group>
     </b-card>

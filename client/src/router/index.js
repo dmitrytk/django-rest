@@ -10,6 +10,7 @@ import FieldData from '@/views/db/FieldData.vue';
 import SQLGenerator from '@/views/SQLGenerator.vue';
 import CoordinateConverter from '@/views/CoordinateConverter.vue';
 import WaterCalculator from '@/views/WaterCalculator.vue';
+import Decline from '@/views/Decline.vue';
 
 Vue.use(VueRouter);
 
@@ -50,6 +51,11 @@ const routes = [
     path: '/import',
     name: 'Import',
     component: Import,
+  },
+  {
+    path: '/decline',
+    name: 'Decline',
+    component: Decline,
   },
   {
     path: '/sql',

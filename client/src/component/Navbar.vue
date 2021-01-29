@@ -12,9 +12,10 @@
           <template v-slot:button-content>
             Инструменты
           </template>
-          <b-dropdown-item to="/sql">SQL генератор</b-dropdown-item>
-          <b-dropdown-item to="/converter">Конвертер координат</b-dropdown-item>
+          <b-dropdown-item to="/decline">Расчет понижений</b-dropdown-item>
           <b-dropdown-item to="/calculator">Водный калькулятор</b-dropdown-item>
+          <b-dropdown-item to="/converter">Конвертер координат</b-dropdown-item>
+          <b-dropdown-item to="/sql">SQL генератор</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
 
