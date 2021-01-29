@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import environ
@@ -6,9 +7,11 @@ env = environ.Env(
     DEBUG=(bool, True)
 )
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-environ.Env.read_env(str(BASE_DIR / ".env"))
+environ.Env.read_env(str(BASE_DIR / "config" / ".env"))
+CLIENT_DIST_DIR = os.path.join(BASE_DIR, 'client', 'dist')
+
 SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env('DEBUG')
@@ -48,6 +51,7 @@ MIDDLEWARE = [
     # CORS
     'corsheaders.middleware.CorsMiddleware',
 
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
 
@@ -67,10 +71,21 @@ REST_FRAMEWORK = {
 
 ROOT_URLCONF = 'config.urls'
 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [CLIENT_DIST_DIR]
+
+WHITENOISE_INDEX_FILE = True
+WHITENOISE_ROOT = os.path.join(STATIC_ROOT)
+
+TEMPLATE_DIRS = [
+    CLIENT_DIST_DIR,
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': TEMPLATE_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,7 +103,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DEV_DB'),
+        'NAME': env('PROD_DB'),
         'USER': env('DB_USER'),
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': '127.0.0.1',
