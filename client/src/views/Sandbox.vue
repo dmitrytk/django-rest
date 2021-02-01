@@ -9,6 +9,7 @@
 
 export default {
   name: 'Sandbox',
+  title: 'Sandbox',
   components: {},
   data() {
     return {};

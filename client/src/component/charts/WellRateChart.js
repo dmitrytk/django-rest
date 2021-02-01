@@ -82,7 +82,6 @@ export default {
   },
 
   mounted() {
-    console.log('rate chart mounted');
     this.renderChart(this.chartdata, this.options);
   }
   ,

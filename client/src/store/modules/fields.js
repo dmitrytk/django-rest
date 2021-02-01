@@ -12,6 +12,7 @@ export default {
       inclinometry: null,
       mer: null,
       rates: null,
+      zones: null,
       coordinates: null,
     }
   ),
@@ -40,6 +41,9 @@ export default {
     setRates(state, payload) {
       state.rates = payload;
     },
+    setZones(state, payload) {
+      state.zones = payload;
+    },
     setCoordinates(state, payload) {
       state.coordinates = payload;
     },
@@ -60,6 +64,7 @@ export default {
       context.dispatch('fetchInclinometry', id);
       context.dispatch('fetchMer', id);
       context.dispatch('fetchRates', id);
+      context.dispatch('fetchZones', id);
       context.dispatch('fetchCoordinates', id);
     },
     async updateField(context, data) {
@@ -79,10 +84,37 @@ export default {
       const res = await FieldService.getRates(id);
       commit('setRates', res.data);
     },
+    async fetchZones({ commit }, id) {
+      const res = await FieldService.getZones(id);
+      commit('setZones', res.data);
+    },
     async fetchCoordinates({ commit }, id) {
       const res = await FieldService.getCoordinates(id);
       commit('setCoordinates', res.data);
     },
+
+    // DELETE CHILD OBJECTS
+    async deleteInclinometry({ dispatch }, id) {
+      await FieldService.deleteInclinometry(id);
+      dispatch('fetchInclinometry', id);
+    },
+    async deleteMer({ dispatch }, id) {
+      await FieldService.deleteMer(id);
+      dispatch('fetchMer', id);
+    },
+    async deleteRates({ dispatch }, id) {
+      await FieldService.deleteRates(id);
+      dispatch('fetchRates', id);
+    },
+    async deleteZones({ dispatch }, id) {
+      await FieldService.deleteZones(id);
+      dispatch('fetchZones', id);
+    },
+    async deleteCoordinates({ dispatch }, id) {
+      await FieldService.deleteCoordinates(id);
+      dispatch('fetchCoordinates', id);
+    },
+
     setSelectionVisible({ commit }, payload) {
       commit('setSelectionVisible', payload);
     },
@@ -96,6 +128,7 @@ export default {
     inclinometry: (state) => state.inclinometry,
     mer: (state) => state.mer,
     rates: (state) => state.rates,
+    zones: (state) => state.zones,
     coordinates: (state) => state.coordinates,
   },
 };

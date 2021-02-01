@@ -43,7 +43,6 @@ export default {
   },
 
   mounted() {
-    console.log('mer mounted');
     this.renderChart(this.chartdata, this.options);
   }
   ,

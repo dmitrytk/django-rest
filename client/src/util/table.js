@@ -25,4 +25,17 @@ const getTableData = (header, body) => body.map((row) => {
   return obj;
 });
 
-export { parseStringTable, getTableData };
+/**
+ * Convert header and body of table to TAB (or else) separated string
+ * @param {Object[]} header
+ * @param {Object[][]} body
+ * @param {String} separator
+ * @return {String}
+ * */
+const tableToString = (header, body, separator = '\t') => {
+  let result = `${header.map((el) => el.label).join(separator)}\n`;
+  result += body.map((row) => header.map((el) => row[el.key]).join(separator)).join('\n');
+  return result;
+};
+
+export { parseStringTable, getTableData, tableToString };

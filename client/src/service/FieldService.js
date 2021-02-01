@@ -35,8 +35,37 @@ class FieldService {
     return http.get(`/fields/${id}/rates/`);
   }
 
+  static getZones(id) {
+    return http.get(`/fields/${id}/zones/`);
+  }
+
   static getCoordinates(id) {
     return http.get(`/fields/${id}/coordinates/`);
+  }
+
+  // DELETE CHILD OBJECTS
+  static deleteWells(id) {
+    return http.delete(`/fields/${id}/wells/`);
+  }
+
+  static deleteInclinometry(id) {
+    return http.delete(`/fields/${id}/inclinometry/`);
+  }
+
+  static deleteMer(id) {
+    return http.delete(`/fields/${id}/mer/`);
+  }
+
+  static deleteRates(id) {
+    return http.delete(`/fields/${id}/rates/`);
+  }
+
+  static deleteZones(id) {
+    return http.delete(`/fields/${id}/zones/`);
+  }
+
+  static deleteCoordinates(id) {
+    return http.delete(`/fields/${id}/coordinates/`);
   }
 }
 

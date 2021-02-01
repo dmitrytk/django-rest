@@ -186,8 +186,8 @@ export default {
           this.outData,
         );
         this.outData = result;
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        console.log(err);
       }
     },
     onCopy() {

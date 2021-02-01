@@ -142,13 +142,13 @@ export default {
           this.$toasted.show(res.data.message);
           this.fetchField(this.field.id);
           this.fetchWells(this.field.id);
-          if (this.well.id) {
+          if (this.well) {
             this.fetchWell(this.well.id);
           }
         })
         .catch((err) => {
           this.$toasted.show('Ошибка загрузки данных');
-          console.log(err.response.data.errors);
+          console.log(err);
         });
     },
     parse() {

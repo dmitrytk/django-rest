@@ -8,21 +8,27 @@
              sticky-header>
     </b-table>
     <p v-else>Нет данных</p>
-    <DeleteButton v-if="data && data.length"
-                  :parentId="well.id"
-                  :resource="tableName"
-                  parent="wells"></DeleteButton>
+
+    <div v-if="data && data.length">
+      <CopyTableButton :body="data" :header="fields"/>
+      <DeleteButton
+        :parentId="field.id"
+        :resource="tableName"
+        parent="fields"></DeleteButton>
+    </div>
   </div>
+
 </template>
 
 <script>
+import CopyTableButton from '@/component/buttons/CopyTableButton.vue';
+import tables from '@/util/databaseTables';
+import DeleteButton from '@/component/buttons/DeleteButton.vue';
 import { mapGetters } from 'vuex';
-import tables from '../../util/databaseTables';
-import DeleteButton from '../DeleteButton.vue';
 
 export default {
   name: 'WellGenericTable',
-  components: { DeleteButton },
+  components: { CopyTableButton, DeleteButton },
   props: ['tableName'],
   data() {
     return {
@@ -30,17 +36,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('wells', [
-      'well',
+    ...mapGetters('fields', [
+      'field',
       'mer',
       'inclinometry',
       'rates',
+      'zones',
+      'coordinates',
     ]),
     data() {
-      return this.$store.getters[`wells/${this.tableName}`];
+      return this.$store.getters[`fields/${this.tableName}`];
     },
   },
-  methods: {},
 };
 </script>
 

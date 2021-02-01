@@ -85,19 +85,19 @@ export default {
     // DELETE CHILD OBJECTS
     async deleteInclinometry({ dispatch }, id) {
       await WellService.deleteInclinometry(id);
-      dispatch('fetchInclinometry');
+      dispatch('fetchInclinometry', id);
     },
     async deleteMer({ dispatch }, id) {
       await WellService.deleteMer(id);
-      dispatch('fetchMer');
+      dispatch('fetchMer', id);
     },
     async deleteRates({ dispatch }, id) {
       await WellService.deleteRates(id);
-      dispatch('fetchRates');
+      dispatch('fetchRates', id);
     },
     async deleteZones({ dispatch }, id) {
       await WellService.deleteZones(id);
-      dispatch('fetchZones');
+      dispatch('fetchZones', id);
     },
 
     async updateWell(context, data) {

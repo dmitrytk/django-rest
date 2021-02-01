@@ -103,6 +103,7 @@ import { getTableData } from '../util/table';
 
 export default {
   name: 'Decline',
+  title: 'Расчет понижений',
   components: { ClearButton },
   data() {
     return {
@@ -145,7 +146,7 @@ export default {
           writeGrid(this.grid);
         }
         this.showOverlay = false;
-      }, 50);
+      }, 25);
     },
     clear() {
       this.data = null;

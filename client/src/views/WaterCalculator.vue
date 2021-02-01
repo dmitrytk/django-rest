@@ -49,6 +49,7 @@
 <script>
 export default {
   name: 'WaterCalculator',
+  title: 'Водный калькулятор',
   data() {
     return {
       salinity: null,
@@ -59,7 +60,6 @@ export default {
   },
   methods: {
     calculate() {
-      console.log('calculate');
       if (this.salinity > 0 && this.temperature > 0) {
         this.viscosity = this.calcViscosity(this.salinity, this.temperature);
         this.density = this.calcDensity(this.salinity, this.temperature);

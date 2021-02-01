@@ -13,17 +13,8 @@
             <b-tab active title="Общие данные">
               <WellForm/>
             </b-tab>
-            <b-tab title="Инклинометрия">
-              <WellGenericTable tableName="inclinometry"/>
-            </b-tab>
-            <b-tab title="МЭР">
-              <WellGenericTable tableName="mer"/>
-            </b-tab>
-            <b-tab title="Режимы">
-              <WellGenericTable tableName="rates"/>
-            </b-tab>
-            <b-tab title="Пласты">
-              <WellGenericTable tableName="zones"/>
+            <b-tab v-for="(table, index) in tables" :key="index" :title="table.label">
+              <GenericWellTable :tableName="table.key"/>
             </b-tab>
             <!--Диграммы-->
             <ChartTab/>
@@ -41,7 +32,7 @@
 import { mapActions, mapGetters } from 'vuex';
 import WellList from '@/component/WellList.vue';
 import WellForm from '@/component/form/WellForm.vue';
-import WellGenericTable from '@/component/tables/WellGenericTable.vue';
+import GenericWellTable from '@/component/tables/GenericWellTable.vue';
 import ImportButton from '@/component/buttons/ImportButton.vue';
 import ChartTab from '@/component/ChartTab.vue';
 
@@ -50,17 +41,20 @@ export default {
   components: {
     ChartTab,
     ImportButton,
-    WellGenericTable,
+    GenericWellTable,
     WellList,
     WellForm,
   },
   data() {
     return {
       loading: false,
+      tables: [
+        { label: 'Инклинометрия', key: 'inclinometry' },
+        { label: 'МЭР', key: 'mer' },
+        { label: 'Режимы', key: 'rates' },
+        { label: 'Пласты', key: 'zones' },
+      ],
     };
-  },
-  mounted() {
-    console.log(this.rates);
   },
   computed: {
     ...mapGetters('fields', [
@@ -82,9 +76,6 @@ export default {
     ...mapActions('fields', [
       'fetchFields',
     ]),
-    changeDB() {
-      console.log('Change Database');
-    },
 
   },
 };
