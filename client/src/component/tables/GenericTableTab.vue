@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-tab :title="`${data && data.length?`${title} (${data.length})`:title}`">
     <b-table v-if="data &&
     data.length>0" ref="table"
              :fields="fields" :items="data"
@@ -12,11 +12,11 @@
     <div v-if="data && data.length">
       <CopyTableButton :body="data" :header="fields"/>
       <DeleteButton
-        :parentId="field.id"
-        :resource="tableName"
-        parent="fields"></DeleteButton>
+        :parent="parent"
+        :parentId="parentId"
+        :resource="tableName"></DeleteButton>
     </div>
-  </div>
+  </b-tab>
 
 </template>
 
@@ -24,28 +24,19 @@
 import CopyTableButton from '@/component/buttons/CopyTableButton.vue';
 import tables from '@/util/databaseTables';
 import DeleteButton from '@/component/buttons/DeleteButton.vue';
-import { mapGetters } from 'vuex';
 
 export default {
-  name: 'WellGenericTable',
+  name: 'WellGenericTableTab',
   components: { CopyTableButton, DeleteButton },
-  props: ['tableName'],
+  props: ['parent', 'parentId', 'title', 'tableName'],
   data() {
     return {
       fields: tables[this.tableName],
     };
   },
   computed: {
-    ...mapGetters('fields', [
-      'field',
-      'mer',
-      'inclinometry',
-      'rates',
-      'zones',
-      'coordinates',
-    ]),
     data() {
-      return this.$store.getters[`fields/${this.tableName}`];
+      return this.$store.getters[`${this.parent}/${this.tableName}`];
     },
   },
 };

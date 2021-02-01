@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import WellService from '../../service/WellService';
-import FieldService from '../../service/FieldService';
+import WellService from '@/service/WellService';
+import FieldService from '@/service/FieldService';
 
 export default {
   namespaced: true,
@@ -74,7 +74,6 @@ export default {
     },
     async fetchRates({ commit }, id) {
       const res = await WellService.getRates(id);
-      console.log(res.data);
       commit('setRates', res.data);
     },
     async fetchZones({ commit }, id) {
@@ -102,6 +101,7 @@ export default {
 
     async updateWell(context, data) {
       try {
+        console.log(data);
         const well = await WellService.update(data.id, data);
         Vue.toasted.show('Сохранено');
         context.commit('setWell', well.data);

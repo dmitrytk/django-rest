@@ -5,7 +5,7 @@
     <WellRateChart v-if="this.rates && this.rates.length>0"
                    id="ratesChart" :data="this.rates"
                    class="mb-3"/>
-    <h3 v-else>Нет данных</h3>
+    <p v-else>Нет данных</p>
   </b-tab>
 </template>
 

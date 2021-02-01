@@ -9,11 +9,11 @@
           <b-nav-item :active="this.$route.path.includes('wells')" to="/db/wells">
             Скважины
           </b-nav-item>
-          <b-nav-item :active="this.$route.path.includes('map')"
-                      to="/db/map">Карта
-          </b-nav-item>
           <b-nav-item :active="this.$route.path.includes('field')"
                       to="/db/field">Данные месторождения
+          </b-nav-item>
+          <b-nav-item :active="this.$route.path.includes('map')"
+                      to="/db/map">Карта
           </b-nav-item>
         </b-nav>
       </b-card>

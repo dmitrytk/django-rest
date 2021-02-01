@@ -4,9 +4,9 @@
     <b-list-group-item v-for="well in this.wells"
                        :key="well.id"
                        :active="well.id===selectedWellId"
-                       @click="selectWell(well.id)"
-    >
+                       @click="selectWell(well.id)">
       {{ well.name }}
+      <template v-if="well.type">/ {{ well.type.charAt(0) }}</template>
     </b-list-group-item>
   </b-list-group>
 </template>

@@ -9,15 +9,24 @@
       </b-col>
       <b-col lg="9">
         <b-card v-if="well">
+
+          <!--    ФОРМА    -->
           <b-tabs content-class="mt-3">
             <b-tab active title="Общие данные">
               <WellForm/>
             </b-tab>
-            <b-tab v-for="(table, index) in tables" :key="index" :title="table.label">
-              <GenericWellTable :tableName="table.key"/>
-            </b-tab>
-            <!--Диграммы-->
+
+            <!--    ТАБЛИЦЫ    -->
+            <GenericTableTab v-for="(table, index) in tables"
+                             :key="index"
+                             :parentId="well.id"
+                             :tableName="table.key"
+                             :title="table.label"
+                             parent="wells"/>
+
+            <!--    ДИАГРАММЫ    -->
             <ChartTab/>
+
           </b-tabs>
         </b-card>
       </b-col>
@@ -32,7 +41,7 @@
 import { mapActions, mapGetters } from 'vuex';
 import WellList from '@/component/WellList.vue';
 import WellForm from '@/component/form/WellForm.vue';
-import GenericWellTable from '@/component/tables/GenericWellTable.vue';
+import GenericTableTab from '@/component/tables/GenericTableTab.vue';
 import ImportButton from '@/component/buttons/ImportButton.vue';
 import ChartTab from '@/component/ChartTab.vue';
 
@@ -41,7 +50,7 @@ export default {
   components: {
     ChartTab,
     ImportButton,
-    GenericWellTable,
+    GenericTableTab,
     WellList,
     WellForm,
   },

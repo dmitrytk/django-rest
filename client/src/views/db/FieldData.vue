@@ -2,12 +2,19 @@
   <div>
     <b-card>
       <b-tabs content-class="mt-3">
+
+        <!--    ФОРМА    -->
         <b-tab active title="Общие данные">
           <FieldForm/>
         </b-tab>
-        <b-tab v-for="(table, index) in tables" :key="index" :title="table.label">
-          <GenericFieldTable :tableName="table.key"/>
-        </b-tab>
+
+        <!--    ТАБЛИЦЫ    -->
+        <GenericTableTab v-for="(table, index) in tables"
+                         :key="index"
+                         :parentId="field.id"
+                         :tableName="table.key"
+                         :title="table.label"
+                         parent="fields"/>
 
       </b-tabs>
     </b-card>
@@ -16,11 +23,12 @@
 
 <script>
 import FieldForm from '@/component/form/FieldForm.vue';
-import GenericFieldTable from '@/component/tables/GenericFieldTable.vue';
+import GenericTableTab from '@/component/tables/GenericTableTab.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'FieldData',
-  components: { FieldForm, GenericFieldTable },
+  components: { FieldForm, GenericTableTab },
   data() {
     return {
       tables: [
@@ -31,6 +39,9 @@ export default {
         { label: 'Пласты', key: 'zones' },
       ],
     };
+  },
+  computed: {
+    ...mapGetters('fields', ['field']),
   },
 };
 </script>
