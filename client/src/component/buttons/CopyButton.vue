@@ -1,7 +1,7 @@
 <template>
   <b-button v-clipboard:copy="target" v-clipboard:success="onCopy"
             class="mr-3">
-    <b-icon aria-hidden="true" icon="trash"></b-icon>
+    <b-icon aria-hidden="true" icon="clipboard-plus"></b-icon>
     Копировать
   </b-button>
 </template>

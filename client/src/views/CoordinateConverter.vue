@@ -111,7 +111,7 @@
 
       <!-- BUTTONS -->
       <div class="text-left">
-        <b-button :disabled="inData.length===0" class="mr-3"
+        <b-button :disabled="!inData" class="mr-3"
                   variant="primary"
                   @click="convert">
           <b-icon icon="chevron-double-right"></b-icon>
@@ -147,7 +147,7 @@ export default {
       selectedOutSystem: 'СК42',
       selectedOutZone: '',
       inData: coordinates,
-      outData: '',
+      outData: null,
       degreeType: 'ГГ MM СС.с',
     };
   },
@@ -194,8 +194,8 @@ export default {
       this.$toasted.show('Скопировано в буфер');
     },
     clear() {
-      this.inData = '';
-      this.outData = '';
+      this.inData = null;
+      this.outData = null;
     },
   },
 };

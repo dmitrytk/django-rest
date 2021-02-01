@@ -80,7 +80,7 @@ export default {
         { value: 'inclinometry', text: 'Инклинометрия' },
         { value: 'rates', text: 'Режимы' },
         { value: 'mer', text: 'МЭР' },
-        { value: 'coordinates', text: 'Координта месторождения' },
+        { value: 'coordinates', text: 'Координаты месторождения' },
       ],
       selectedDataType: 'wells',
     };
