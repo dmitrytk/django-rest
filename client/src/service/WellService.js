@@ -13,6 +13,10 @@ class WellService {
     return http.put(`/wells/${id}/`, data);
   }
 
+  static delete(id) {
+    return http.delete(`/wells/${id}/`);
+  }
+
   // GET CHILD OBJECTS
   static getInclinometry(id) {
     return http.get(`/wells/${id}/inclinometry/`);

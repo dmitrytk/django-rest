@@ -7,7 +7,7 @@ from api.services import well_service
 
 
 class WellViewSet(viewsets.ModelViewSet):
-    queryset = Well.objects.filter()
+    queryset = Well.objects.all()
     serializer_class = WellSerializer
 
     # Child objects

@@ -10,8 +10,8 @@ class TestBatchService(TestCase):
 
     def test_mer_view(self):
         data = get_raw_view(queries.MER_RANGE, [1], mappers.map_mer_view)
-        self.assertEqual(len(data), 4)
+        self.assertEqual(len(data), 2)
 
     def test_rates_view(self):
         data = get_raw_view(queries.RATES_RANGE, [1], mappers.map_rates_view)
-        self.assertEqual(len(data), 5)
+        self.assertEqual(len(data), 2)

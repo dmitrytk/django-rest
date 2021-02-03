@@ -46,7 +46,8 @@ export default {
     ]),
     saveField() {
       if (this.currentField.id) {
-        this.updateField(this.currentField);
+        const result = _.mapValues(this.currentField, (v) => (v === '' ? null : v));
+        this.updateField(result);
       } else {
         console.log('save new well');
       }

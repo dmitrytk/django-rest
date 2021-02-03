@@ -50,6 +50,9 @@ export default {
       context.commit('setWell', well.data);
       context.commit('setWellLoading', false);
     },
+    async deleteWell(context, id) {
+      return WellService.delete(id);
+    },
     async fetchWells({ commit }, fieldId) {
       commit('setWellsLoading', true);
       const wells = await FieldService.getWells(fieldId);
@@ -99,9 +102,10 @@ export default {
       try {
         const well = await WellService.update(data.id, data);
         await context.dispatch('fetchWell', well.data.id);
-        // await context.dispatch('fetchWells', well.data.field);
+        await context.dispatch('fetchWells', well.data.field);
         Vue.toasted.show('Сохранено');
       } catch (err) {
+        Vue.toasted.show('Ошибка');
         console.log(err);
       }
     },

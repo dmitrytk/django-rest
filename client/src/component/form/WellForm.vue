@@ -75,7 +75,8 @@ export default {
     ]),
     saveWell() {
       if (this.currentWell.id) {
-        this.updateWell(this.currentWell);
+        const result = _.mapValues(this.currentWell, (v) => (v === '' ? null : v));
+        this.updateWell(result);
       } else {
         console.log('save new well');
       }
