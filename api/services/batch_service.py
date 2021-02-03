@@ -15,7 +15,7 @@ from api.utils.validators import validate_batch_data
 
 
 def _invalid_data_error(serializer: Optional[Serializer] = None) -> Response:
-    payload = {'message': 'Invalid data'}
+    payload = {'message': 'Некорректные данные'}
     if serializer is not None:
         payload['errors'] = serializer.errors
     return Response(payload, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
@@ -33,7 +33,7 @@ def load_wells(data: dict) -> Response:
         well_names = set([well['name'] for well in data['rows']])
         old_wells = Well.objects.filter(field_id=data['field_id'], name__in=well_names)
         serializer.update(old_wells, serializer.validated_data)
-        return Response({'message': f'{len(serializer.validated_data)} wells loaded'},
+        return Response({'message': f'Загружено скважин: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
         return _invalid_data_error(serializer)
@@ -50,7 +50,7 @@ def load_inclinometry(data: dict) -> Response:
         _create_new_wells(field_id, wells)
         _delete_old_inc(field_id, wells)
         batch_load(queries.INCLINOMETRY_LOAD, [(field_id, *mappers.map_inc(row)) for row in serializer.validated_data])
-        return Response({'message': f'{len(serializer.validated_data)} inclinometry loaded'},
+        return Response({'message': f'Загружено инклинометрии: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
         return _invalid_data_error(serializer)
@@ -66,7 +66,7 @@ def load_mer(data: dict) -> Response:
         wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         batch_load(queries.MER_LOAD, [(field_id, *mappers.map_mer(row)) for row in serializer.validated_data])
-        return Response({'message': f'{len(serializer.validated_data)} mer loaded'},
+        return Response({'message': f'Загружено МЭР: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
         return _invalid_data_error(serializer)
@@ -82,7 +82,7 @@ def load_rates(data: dict) -> Response:
         wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         batch_load(queries.RATE_LOAD, [(field_id, *mappers.map_rate(row)) for row in serializer.validated_data])
-        return Response({'message': f'{len(serializer.validated_data)} rates loaded'},
+        return Response({'message': f'Загружено режимных наблюдений: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
         return _invalid_data_error(serializer)
@@ -98,7 +98,7 @@ def load_zones(data: dict) -> Response:
         wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         batch_load(queries.ZONE_LOAD, [(field_id, *mappers.map_zone(row)) for row in serializer.validated_data])
-        return Response({'message': f'{len(serializer.validated_data)} zones loaded'},
+        return Response({'message': f'Загружено пластов: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
         return _invalid_data_error(serializer)
@@ -114,7 +114,7 @@ def load_coordinates(data: dict) -> Response:
         _delete_old_coordinates(field_id)
         batch_load(queries.COORDINATE_LOAD,
                    [(field_id, *mappers.map_coordinate(row)) for row in serializer.validated_data])
-        return Response({'message': f'{len(serializer.validated_data)} coordinates loaded'},
+        return Response({'message': f'Загружено координат: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
         return _invalid_data_error(serializer)

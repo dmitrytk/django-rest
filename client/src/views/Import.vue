@@ -131,7 +131,7 @@ export default {
         return matched ? matched.key : '';
       });
     },
-    load() {
+    async load() {
       const data = getTableData(this.selectedColumns, this.body);
       const payload = {
         field_id: this.field.id,
@@ -145,6 +145,7 @@ export default {
           if (this.well) {
             this.fetchWell(this.well.id);
           }
+          this.$router.push('/db/wells');
         })
         .catch((err) => {
           this.$toasted.show('Ошибка загрузки данных');

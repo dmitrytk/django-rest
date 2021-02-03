@@ -54,7 +54,6 @@ export default {
       commit('setFields', fields.data);
     },
     async fetchField(context, id) {
-      console.log(`Field ${id} fetched`);
       const field = await FieldService.findOne(id);
       localStorage.setItem('lastFieldId', field.data.id);
       context.commit('setField', field.data);

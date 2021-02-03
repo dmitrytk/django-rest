@@ -2,20 +2,26 @@
   <div>
     <b-modal
       v-model="visible"
+      hide-footer
       no-fade
-      title="Database"
+      title="База данных"
       @ok="loadField"
     >
       <b-form-select
         v-if="this.fields"
         v-model="selectedFieldId"
-        :options="fieldList">
+        :options="fieldList"
+      >
         <template #first>
           <b-form-select-option :value="null" disabled>
             -- Выберите месторождение --
           </b-form-select-option>
         </template>
       </b-form-select>
+      <div class="text-right">
+        <b-button class="mt-3 mr-3">Отмена</b-button>
+        <b-button class="mt-3" variant="primary" @click="loadField">Выбрать</b-button>
+      </div>
     </b-modal>
   </div>
 </template>
