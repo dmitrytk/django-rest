@@ -32,7 +32,8 @@ class TestFieldApi(APITestCase):
         self.assertEqual(response.data['name'], self.new_well_name)
 
     def test_well_update(self):
-        response = self.client.put(self.well_detail_url, data={'name': '1z', 'field': 1})
+        response = self.client.put(self.well_detail_url,
+                                   data={'name': '1z', 'field': 1, 'pad': '1', 'type': 'разведочная'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], '1z')
 
@@ -50,12 +51,12 @@ class TestFieldApi(APITestCase):
     def test_get_well_mer(self):
         response = self.client.get(self.well_mer_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 4)
+        self.assertEqual(len(response.data), 2)
 
     def test_get_well_rates(self):
         response = self.client.get(self.well_rates_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 5)
+        self.assertEqual(len(response.data), 2)
 
     def test_get_well_zones(self):
         response = self.client.get(self.well_zones_url)

@@ -10,7 +10,6 @@ class WellService {
   }
 
   static update(id, data) {
-    console.log(`/wells/${id}/`);
     return http.put(`/wells/${id}/`, data);
   }
 

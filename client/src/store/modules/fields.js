@@ -94,25 +94,20 @@ export default {
     },
 
     // DELETE CHILD OBJECTS
-    async deleteInclinometry({ dispatch }, id) {
+    async deleteInclinometry(context, id) {
       await FieldService.deleteInclinometry(id);
-      dispatch('fetchInclinometry', id);
     },
-    async deleteMer({ dispatch }, id) {
+    async deleteMer(context, id) {
       await FieldService.deleteMer(id);
-      dispatch('fetchMer', id);
     },
-    async deleteRates({ dispatch }, id) {
+    async deleteRates(context, id) {
       await FieldService.deleteRates(id);
-      dispatch('fetchRates', id);
     },
-    async deleteZones({ dispatch }, id) {
+    async deleteZones(context, id) {
       await FieldService.deleteZones(id);
-      dispatch('fetchZones', id);
     },
-    async deleteCoordinates({ dispatch }, id) {
+    async deleteCoordinates(context, id) {
       await FieldService.deleteCoordinates(id);
-      dispatch('fetchCoordinates', id);
     },
 
     setSelectionVisible({ commit }, payload) {

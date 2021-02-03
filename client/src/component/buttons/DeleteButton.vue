@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import capitalize from '../../util/string';
 
 export default {
@@ -15,9 +16,13 @@ export default {
     parentId: Number,
     resource: String,
   },
+  computed: {
+    ...mapGetters('fields', ['field']),
+    ...mapGetters('wells', ['well']),
+  },
   methods: {
-    deleteResource() {
-      this.$bvModal.msgBoxConfirm('Вы уверены что хотите удалить ресурс?', {
+    async deleteResource() {
+      this.$bvModal.msgBoxConfirm('Вы уверены что хотите удалить данные?', {
         size: 'sm',
         buttonSize: 'sm',
         okVariant: 'danger',
@@ -27,11 +32,13 @@ export default {
         hideHeaderClose: false,
         centered: true,
       })
-        .then((value) => {
+        .then(async (value) => {
           if (value) {
-            return this.$store.dispatch(`${this.parent}/delete${capitalize(this.resource)}`, this.parentId);
+            await this.$store.dispatch(`${this.parent}/delete${capitalize(this.resource)}`, this.parentId);
+            this.$toasted.show('Данные удалены');
+            this.$store.dispatch(`fields/fetch${capitalize(this.resource)}`, this.field.id);
+            this.$store.dispatch(`wells/fetch${capitalize(this.resource)}`, this.well.id);
           }
-          return 0;
         })
         .catch((err) => {
           console.log(err);

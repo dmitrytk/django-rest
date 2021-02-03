@@ -14,9 +14,9 @@ CLIENT_DIST_DIR = os.path.join(BASE_DIR, 'client', 'dist')
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env('DEBUG')
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     # Django apps

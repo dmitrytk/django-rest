@@ -1,6 +1,6 @@
-import Vue from 'vue';
 import WellService from '@/service/WellService';
 import FieldService from '@/service/FieldService';
+import Vue from 'vue';
 
 export default {
   namespaced: true,
@@ -82,33 +82,27 @@ export default {
     },
 
     // DELETE CHILD OBJECTS
-    async deleteInclinometry({ dispatch }, id) {
+    async deleteInclinometry(context, id) {
       await WellService.deleteInclinometry(id);
-      dispatch('fetchInclinometry', id);
     },
-    async deleteMer({ dispatch }, id) {
+    async deleteMer(context, id) {
       await WellService.deleteMer(id);
-      dispatch('fetchMer', id);
     },
-    async deleteRates({ dispatch }, id) {
+    async deleteRates(context, id) {
       await WellService.deleteRates(id);
-      dispatch('fetchRates', id);
     },
-    async deleteZones({ dispatch }, id) {
+    async deleteZones(context, id) {
       await WellService.deleteZones(id);
-      dispatch('fetchZones', id);
     },
 
     async updateWell(context, data) {
       try {
-        console.log(data);
         const well = await WellService.update(data.id, data);
+        await context.dispatch('fetchWell', well.data.id);
+        // await context.dispatch('fetchWells', well.data.field);
         Vue.toasted.show('Сохранено');
-        context.commit('setWell', well.data);
-        context.commit('setWellLoading', false);
-        await context.dispatch('fetchWells', well.data.field);
-      } catch (e) {
-        Vue.toasted.show('Ошибка!');
+      } catch (err) {
+        console.log(err);
       }
     },
   },
