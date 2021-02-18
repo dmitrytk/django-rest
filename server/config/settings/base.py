@@ -1,22 +1,21 @@
-import os
 from pathlib import Path
 
 import environ
 
-env = environ.Env(
-    DEBUG=(bool, True)
-)
+env = environ.Env()
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(str(BASE_DIR / "config" / ".env"))
-CLIENT_DIST_DIR = os.path.join(BASE_DIR, 'client', 'dist')
+READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=True)
+if READ_DOT_ENV_FILE:
+    # OS environment variables take precedence over variables from .env
+    env.read_env(str(BASE_DIR / ".env"))
 
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-DEBUG = False
+DEBUG = env('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # Django apps
@@ -51,7 +50,6 @@ MIDDLEWARE = [
     # CORS
     'corsheaders.middleware.CorsMiddleware',
 
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
 
@@ -71,21 +69,10 @@ REST_FRAMEWORK = {
 
 ROOT_URLCONF = 'config.urls'
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [CLIENT_DIST_DIR]
-
-WHITENOISE_INDEX_FILE = True
-WHITENOISE_ROOT = os.path.join(STATIC_ROOT)
-
-TEMPLATE_DIRS = [
-    CLIENT_DIST_DIR,
-]
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': TEMPLATE_DIRS,
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -103,11 +90,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('PROD_DB'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
     }
 }
 
