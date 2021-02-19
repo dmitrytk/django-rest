@@ -28,14 +28,15 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     # Third-party
-    'allauth',
-    'allauth.account',
     'rest_framework',
     'corsheaders',
+    'django_extensions',
 
     # My apps
-    'api.apps.ApiConfig'
+    'api.apps.ApiConfig',
+    'authentication.apps.AuthenticationConfig',
 ]
+
 SITE_ID = 1
 
 MIDDLEWARE = [
@@ -53,16 +54,22 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
+AUTH_USER_MODEL = 'authentication.User'
+
+# CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
-    'https://localhost:8081',
+    '0.0.0.0:8080',
+    'localhost:8080',
 )
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'authentication.backends.JWTAuthentication',
+    ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DATE_INPUT_FORMATS': ['%d.%m.%Y'],
 }
