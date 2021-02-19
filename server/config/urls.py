@@ -1,9 +1,8 @@
-from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^', include('api.urls')),
-    url(r'^', include('authentication.urls')),
+    path('api/', include('api.urls')),
+    path('api/', include('authentication.urls')),
 ]

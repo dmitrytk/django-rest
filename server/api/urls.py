@@ -8,14 +8,14 @@ router.register(r'fields', field_views.FieldViewSet)
 router.register(r'wells', well_views.WellViewSet)
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
 
     # Batch URLs
-    path('api/batch/wells/', batch_views.load_wells),
-    path('api/batch/inclinometry/', batch_views.load_inclinometry),
-    path('api/batch/mer/', batch_views.load_mer),
-    path('api/batch/rates/', batch_views.load_rates),
-    path('api/batch/zones/', batch_views.load_zones),
-    path('api/batch/coordinates/', batch_views.load_coordinates),
+    path('batch/wells/', batch_views.load_wells),
+    path('batch/inclinometry/', batch_views.load_inclinometry),
+    path('batch/mer/', batch_views.load_mer),
+    path('batch/rates/', batch_views.load_rates),
+    path('batch/zones/', batch_views.load_zones),
+    path('batch/coordinates/', batch_views.load_coordinates),
 
 ]
