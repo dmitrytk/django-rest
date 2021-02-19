@@ -1,4 +1,4 @@
-import FieldService from '@/service/FieldService';
+import FieldService from '../../service/field.service';
 
 export default {
   namespaced: true,

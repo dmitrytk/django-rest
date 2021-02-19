@@ -33,8 +33,6 @@ class LoginAPIView(APIView):
 
     def post(self, request):
         user = request.data.get('user', {})
-        print(user)
-
         serializer = self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
 
@@ -57,11 +55,6 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
         serializer_data = {
             'username': user_data.get('username', request.user.username),
             'email': user_data.get('email', request.user.email),
-
-            'profile': {
-                'bio': user_data.get('bio', request.user.profile.bio),
-                'image': user_data.get('image', request.user.profile.image)
-            }
         }
 
         serializer = self.serializer_class(

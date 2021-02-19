@@ -61,7 +61,7 @@ import FieldSelector from '@/component/FieldSelector.vue';
 import { getTableData, parseStringTable } from '@/util/table';
 import tables from '@/util/databaseTables';
 import { validateNotEmptyColumns, validateRequiredColumn } from '../util/validator';
-import BatchService from '../service/BatchService';
+import BatchService from '../service/batch.service';
 
 export default {
   name: 'Import',

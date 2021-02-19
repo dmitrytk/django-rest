@@ -17,5 +17,4 @@ urlpatterns = [
     path('batch/rates/', batch_views.load_rates),
     path('batch/zones/', batch_views.load_zones),
     path('batch/coordinates/', batch_views.load_coordinates),
-
 ]

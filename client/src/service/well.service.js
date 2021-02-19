@@ -1,4 +1,4 @@
-import http from '@/http-commons';
+import http from '../common/http';
 
 class WellService {
   static findOne(id) {

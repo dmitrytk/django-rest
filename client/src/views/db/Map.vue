@@ -69,6 +69,7 @@ export default {
       markers: [],
     };
   },
+
   computed: {
     ...mapGetters('fields', [
       'field',

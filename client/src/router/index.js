@@ -11,6 +11,8 @@ import SQLGenerator from '@/views/SQLGenerator.vue';
 import CoordinateConverter from '@/views/CoordinateConverter.vue';
 import WaterCalculator from '@/views/WaterCalculator.vue';
 import Decline from '@/views/Decline.vue';
+import Login from '@/views/Login.vue';
+import { USER_KEY } from '../common/config';
 
 Vue.use(VueRouter);
 
@@ -72,6 +74,12 @@ const routes = [
     name: 'WaterCalculator',
     component: WaterCalculator,
   },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
+  { path: '*', redirect: '/' },
 
 ];
 
@@ -79,6 +87,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+// eslint-disable-next-line consistent-return
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/login', '/'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem(USER_KEY);
+
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
+
+  next();
 });
 
 export default router;

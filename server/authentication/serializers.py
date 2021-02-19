@@ -10,7 +10,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
         min_length=8,
         write_only=True
     )
-
     token = serializers.CharField(max_length=255, read_only=True)
 
     class Meta:
@@ -28,31 +27,18 @@ class LoginSerializer(serializers.Serializer):
     token = serializers.CharField(max_length=255, read_only=True)
 
     def validate(self, data):
-
         email = data.get('email', None)
         password = data.get('password', None)
 
-        if email is None:
-            raise serializers.ValidationError(
-                'An email address is required to log in.'
-            )
-
-        if password is None:
-            raise serializers.ValidationError(
-                'A password is required to log in.'
-            )
+        if email is None or password is None:
+            raise serializers.ValidationError('An email address and password is required to log in.')
 
         user = authenticate(username=email, password=password)
 
         if user is None:
-            raise serializers.ValidationError(
-                'A user with this email and password was not found.'
-            )
-
+            raise serializers.ValidationError('A user with this email and password was not found.')
         if not user.is_active:
-            raise serializers.ValidationError(
-                'This user has been deactivated.'
-            )
+            raise serializers.ValidationError('This user has been deactivated.')
 
         return {
             'email': user.email,
@@ -70,9 +56,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = (
-            'email', 'username', 'password', 'token',
-        )
+        fields = ('email', 'username', 'password', 'token',)
         read_only_fields = ('token',)
 
     def update(self, instance, validated_data):
@@ -83,6 +67,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         if password is not None:
             instance.set_password(password)
-       
+
         instance.save()
         return instance

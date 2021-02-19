@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_extensions',
 
-    # My apps
+    # Local
     'api.apps.ApiConfig',
     'authentication.apps.AuthenticationConfig',
 ]
@@ -42,7 +42,6 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -50,7 +49,6 @@ MIDDLEWARE = [
 
     # CORS
     'corsheaders.middleware.CorsMiddleware',
-
     'django.middleware.common.CommonMiddleware',
 ]
 
@@ -61,6 +59,8 @@ AUTH_USER_MODEL = 'authentication.User'
 CORS_ORIGIN_WHITELIST = (
     '0.0.0.0:8080',
     'localhost:8080',
+    '0.0.0.0:8000',
+    'localhost:8000',
 )
 
 REST_FRAMEWORK = {
