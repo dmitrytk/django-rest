@@ -3,12 +3,11 @@ import { TOKEN_KEY, USER_KEY } from '../common/config';
 
 class AuthService {
   static login(credentials) {
-    console.log('Log by auth service');
     return http.post('/users/login/', credentials)
       .then((response) => {
-        console.log(response.data);
-        if (response.data[TOKEN_KEY]) {
-          localStorage.setItem(USER_KEY, JSON.stringify(response.data));
+        if (response.data.user.token) {
+          localStorage.setItem(USER_KEY, response.data.user.username);
+          localStorage.setItem(TOKEN_KEY, response.data.user.token);
         }
         return response.data;
       });

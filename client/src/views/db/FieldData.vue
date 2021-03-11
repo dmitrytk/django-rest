@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import FieldForm from '@/component/form/FieldForm.vue';
+import FieldForm from '@/component/forms/FieldForm.vue';
 import GenericTableTab from '@/component/tables/GenericTableTab.vue';
 import { mapGetters } from 'vuex';
 

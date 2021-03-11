@@ -40,7 +40,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import WellList from '@/component/WellList.vue';
-import WellForm from '@/component/form/WellForm.vue';
+import WellForm from '@/component/forms/WellForm.vue';
 import GenericTableTab from '@/component/tables/GenericTableTab.vue';
 import ImportButton from '@/component/buttons/ImportButton.vue';
 import ChartTab from '@/component/ChartTab.vue';

@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <h2 class="text-center my-3">Login</h2>
+    <h2 class="text-center my-3">Войти</h2>
     <b-card>
       <LoginForm/>
     </b-card>
@@ -8,7 +8,7 @@
 </template>
 <script>
 
-import LoginForm from '@/component/form/LoginForm.vue';
+import LoginForm from '@/component/forms/LoginForm.vue';
 
 export default {
   name: 'Login',

@@ -30,13 +30,16 @@
         <b-nav-item v-if="this.field" class="font-italic">
           <b-icon class="clickable" icon="arrow-repeat" @click="changeDB()"></b-icon>
         </b-nav-item>
-        <b-nav-item-dropdown right>
+        <b-nav-item-dropdown v-if="user" right>
           <template v-slot:button-content>
-            <em>Пользователь</em>
+            <em>{{ user }}</em>
           </template>
-          <b-dropdown-item href="#">Профиль</b-dropdown-item>
-          <b-dropdown-item href="#">Выйти</b-dropdown-item>
+          <!--          <b-dropdown-item href="#">Профиль</b-dropdown-item>-->
+          <b-dropdown-item href="#" @click="logout">Выйти</b-dropdown-item>
         </b-nav-item-dropdown>
+        <b-nav-item v-else to="/login">
+          <ins>Войти</ins>
+        </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -52,10 +55,16 @@ export default {
       'field',
       'fields',
     ]),
+    ...mapGetters('auth', [
+      'user',
+    ]),
   },
   methods: {
     ...mapActions('fields', [
       'setSelectionVisible',
+    ]),
+    ...mapActions('auth', [
+      'logout',
     ]),
     changeDB() {
       this.setSelectionVisible(true);

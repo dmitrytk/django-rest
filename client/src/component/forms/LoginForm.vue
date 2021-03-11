@@ -1,7 +1,7 @@
 <template>
   <b-card-text>
     <!--    EMAIL    -->
-    <b-form-group label="Email"
+    <b-form-group label="Почта"
                   label-cols="4"
                   label-cols-lg="2"
                   label-for="input-default">
@@ -10,7 +10,7 @@
     </b-form-group>
 
     <!--    PASSWORD    -->
-    <b-form-group label="Password"
+    <b-form-group label="Пароль"
                   label-cols="4"
                   label-cols-lg="2"
                   label-for="input-default">
@@ -44,7 +44,7 @@ export default {
         };
         this.login(credentials);
       } else {
-        this.$toasted.show('Invalid data');
+        this.$toasted.show('Некорректные данные');
       }
     },
   },

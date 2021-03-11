@@ -1,13 +1,16 @@
 <template>
   <b-card-text v-if="currentField">
     <!--String-->
-    <b-form-group label="Name" label-cols="4" label-cols-lg="2" label-for="input-default">
+    <b-form-group label="Название" label-cols="4" label-cols-lg="2" label-for="input-default">
       <b-form-input v-model="currentField.name"></b-form-input>
     </b-form-group>
-    <b-form-group label="Type" label-cols="4" label-cols-lg="2" label-for="input-default">
+    <b-form-group label="Тип" label-cols="4" label-cols-lg="2" label-for="input-default">
       <b-form-input v-model="currentField.type"></b-form-input>
     </b-form-group>
-    <b-form-group label="Location" label-cols="4" label-cols-lg="2" label-for="input-default">
+    <b-form-group label="Местонахождение"
+                  label-cols="4"
+                  label-cols-lg="2"
+                  label-for="input-default">
       <b-form-input v-model="currentField.location">
       </b-form-input>
     </b-form-group>
