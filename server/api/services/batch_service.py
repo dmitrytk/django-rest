@@ -8,7 +8,7 @@ from rest_framework.serializers import Serializer
 from api import queries
 from api.models import Inclinometry, Well, FieldCoordinate
 from api.serializers import IncSerializer, MerSerializer, RateSerializer, ZoneSerializer, FieldCoordinateSerializer, \
-    WellSerializer
+    WellSerializer, WellCaseSerializer, WellPerforationSerializer, WellPumpSerializer
 from api.services.raw_sql_service import batch_load
 from api.utils import mappers
 from api.utils.validators import validate_batch_data
@@ -99,6 +99,55 @@ def load_zones(data: dict) -> Response:
         _create_new_wells(field_id, wells)
         batch_load(queries.ZONE_LOAD, [(field_id, *mappers.map_zone(row)) for row in serializer.validated_data])
         return Response({'message': f'Загружено пластов: {len(serializer.validated_data)}'},
+                        status=status.HTTP_200_OK)
+    else:
+        return _invalid_data_error(serializer)
+
+
+@transaction.atomic
+def load_cases(data: dict) -> Response:
+    if not validate_batch_data(data):
+        return _invalid_data_error()
+    field_id = data['field_id']
+    serializer = WellCaseSerializer(data=data['rows'], many=True)
+    if serializer.is_valid():
+        wells = _get_well_names(data['rows'])
+        _create_new_wells(field_id, wells)
+        batch_load(queries.CASE_LOAD, [(field_id, *mappers.map_case(row)) for row in serializer.validated_data])
+        return Response({'message': f'Загружено обсадных колонн: {len(serializer.validated_data)}'},
+                        status=status.HTTP_200_OK)
+    else:
+        return _invalid_data_error(serializer)
+
+
+@transaction.atomic
+def load_perforations(data: dict) -> Response:
+    if not validate_batch_data(data):
+        return _invalid_data_error()
+    field_id = data['field_id']
+    serializer = WellPerforationSerializer(data=data['rows'], many=True)
+    if serializer.is_valid():
+        wells = _get_well_names(data['rows'])
+        _create_new_wells(field_id, wells)
+        batch_load(queries.PERFORATION_LOAD,
+                   [(field_id, *mappers.map_perforation(row)) for row in serializer.validated_data])
+        return Response({'message': f'Загружено интервалов перфорации: {len(serializer.validated_data)}'},
+                        status=status.HTTP_200_OK)
+    else:
+        return _invalid_data_error(serializer)
+
+
+@transaction.atomic
+def load_pumps(data: dict) -> Response:
+    if not validate_batch_data(data):
+        return _invalid_data_error()
+    field_id = data['field_id']
+    serializer = WellPumpSerializer(data=data['rows'], many=True)
+    if serializer.is_valid():
+        wells = _get_well_names(data['rows'])
+        _create_new_wells(field_id, wells)
+        batch_load(queries.PUMP_LOAD, [(field_id, *mappers.map_pump(row)) for row in serializer.validated_data])
+        return Response({'message': f'Загружено насосов: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
         return _invalid_data_error(serializer)

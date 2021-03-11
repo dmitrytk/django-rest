@@ -16,5 +16,8 @@ urlpatterns = [
     path('batch/mer/', batch_views.load_mer),
     path('batch/rates/', batch_views.load_rates),
     path('batch/zones/', batch_views.load_zones),
+    path('batch/cases/', batch_views.load_cases),
+    path('batch/perforations/', batch_views.load_perforations),
+    path('batch/pumps/', batch_views.load_pumps),
     path('batch/coordinates/', batch_views.load_coordinates),
 ]

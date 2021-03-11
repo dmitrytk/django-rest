@@ -13,13 +13,28 @@ def map_rate(data: dict) -> list:
     return [data.get(key, None) for key in keys]
 
 
+def map_coordinate(data: dict) -> list:
+    keys = ['lat', 'lng', 'x', 'y']
+    return [data.get(key, None) for key in keys]
+
+
 def map_zone(data: dict) -> list:
     keys = ['well', 'name', 'top_md', 'bot_md', 'top_tvd', 'bot_tvd', 'h', ]
     return [data.get(key, None) for key in keys]
 
 
-def map_coordinate(data: dict) -> list:
-    keys = ['lat', 'lng', 'x', 'y']
+def map_case(data: dict) -> list:
+    keys = ['well', 'name', 'diameter', 'length', 'top_md', 'bot_md', 'cemented', 'cement_top', ]
+    return [data.get(key, None) for key in keys]
+
+
+def map_perforation(data: dict) -> list:
+    keys = ['well', 'perforator_type', 'hole_diameter', 'holes_per_meter', 'top_md', 'bot_md']
+    return [data.get(key, None) for key in keys]
+
+
+def map_pump(data: dict) -> list:
+    keys = ['well', 'name', 'md', 'rate', 'diameter']
     return [data.get(key, None) for key in keys]
 
 

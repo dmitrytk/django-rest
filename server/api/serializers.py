@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.models import Field, Well, Inclinometry, Mer, Rate, FieldCoordinate, Zone
+from api.models import Field, Well, Inclinometry, Mer, Rate, FieldCoordinate, Zone, WellCase, WellPump, WellPerforation
 
 
 class FieldSerializer(serializers.ModelSerializer):
@@ -80,4 +80,28 @@ class ZoneSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Zone
+        fields = '__all__'
+
+
+class WellCaseSerializer(serializers.ModelSerializer):
+    well = serializers.CharField()
+
+    class Meta:
+        model = WellCase
+        fields = '__all__'
+
+
+class WellPerforationSerializer(serializers.ModelSerializer):
+    well = serializers.CharField()
+
+    class Meta:
+        model = WellPerforation
+        fields = '__all__'
+
+
+class WellPumpSerializer(serializers.ModelSerializer):
+    well = serializers.CharField()
+
+    class Meta:
+        model = WellPump
         fields = '__all__'

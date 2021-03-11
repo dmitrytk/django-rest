@@ -29,6 +29,33 @@ ZONE_LOAD = """INSERT INTO zones
     h = EXCLUDED.h
 """
 
+CASE_LOAD = """INSERT INTO well_cases
+    (well_id, name, diameter, length, top_md, bot_md, cemented, cement_top) VALUES
+    ((SELECT id FROM wells w WHERE w.field_id=%s and w.name=%s),%s,%s,%s,%s,%s,%s,%s)
+    ON CONFLICT (well_id, name)
+    DO UPDATE SET diameter = EXCLUDED.diameter,
+    length = EXCLUDED.length,
+    top_tvd = EXCLUDED.top_tvd,
+    bot_md = EXCLUDED.bot_md,
+    cemeneted = EXCLUDED.cemeneted,
+    cement_top = EXCLUDED.cement_top
+"""
+
+PERFORATION_LOAD = """INSERT INTO well_perforations
+    (well_id, perforator_type, hole_diameter, holes_per_meter, top_md, bot_md) VALUES
+    ((SELECT id FROM wells w WHERE w.field_id=%s and w.name=%s),%s,%s,%s,%s,%s)
+"""
+
+PUMP_LOAD = """INSERT INTO well_pumps
+    (well_id, name, md, rate, diameter) VALUES
+    ((SELECT id FROM wells w WHERE w.field_id=%s and w.name=%s),%s,%s,%s,%s)
+    ON CONFLICT (well_id)
+    DO UPDATE SET name = EXCLUDED.name,
+    md = EXCLUDED.md,
+    rate = EXCLUDED.rate,
+    diameter = EXCLUDED.diameter
+"""
+
 COORDINATE_LOAD = """INSERT INTO field_coordinates
     (field_id, lat, lng, x, y) VALUES
     (%s,%s,%s,%s,%s)

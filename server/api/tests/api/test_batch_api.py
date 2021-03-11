@@ -11,6 +11,7 @@ class TestBatchApi(APITestCase):
     mer_url = '/api/batch/mer/'
     rates_url = '/api/batch/rates/'
     zones_url = '/api/batch/zones/'
+    cases_url = '/api/batch/cases/'
     coordinates_url = '/api/batch/coordinates/'
 
     def test_load_wells(self):
@@ -73,6 +74,16 @@ class TestBatchApi(APITestCase):
         }
         response = self.client.post(self.zones_url, data, format='json')
         self.assertEqual(Zone.objects.all().count(), 5)  # 2 + 2 + 1 = 5
+
+    def test_load_cases(self):
+        data = {
+            'field_id': 1,
+            'rows': [
+                {'well': self.well_name, 'name': 'кондуктор', 'diameter': 1500.25},
+            ]
+        }
+        response = self.client.post(self.zones_url, data, format='json')
+        self.assertEqual(Zone.objects.all().count(), 1)  # 1
 
     def test_load_coordinates(self):
         data = {

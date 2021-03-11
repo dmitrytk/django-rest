@@ -30,5 +30,20 @@ def load_zones(request):
 
 
 @api_view(['POST'])
+def load_cases(request):
+    return batch_service.load_cases(request.data)
+
+
+@api_view(['POST'])
+def load_perforations(request):
+    return batch_service.load_perforations(request.data)
+
+
+@api_view(['POST'])
+def load_pumps(request):
+    return batch_service.load_pumps(request.data)
+
+
+@api_view(['POST'])
 def load_coordinates(request):
     return batch_service.load_coordinates(request.data)

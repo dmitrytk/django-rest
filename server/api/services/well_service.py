@@ -2,8 +2,9 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from api import queries
-from api.models import Inclinometry, Mer, Rate, Zone
-from api.serializers import IncSerializer, ZoneSerializer
+from api.models import Inclinometry, Mer, Rate, Zone, WellCase, WellPerforation, WellPump
+from api.serializers import IncSerializer, ZoneSerializer, WellCaseSerializer, WellPerforationSerializer, \
+    WellPumpSerializer
 # GET CHILD OBJECTS
 # /wells/{id}/inclinometry GET
 from api.services.raw_sql_service import get_raw_view
@@ -35,6 +36,27 @@ def get_well_zones(pk):
     return Response(serializer.data)
 
 
+# /wells/{id}/cases GET
+def get_well_cases(pk):
+    rate = WellCase.objects.filter(well_id=pk)
+    serializer = WellCaseSerializer(rate, many=True)
+    return Response(serializer.data)
+
+
+# /wells/{id}/perforations GET
+def get_well_perforations(pk):
+    rate = WellPerforation.objects.filter(well_id=pk)
+    serializer = WellPerforationSerializer(rate, many=True)
+    return Response(serializer.data)
+
+
+# /wells/{id}/pumps GET
+def get_well_pumps(pk):
+    rate = WellPump.objects.filter(well_id=pk)
+    serializer = WellPumpSerializer(rate, many=True)
+    return Response(serializer.data)
+
+
 # DELETE CHILD OBJECTS
 # /wells/{id}/inclinometry DELETE
 def delete_well_inclinometry(pk):
@@ -61,4 +83,25 @@ def delete_well_rates(pk):
 def delete_well_zones(pk):
     count = Zone.objects.filter(well_id=pk).delete()
     return Response({'message': f'{count[0]} Zones were deleted successfully!'},
+                    status=status.HTTP_204_NO_CONTENT)
+
+
+# /wells/{id}/cases DELETE
+def delete_well_cases(pk):
+    count = WellCase.objects.filter(well_id=pk).delete()
+    return Response({'message': f'{count[0]} Cases were deleted successfully!'},
+                    status=status.HTTP_204_NO_CONTENT)
+
+
+# /wells/{id}/perforations DELETE
+def delete_well_perforations(pk):
+    count = WellPerforation.objects.filter(well_id=pk).delete()
+    return Response({'message': f'{count[0]} Perforations were deleted successfully!'},
+                    status=status.HTTP_204_NO_CONTENT)
+
+
+# /wells/{id}/pumps DELETE
+def delete_well_pumps(pk):
+    count = WellPump.objects.filter(well_id=pk).delete()
+    return Response({'message': f'{count[0]} Pumps were deleted successfully!'},
                     status=status.HTTP_204_NO_CONTENT)

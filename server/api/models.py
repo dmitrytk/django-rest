@@ -115,3 +115,49 @@ class Zone(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class WellCase(models.Model):
+    """Inclinometry model"""
+
+    well = models.ForeignKey(
+        Well, related_name='well_cases', on_delete=models.CASCADE)
+    name = models.CharField(max_length=70)
+    diameter = models.FloatField()
+    length = models.FloatField(null=True)
+    top_md = models.FloatField(null=True)
+    bot_md = models.FloatField(null=True)
+    cemented = models.BooleanField(null=True)
+    cement_top = models.FloatField(null=True)
+
+    class Meta:
+        db_table = 'well_cases'
+
+
+class WellPerforation(models.Model):
+    """Inclinometry model"""
+
+    well = models.ForeignKey(
+        Well, related_name='well_perforations', on_delete=models.CASCADE)
+    perforator_type = models.CharField(max_length=70)
+    hole_diameter = models.FloatField(null=True)
+    holes_per_meter = models.FloatField(null=True)
+    top_md = models.FloatField(null=True)
+    bot_md = models.FloatField(null=True)
+
+    class Meta:
+        db_table = 'well_perforations'
+
+
+class WellPump(models.Model):
+    """Inclinometry model"""
+
+    well = models.OneToOneField(
+        Well, on_delete=models.CASCADE)
+    name = models.CharField(max_length=70)
+    md = models.FloatField(null=True)
+    rate = models.FloatField(null=True)
+    diameter = models.FloatField(null=True)
+
+    class Meta:
+        db_table = 'well_pumps'
