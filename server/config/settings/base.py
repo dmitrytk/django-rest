@@ -57,10 +57,10 @@ AUTH_USER_MODEL = 'authentication.User'
 # CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = (
-    '0.0.0.0:8080',
-    'localhost:8080',
-    '0.0.0.0:8000',
-    'localhost:8000',
+    'http://0.0.0.0:8080',
+    'http://localhost:8080',
+    'http://0.0.0.0:8000',
+    'http://localhost:8000',
 )
 
 REST_FRAMEWORK = {
