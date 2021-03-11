@@ -13,6 +13,9 @@ export default {
       inclinometry: null,
       mer: null,
       rates: null,
+      cases: null,
+      perforations: null,
+      pumps: null,
       zones: null,
     }
   ),
@@ -37,6 +40,15 @@ export default {
     },
     setRates(state, payload) {
       state.rates = payload;
+    },
+    setCases(state, payload) {
+      state.cases = payload;
+    },
+    setPerforations(state, payload) {
+      state.perforations = payload;
+    },
+    setPumps(state, payload) {
+      state.pumps = payload;
     },
     setZones(state, payload) {
       state.zones = payload;
@@ -64,6 +76,9 @@ export default {
       context.dispatch('fetchMer', id);
       context.dispatch('fetchRates', id);
       context.dispatch('fetchZones', id);
+      context.dispatch('fetchCases', id);
+      context.dispatch('fetchPerforations', id);
+      context.dispatch('fetchPumps', id);
     },
 
     // GET CHILD OBJECTS
@@ -83,6 +98,18 @@ export default {
       const res = await WellService.getZones(id);
       commit('setZones', res.data);
     },
+    async fetchCases({ commit }, id) {
+      const res = await WellService.getCases(id);
+      commit('setCases', res.data);
+    },
+    async fetchPerforations({ commit }, id) {
+      const res = await WellService.getPerforations(id);
+      commit('setPerforations', res.data);
+    },
+    async fetchPumps({ commit }, id) {
+      const res = await WellService.getPumps(id);
+      commit('setPumps', res.data);
+    },
 
     // DELETE CHILD OBJECTS
     async deleteInclinometry(context, id) {
@@ -96,6 +123,15 @@ export default {
     },
     async deleteZones(context, id) {
       await WellService.deleteZones(id);
+    },
+    async deleteCases(context, id) {
+      await WellService.deleteCases(id);
+    },
+    async deletePerforations(context, id) {
+      await WellService.deletePerforations(id);
+    },
+    async deletePumps(context, id) {
+      await WellService.deletePumps(id);
     },
 
     async updateWell(context, data) {
@@ -119,6 +155,9 @@ export default {
     mer: (state) => state.mer,
     rates: (state) => state.rates,
     zones: (state) => state.zones,
+    cases: (state) => state.cases,
+    perforations: (state) => state.perforations,
+    pumps: (state) => state.pumps,
 
   },
 };

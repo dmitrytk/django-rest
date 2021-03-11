@@ -62,6 +62,9 @@ export default {
         { label: 'МЭР', key: 'mer' },
         { label: 'Режимы', key: 'rates' },
         { label: 'Пласты', key: 'zones' },
+        { label: 'Обсадные колонны', key: 'cases' },
+        { label: 'Перфорации', key: 'perforations' },
+        { label: 'Насос', key: 'pumps' },
       ],
     };
   },

@@ -223,6 +223,117 @@ const zones = [
   },
 ];
 
+const cases = [
+  {
+    label: 'Скважина',
+    key: 'well',
+    required: true,
+    regex: /(well|скв)/i,
+  },
+  {
+    label: 'Название',
+    key: 'name',
+    required: true,
+    regex: /(name|назв|тип)/i,
+  },
+  {
+    label: 'Диаметр',
+    key: 'diameter',
+    regex: /(diam|диам)/i,
+  },
+  {
+    label: 'Длина',
+    key: 'length',
+    regex: /(length|длин)/i,
+  },
+  {
+    label: 'От',
+    key: 'top_md',
+    regex: /(top_md|от)/i,
+  },
+  {
+    label: 'До',
+    key: 'bot_md',
+    regex: /(bot_md|до)/i,
+  },
+  {
+    label: 'Зацементирована',
+    key: 'cemented',
+    regex: /(^cement|цемент)/i,
+  },
+  {
+    label: 'Кровля цемента',
+    key: 'cement_top',
+    regex: /(^cement_top|кровля)/i,
+  },
+];
+
+const perforations = [
+  {
+    label: 'Скважина',
+    key: 'well',
+    required: true,
+    regex: /(well|скв)/i,
+  },
+  {
+    label: 'Тип перфоратора',
+    key: 'perforator_type',
+    required: true,
+    regex: /(perforato|тип)/i,
+  },
+  {
+    label: 'Диаметр отверстия',
+    key: 'hole_diameter',
+    regex: /(diam|диам)/i,
+  },
+  {
+    label: 'Отверстий на погонный метр',
+    key: 'holes_per_meter',
+    regex: /(holes|отве)/i,
+  },
+  {
+    label: 'От',
+    key: 'top_md',
+    regex: /(top_md|от)/i,
+  },
+  {
+    label: 'До',
+    key: 'bot_md',
+    regex: /(bot_md|до)/i,
+  },
+];
+
+const pumps = [
+  {
+    label: 'Скважина',
+    key: 'well',
+    required: true,
+    regex: /(well|скв)/i,
+  },
+  {
+    label: 'Марка',
+    key: 'name',
+    required: true,
+    regex: /(name|марка)/i,
+  },
+  {
+    label: 'Глубина установки',
+    key: 'md',
+    regex: /(md|глуб)/i,
+  },
+  {
+    label: 'Производительность',
+    key: 'rate',
+    regex: /(rate|произ)/i,
+  },
+  {
+    label: 'Диаметр',
+    key: 'diameter',
+    regex: /(diam|диам)/i,
+  },
+
+];
+
 const coordinates = [
   {
     label: 'X',
@@ -253,6 +364,9 @@ const tables = {
   mer,
   rates,
   zones,
+  cases,
+  perforations,
+  pumps,
   coordinates,
 };
 

@@ -34,6 +34,18 @@ class WellService {
     return http.get(`/wells/${id}/zones/`);
   }
 
+  static getCases(id) {
+    return http.get(`/wells/${id}/cases/`);
+  }
+
+  static getPerforations(id) {
+    return http.get(`/wells/${id}/perforations/`);
+  }
+
+  static getPumps(id) {
+    return http.get(`/wells/${id}/pumps/`);
+  }
+
   // DELETE CHILD OBJECTS
   static deleteInclinometry(id) {
     return http.delete(`/wells/${id}/inclinometry/`);
@@ -49,6 +61,18 @@ class WellService {
 
   static deleteZones(id) {
     return http.delete(`/wells/${id}/zones/`);
+  }
+
+  static deleteCases(id) {
+    return http.delete(`/wells/${id}/cases/`);
+  }
+
+  static deletePerforations(id) {
+    return http.delete(`/wells/${id}/perforations/`);
+  }
+
+  static deletePumps(id) {
+    return http.delete(`/wells/${id}/pumps/`);
   }
 }
 
