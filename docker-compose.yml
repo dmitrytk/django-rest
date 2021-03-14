@@ -14,8 +14,8 @@ services:
       - ./.envs/.local/.postgres
     ports:
       - 8000:8000
-    #    command: gunicorn --bind :8000 --workers 3 config.wsgi:application
-    command: python manage.py runserver 0.0.0.0:8000 --settings=config.settings.local
+    command: gunicorn --bind :8000 --workers 3 --env DJANGO_SETTINGS_MODULE=config.settings.local config.wsgi:application
+  #    command: python manage.py runserver 0.0.0.0:8000 --settings=config.settings.local
 
 
 
