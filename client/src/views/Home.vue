@@ -1,5 +1,5 @@
 <template>
-  <b-jumbotron header="Horizon" lead="Геологическая база данных">
+  <b-jumbotron class="full-height" header="Horizon" lead="Геологическая база данных">
   </b-jumbotron>
 </template>
 

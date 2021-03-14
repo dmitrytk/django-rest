@@ -7,7 +7,7 @@
         <b-col class="mb-3" lg="6">
           <h4 class="text-center text-secondary mb-3">Исходные</h4>
           <b-row class="mb-3">
-            <b-col>
+            <b-col lg>
               <b-form-group
                 label="Тип координаты"
               >
@@ -48,10 +48,10 @@
         </b-col>
 
         <!-- OUTPUT -->
-        <b-col class="mb-3" lg="6">
+        <b-col class="" lg="6">
           <h4 class="text-center text-secondary mb-3">Результат</h4>
           <b-row class="mb-3">
-            <b-col>
+            <b-col lg>
               <b-form-group
                 label="Тип координаты"
               >
@@ -111,15 +111,15 @@
 
       <!-- BUTTONS -->
       <div class="text-left">
-        <b-button :disabled="!inData" class="mr-3"
+        <b-button :disabled="!inData" class="mr-3 mt-3"
                   variant="primary"
                   @click="convert">
           <b-icon icon="chevron-double-right"></b-icon>
           Конвертировать
         </b-button>
 
-        <CopyButton :target="outData"/>
-        <ClearButton :callback="clear"/>
+        <CopyButton :target="outData" class="mt-3"/>
+        <ClearButton :callback="clear" class="mt-3"/>
       </div>
     </b-card>
   </b-container>

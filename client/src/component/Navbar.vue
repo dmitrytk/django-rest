@@ -4,7 +4,7 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item to="/db/wells">База данных</b-nav-item>
+        <b-nav-item to="/db/wells">БД</b-nav-item>
         <b-nav-item to="/import">Импорт</b-nav-item>
         <b-nav-item to="/sandbox">Sandbox</b-nav-item>
 

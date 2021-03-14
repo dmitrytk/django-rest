@@ -27,15 +27,14 @@
 
         <!--      CHECKBOX      -->
         <b-form-checkbox
-          v-model="selected"
-          class="mb-3">
+          v-model="selected">
           Сетка
         </b-form-checkbox>
 
         <!--      GRID PARAMS      -->
         <b-row v-if="selected">
-          <b-col>
-            <b-form-group>
+          <b-col md="4">
+            <b-form-group class="mb-0">
               <label>Шаг сетки, м</label>
               <b-form-input
                 v-model="step"
@@ -44,8 +43,8 @@
             </b-form-group>
           </b-col>
 
-          <b-col>
-            <b-form-group>
+          <b-col md="4">
+            <b-form-group class="mb-0">
               <label>Запас сетки, м</label>
               <b-form-input
                 v-model="margin"
@@ -54,9 +53,9 @@
             </b-form-group>
           </b-col>
 
-          <b-col>
-            <b-form-group>
-              <label>Дополнительное понижение, м</label>
+          <b-col md="4">
+            <b-form-group class="mb-0">
+              <label>Доп. понижение, м</label>
               <b-form-input
                 v-model="additionalDrawdown"
                 type="number">
@@ -68,14 +67,17 @@
         <!--      BUTTONS      -->
         <b-row>
           <b-col>
-            <b-button :disabled="!data" class="mr-3" variant="primary" @click="calculate">
+            <b-button :disabled="!data" class="mr-3 mt-3" variant="primary" @click="calculate">
               <b-icon icon="chevron-double-right"></b-icon>
               Рассчитать
             </b-button>
-            <ClearButton :callback="clear"/>
+            <ClearButton :callback="clear" class="mt-3"/>
           </b-col>
           <b-col class="text-right">
-            <b-button id="template" v-b-modal.modal-1 @click="copyTemplate">Шаблон</b-button>
+            <b-button id="template" v-b-modal.modal-1
+                      class="mt-3"
+                      @click="copyTemplate">Шаблон
+            </b-button>
             <b-modal
               id="modal-1"
               ok-only

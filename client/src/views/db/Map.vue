@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-card>
-      <div v-if="polygon.latlngs.length>0">
+    <b-card v-if="polygon.latlngs.length>0">
+      <div>
         <l-map ref="leafmap"
                :center="center"
                style="height: 600px">
@@ -32,8 +32,11 @@
         </l-map>
         <b-button class="mt-3" @click="fitBounds">Подогнать</b-button>
       </div>
-      <h3 v-else class="text-center my-3">Нет координат месторождения</h3>
     </b-card>
+    <h4 v-else class="text-center my-3">
+      Нет координат месторождения
+      <ImportButton/>
+    </h4>
   </div>
 </template>
 
@@ -43,10 +46,12 @@ import {
 } from 'vue2-leaflet';
 import WellIcon from '@/component/icons/WellIcon.vue';
 import { mapGetters } from 'vuex';
+import ImportButton from '@/component/buttons/ImportButton.vue';
 
 export default {
   name: 'Map',
   components: {
+    ImportButton,
     LMap,
     LTileLayer,
     LIcon,
