@@ -15,6 +15,18 @@ class Field(models.Model):
         db_table = 'fields'
 
 
+class Project(models.Model):
+    field = models.OneToOneField(
+        Field, on_delete=models.CASCADE)
+    name = models.TextField(unique=True)
+    number = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    deadline = models.DateField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'projects'
+
+
 class FieldCoordinate(models.Model):
     field = models.ForeignKey(
         Field, related_name='coordinates', on_delete=models.CASCADE)
