@@ -1,5 +1,5 @@
+import { TOKEN_KEY, USER_KEY } from '@/common/config';
 import http from '../common/http';
-import { TOKEN_KEY, USER_KEY } from '../common/config';
 
 class AuthService {
   static login(credentials) {

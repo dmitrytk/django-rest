@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework import routers
 
 from api.views import field_views, batch_views, well_views
+from api.views.foo_views import foo
 
 router = routers.SimpleRouter()
 router.register(r'fields', field_views.FieldViewSet)
@@ -20,4 +21,6 @@ urlpatterns = [
     path('batch/perforations/', batch_views.load_perforations),
     path('batch/pumps/', batch_views.load_pumps),
     path('batch/coordinates/', batch_views.load_coordinates),
+
+    path('foo/', foo),
 ]

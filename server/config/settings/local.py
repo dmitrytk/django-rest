@@ -7,7 +7,7 @@ from .base import env
 DEBUG = True
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
+ALLOWED_HOSTS = ["0.0.0.0", 'localhost', '127.0.0.1', 'deephorizon.ru', 'www.deephorizon.ru']
 
 sentry_sdk.init(
     dsn="https://627974e1f0c144b583cc909e641554e3@o527514.ingest.sentry.io/5643856",
