@@ -4,35 +4,32 @@ services:
   server:
     build:
       context: ./server
-      dockerfile: local.dockerfile
-    image: horizon_server
-    container_name: horizon_server
+      dockerfile: prod.dockerfile
+    image: horizon_local_server
+    container_name: server
     depends_on:
       - db
     volumes:
-      - ./server:/app
+      - ./server:/usr/src/app
     env_file:
-      - .envs/.local/.django
+      - .envs/local
     ports:
       - 8000:8000
     command: python manage.py runserver 0.0.0.0:8000 --settings=config.settings.local
 
 
+
   client:
     build:
       context: ./client
-      dockerfile: local.dockerfile
-    image: horizon_client
-    container_name: horizon_client
+      dockerfile: prod.dockerfile
+    image: horizon_local_client
     depends_on:
       - server
     volumes:
-      - ./client:/app
-    env_file:
-      - .envs/.local/.vue
+      - ./client:/usr/src/app
     ports:
-      - 8080:8080
-    command: npm run serve
+      - 80:80
 
 
   db:
@@ -40,8 +37,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - .envs/.local/.postgres
-
+      - .envs/local
 
 volumes:
   postgres_data: { }

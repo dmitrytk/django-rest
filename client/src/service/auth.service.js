@@ -3,6 +3,7 @@ import http from '../common/http';
 
 class AuthService {
   static login(credentials) {
+    console.log(credentials);
     return http.post('/users/login/', credentials)
       .then((response) => {
         if (response.data.user.token) {

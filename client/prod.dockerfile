@@ -1,7 +1,7 @@
 # Build stage
 FROM node:lts-alpine as build-stage
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY package*.json ./
 
@@ -18,7 +18,6 @@ COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 
 RUN rm -rf /usr/share/nginx/html/*
 
-COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
-
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
