@@ -8,7 +8,7 @@ export default {
   state: () => (
     {
       user: null,
-      isAuthenticated: getToken(),
+      isAuthenticated: !!getToken(),
     }
   ),
   mutations: {
