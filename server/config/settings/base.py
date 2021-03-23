@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -15,8 +16,6 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 DEBUG = env('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = []
-
 INSTALLED_APPS = [
     # Django apps
     'django.contrib.admin',
@@ -30,12 +29,12 @@ INSTALLED_APPS = [
     # Third-party
     'rest_framework',
     'corsheaders',
-    'django_extensions',
 
     # Local
     'api.apps.ApiConfig',
-    'authentication.apps.AuthenticationConfig',
+    'users.apps.UsersConfig',
 ]
+ALLOWED_HOSTS = []
 
 SITE_ID = 1
 
@@ -52,8 +51,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-AUTH_USER_MODEL = 'authentication.User'
-
 CORS_ALLOWED_ORIGINS = [
     'http://0.0.0.0:8080',
     'http://localhost:8080',
@@ -69,13 +66,18 @@ CORS_ALLOWED_ORIGINS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.IsAuthenticated'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'authentication.backends.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DATE_INPUT_FORMATS': ['%d.%m.%Y'],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
 ROOT_URLCONF = 'config.urls'
