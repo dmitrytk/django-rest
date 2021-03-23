@@ -1,1 +1,0 @@
-python manage.py loaddata  api.json --settings=config.settings.local
