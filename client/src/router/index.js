@@ -12,7 +12,7 @@ import CoordinateConverter from '@/views/CoordinateConverter.vue';
 import WaterCalculator from '@/views/WaterCalculator.vue';
 import Decline from '@/views/Decline.vue';
 import Login from '@/views/Login.vue';
-import { USER_KEY } from '../common/config';
+import { getToken } from '@/common/jwt';
 
 Vue.use(VueRouter);
 
@@ -93,7 +93,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/'];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem(USER_KEY);
+  const loggedIn = getToken();
 
   if (authRequired && !loggedIn) {
     return next('/login');

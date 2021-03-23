@@ -1,10 +1,9 @@
-import { TOKEN_KEY, USER_KEY } from './config';
+import { getToken } from '@/common/jwt';
 
-export default function authHeader() {
-  const user = JSON.parse(localStorage.getItem(USER_KEY));
+const authHeaders = () => ({
+  headers: {
+    Authorization: `Bearer ${getToken()}`,
+  },
+});
 
-  if (user && user[TOKEN_KEY]) {
-    return { Authorization: `Bearer ${user[TOKEN_KEY]}` };
-  }
-  return {};
-}
+export default authHeaders;
