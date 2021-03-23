@@ -8,4 +8,3 @@ ENV PYTHONUNBUFFERED 1
 RUN pip install --upgrade pip
 COPY ./requirements /app/requirements
 RUN pip install -r /app/requirements/local.txt
-
