@@ -30,9 +30,9 @@
         <b-nav-item v-if="this.field" class="font-italic">
           <b-icon class="clickable" icon="arrow-repeat" @click="changeDB()"></b-icon>
         </b-nav-item>
-        <b-nav-item-dropdown v-if="user" right>
+        <b-nav-item-dropdown v-if="userProfile" right>
           <template v-slot:button-content>
-            <em>{{ user }}</em>
+            <em>{{ userProfile.username }}</em>
           </template>
           <!--          <b-dropdown-item href="#">Профиль</b-dropdown-item>-->
           <b-dropdown-item href="#" @click="logout">Выйти</b-dropdown-item>
@@ -47,6 +47,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { getToken } from '@/common/jwt';
 
 export default {
   name: 'Navbar',
@@ -56,7 +57,7 @@ export default {
       'fields',
     ]),
     ...mapGetters('auth', [
-      'user',
+      'userProfile',
     ]),
   },
   methods: {
@@ -65,11 +66,17 @@ export default {
     ]),
     ...mapActions('auth', [
       'logout',
+      'getUserProfile',
     ]),
     changeDB() {
       this.setSelectionVisible(true);
     },
+  },
 
+  mounted() {
+    if (!this.userProfile && getToken()) {
+      this.getUserProfile();
+    }
   },
 };
 

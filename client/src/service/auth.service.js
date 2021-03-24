@@ -1,21 +1,13 @@
-import { TOKEN_KEY, USER_KEY } from '@/common/config';
+import authHeaders from '@/common/auth-header';
 import http from '../common/http';
 
 class AuthService {
   static login(credentials) {
-    console.log(credentials);
-    return http.post('/users/login/', credentials)
-      .then((response) => {
-        if (response.data.user.token) {
-          localStorage.setItem(USER_KEY, response.data.user.username);
-          localStorage.setItem(TOKEN_KEY, response.data.user.token);
-        }
-        return response.data;
-      });
+    return http.post('/users/login/', credentials);
   }
 
-  static logout() {
-    localStorage.removeItem(USER_KEY);
+  static getUserProfile() {
+    return http.get('/users/me/', authHeaders());
   }
 }
 

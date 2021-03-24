@@ -4,17 +4,26 @@
     "pk": 1,
     "fields": {
       "name": "Верхнесалымское",
-      "type": "нефтяное",
-      "location": "ХМАО"
+      "type": null,
+      "location": null
     }
   },
   {
     "model": "api.field",
     "pk": 2,
     "fields": {
+      "name": "Царичанское",
+      "type": null,
+      "location": null
+    }
+  },
+  {
+    "model": "api.field",
+    "pk": 3,
+    "fields": {
       "name": "Ленское",
-      "type": "нефтегазоконденсатное",
-      "location": "Республика Саха"
+      "type": null,
+      "location": null
     }
   }
 ]

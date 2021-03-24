@@ -2,11 +2,11 @@
   <b-card-text>
     <!--    EMAIL    -->
     <b-form @submit="authenticate">
-      <b-form-group label="Почта"
+      <b-form-group label="Имя пользователя"
                     label-cols="4"
                     label-cols-lg="2"
                     label-for="input-default">
-        <b-form-input v-model="email" required type="email">
+        <b-form-input v-model="username" required type="text">
         </b-form-input>
       </b-form-group>
 
@@ -30,7 +30,7 @@ export default {
   name: 'LoginForm',
   data() {
     return {
-      email: 'admin@deephorizon.ru',
+      username: 'admin',
       password: null,
     };
   },
@@ -38,12 +38,10 @@ export default {
     ...mapActions('auth', ['login']),
     authenticate(event) {
       event.preventDefault();
-      if (this.email && this.password) {
+      if (this.username && this.password) {
         const credentials = {
-          user: {
-            email: this.email,
-            password: this.password,
-          },
+          username: this.username,
+          password: this.password,
         };
         this.login(credentials);
       } else {
