@@ -16,6 +16,22 @@ const routes = [
             path: 'dashboard',
             component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/main/Dashboard.vue'),
           },
+          {
+            path: 'import',
+            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/Import.vue'),
+          },
+          {
+            path: 'db',
+            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/Database.vue'),
+          },
+          {
+            path: 'tools/calculator',
+            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/tools/Calculator.vue'),
+          },
+          {
+            path: 'tools/sql',
+            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/tools/SQLGenerator.vue'),
+          },
         ],
       },
     ],

@@ -1,11 +1,55 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      v-model="drawer"
-      app>
-      <!--  -->
+    <!--    Side Nav    -->
+    <v-navigation-drawer v-model="drawer" app>
+      <v-subheader>Main menu</v-subheader>
+      <v-list flat nav>
+        <v-list-item-group color="primary">
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            :to="item.to"
+            link>
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+
+      <v-list-group no-action prepend-icon="mdi-tools">
+        <template v-slot:activator>
+          <v-list-item-title>Инструменты</v-list-item-title>
+        </template>
+        <v-list-item
+          v-for="([title, to], i) in tools"
+          :key="i"
+          :to="to" link>
+          <v-list-item-title v-text="title"></v-list-item-title>
+        </v-list-item>
+
+      </v-list-group>
+
+      <v-spacer></v-spacer>
+
+      <!--      Bottom nav      -->
+      <v-list>
+        <v-list-item link>
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
 
+    <!--    App Bar    -->
     <v-app-bar app color="primary" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Application</v-toolbar-title>
@@ -32,19 +76,38 @@
       </v-menu>
     </v-app-bar>
 
+    <!--    Main content    -->
     <v-main>
-      <!--  -->
+      <router-view></router-view>
     </v-main>
+
+    <!--    Footer    -->
+    <v-footer app class="pa-3" fixed>
+      <v-spacer></v-spacer>
+      <span>&copy; {{ appName }}</span>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
 
+import { appName } from '@/commons/config';
+
 export default {
   name: 'Main',
   data() {
     return {
+      appName,
       drawer: null,
+      items: [
+        { title: 'Главная', icon: 'mdi-home', to: '/main/dashboard' },
+        { title: 'База данных', icon: 'mdi-database', to: '/main/db' },
+        { title: 'Импорт', icon: 'mdi-application-import', to: '/main/import' },
+      ],
+      tools: [
+        ['Калькулятор', '/main/tools/calculator'],
+        ['SQL Генератор', '/main/tools/sql'],
+      ],
     };
   },
   methods: {},
