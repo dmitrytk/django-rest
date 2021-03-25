@@ -47,9 +47,11 @@
                  class="mr-3"
                  variant="primary"
                  @click="generate">
-            <v-icon icon="chevron-double-right"></v-icon>
+            <v-icon>mdi-play</v-icon>
             Генерировать SQL
           </v-btn>
+          <CopyButton :target="output"/>
+          <ClearButton :callback="clear"/>
         </form>
 
       </v-card-text>
@@ -62,9 +64,12 @@
 
 import { csv } from '@/util/mock';
 import generateSQL from '@/util/sql';
+import ClearButton from '@/components/buttons/ClearButton.vue';
+import CopyButton from '@/components/buttons/CopyButton.vue';
 
 export default {
   name: 'SQLGenerator',
+  components: { CopyButton, ClearButton },
   title: 'SQL генератор',
   data() {
     return {
@@ -91,7 +96,7 @@ export default {
       this.output = '';
     },
     onCopy() {
-      this.$toasted.show('Скопировано в буфер');
+      console.log('copy');
     },
   },
 };

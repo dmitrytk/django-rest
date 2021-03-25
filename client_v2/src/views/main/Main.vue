@@ -19,40 +19,37 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
+        <v-list-group no-action prepend-icon="mdi-tools">
+          <template v-slot:activator>
+            <v-list-item-title>Инструменты</v-list-item-title>
+          </template>
+          <v-list-item
+            v-for="([title, to], i) in tools"
+            :key="i"
+            :to="to" link>
+            <v-list-item-title v-text="title"></v-list-item-title>
+          </v-list-item>
+
+        </v-list-group>
       </v-list>
 
-      <v-list-group no-action prepend-icon="mdi-tools">
-        <template v-slot:activator>
-          <v-list-item-title>Инструменты</v-list-item-title>
-        </template>
-        <v-list-item
-          v-for="([title, to], i) in tools"
-          :key="i"
-          :to="to" link>
-          <v-list-item-title v-text="title"></v-list-item-title>
-        </v-list-item>
-
-      </v-list-group>
-
-      <v-spacer></v-spacer>
-
       <!--      Bottom nav      -->
-      <v-list>
-        <v-list-item link>
+      <template v-slot:append>
+        <v-list-item link @click="logout">
           <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
+            <v-icon>mdi-close</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      </v-list>
+      </template>
     </v-navigation-drawer>
 
     <!--    App Bar    -->
     <v-app-bar app color="primary" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>{{ appName }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon>
         <v-icon>mdi-magnify</v-icon>
@@ -110,6 +107,10 @@ export default {
       ],
     };
   },
-  methods: {},
+  methods: {
+    logout() {
+      console.log('Logout');
+    },
+  },
 };
 </script>

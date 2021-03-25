@@ -1,8 +1,8 @@
 <template>
-  <b-button class="mr-3" variant="danger" @click="callback">
-    <b-icon aria-hidden="true" icon="trash"></b-icon>
+  <v-btn class="mr-3" color="error" @click="callback">
+    <v-icon>mdi-delete</v-icon>
     Очистить
-  </b-button>
+  </v-btn>
 </template>
 
 <script>
@@ -11,6 +11,7 @@ export default {
   props: {
     callback: Function,
   },
+  methods: {},
 };
 </script>
 
