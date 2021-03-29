@@ -36,6 +36,10 @@ const routes = [
             path: 'tools/converter',
             component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/tools/CoordinateConverter.vue'),
           },
+          {
+            path: 'tools/decline',
+            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/tools/Decline.vue'),
+          },
         ],
       },
     ],

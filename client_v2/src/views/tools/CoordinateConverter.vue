@@ -7,7 +7,7 @@
       <v-row>
         <!-- INPUT -->
         <v-col class="mb-3" lg="6">
-          <h4 class="text-center text-secondary mb-3">Исходные</h4>
+          <h3 class="text-center text-secondary mb-3">Исходные</h3>
           <v-row class="mb-3">
             <v-col lg>
               <v-select v-model="selectedInType" :items="syst" label="Тип координаты"></v-select>
@@ -29,7 +29,7 @@
 
         <!-- OUTPUT -->
         <v-col class="" lg="6">
-          <h4 class="text-center text-secondary mb-3">Результат</h4>
+          <h3 class="text-center text-secondary mb-3">Результат</h3>
           <v-row class="mb-3">
             <v-col lg>
               <v-select v-model="selectedOutType"
@@ -64,6 +64,7 @@
         </v-col>
       </v-row>
 
+      <!-- TEXT AREAS -->
       <v-row>
         <v-col class="mb-3" lg="6">
           <v-textarea v-model="inData" class="form-control" rows="10"/>
@@ -137,15 +138,9 @@ export default {
   },
 
   methods: {
-    log() {
-      console.log(this.selectedInSystem);
-      console.log(this.selectedInType);
-      console.log(this.selectedInZone);
-      console.log(this.degreeType);
-    },
     convert() {
       try {
-        const result = convert(
+        this.outData = convert(
           this.selectedInType,
           this.selectedInSystem,
           this.selectedInZone,
@@ -156,13 +151,9 @@ export default {
           this.degreeType,
           this.outData,
         );
-        this.outData = result;
       } catch (err) {
         console.log(err);
       }
-    },
-    onCopy() {
-      this.$toasted.show('Скопировано в буфер');
     },
     clear() {
       this.inData = null;
