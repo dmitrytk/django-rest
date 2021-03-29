@@ -104,6 +104,7 @@ export default {
       tools: [
         ['Калькулятор', '/main/tools/calculator'],
         ['SQL Генератор', '/main/tools/sql'],
+        ['Ковертер координат', '/main/tools/converter'],
       ],
     };
   },

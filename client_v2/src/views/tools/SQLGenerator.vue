@@ -23,36 +23,43 @@
             ></v-textarea>
           </v-col>
         </v-row>
-        <v-text-field v-model="table"
-                      class="mr-2"
-                      label="Таблица"
-                      type="text"
-        ></v-text-field>
-        <v-row>
+        <v-row justify="start">
+          <v-col md="4">
+            <v-text-field v-model="table"
+                          :rules="tableNameRules"
+                          class="mr-2"
+                          label="Таблица"
+                          type="text"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+
+        <v-row justify="start">
           <v-col md="2">
-            <v-checkbox v-model="drop" class="mr-2" label="Drop">
+            <v-checkbox v-model="drop" class="mr-3" label="Drop">
             </v-checkbox>
           </v-col>
           <v-col md="2">
-            <v-checkbox v-model="create" class="mr-2" label="Create">
+            <v-checkbox v-model="create" class="mr-3" label="Create">
             </v-checkbox>
           </v-col>
           <v-col md="2">
-            <v-checkbox v-model="id" class="mr-2" label="Add id">
+            <v-checkbox v-model="id" class="mr-3" label="Add id">
             </v-checkbox>
           </v-col>
         </v-row>
-        <form inline>
+
+        <div>
           <v-btn :disabled="input.length===0"
-                 class="mr-3"
+                 class="mr-3 mt-3"
                  variant="primary"
                  @click="generate">
             <v-icon>mdi-play</v-icon>
             Генерировать SQL
           </v-btn>
-          <CopyButton :target="output"/>
-          <ClearButton :callback="clear"/>
-        </form>
+          <CopyButton :target="output" class="mt-3"/>
+          <ClearButton :callback="clear" class="mt-3"/>
+        </div>
 
       </v-card-text>
 
@@ -79,6 +86,10 @@ export default {
       drop: true,
       create: true,
       id: true,
+      tableNameRules: [
+        (v) => !!v || 'Table name is required',
+        (v) => v.length <= 50 || 'Table Name must be less than 50 characters',
+      ],
     };
   },
   methods: {
@@ -94,9 +105,6 @@ export default {
     clear() {
       this.input = '';
       this.output = '';
-    },
-    onCopy() {
-      console.log('copy');
     },
   },
 };

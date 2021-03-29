@@ -32,6 +32,10 @@ const routes = [
             path: 'tools/sql',
             component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/tools/SQLGenerator.vue'),
           },
+          {
+            path: 'tools/converter',
+            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/tools/CoordinateConverter.vue'),
+          },
         ],
       },
     ],
