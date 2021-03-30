@@ -2,13 +2,13 @@
 
 > ### Django and PostgreSQL app with Vue.js front-end
 
-### Requirements
+### Run locally
+
+#### Requirements
 
 - Python 3.7+
 - PostgreSQL 11+
 - Node.js 12+
-
-### Run locally
 
 Clone repository
 
@@ -80,7 +80,7 @@ npm run serve
 
 ### Run in Docker containers
 
-### Requirements
+#### Requirements
 
 - Docker
 - Docker Compose
