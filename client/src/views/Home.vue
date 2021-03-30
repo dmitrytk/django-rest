@@ -1,6 +1,6 @@
 <template>
-  <b-jumbotron class="full-height" header="Horizon" lead="Геологическая база данных">
-  </b-jumbotron>
+  <div class="home">
+  </div>
 </template>
 
 <script>
@@ -8,7 +8,5 @@
 
 export default {
   name: 'Home',
-  title: 'Horizon',
-  components: {},
 };
 </script>
