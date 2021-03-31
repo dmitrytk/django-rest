@@ -10,7 +10,7 @@
 - PostgreSQL 11+
 - Node.js 12+
 
-Clone repository
+Clone repository.
 
 ```
 git clone git@github.com:dmitrytk/horizon.git
@@ -78,31 +78,6 @@ cd client
 npm run serve
 ```
 
-### Run in Docker containers
-
-#### Requirements
-
-- Docker
-- Docker Compose
-
-Clone project.
-
-Fill environment variables in .envs/.local directory.
-
-Build images and run containers
-
-```
-docker-compose up -d
-```
-
-Migrate and create superuser.
-
-```
-docker exec -it <server_container_name> bash
-cd server
-python manage.py migrate
-python manage.py createsuperuser
-```
 
 ### License
 
