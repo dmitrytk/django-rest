@@ -1,334 +1,334 @@
 const fields = [
   {
-    label: 'Id',
-    key: 'id',
+    text: 'Id',
+    value: 'id',
     regex: /(id|иден)/i,
   },
   {
-    label: 'Название',
-    key: 'name',
+    text: 'Название',
+    value: 'name',
     required: true,
     sortable: true,
     regex: /(name|назавние)/i,
   },
   {
-    label: 'Тип',
-    key: 'type',
+    text: 'Тип',
+    value: 'type',
     regex: /(type|тип)/i,
   },
   {
-    label: 'Местонахождение',
-    key: 'location',
+    text: 'Местонахождение',
+    value: 'location',
     regex: /(loc|распол|местона)/i,
   },
 ];
 
 const wells = [
   {
-    label: 'id',
-    key: 'id',
+    text: 'id',
+    value: 'id',
     regex: /(id|ид)/i,
   },
   {
-    label: 'Номер',
-    key: 'name',
+    text: 'Номер',
+    value: 'name',
     required: true,
     sortable: true,
     regex: /(well|name|номер|скв)/i,
 
   },
   {
-    label: 'Куст',
-    key: 'pad',
+    text: 'Куст',
+    value: 'pad',
     regex: /(pad|куст)/i,
 
   },
   {
-    label: 'Тип',
-    key: 'type',
+    text: 'Тип',
+    value: 'type',
     regex: /(type|тип|назна)/i,
 
   },
   {
-    label: 'Состояние',
-    key: 'status',
+    text: 'Состояние',
+    value: 'status',
     regex: /(stat|сост|стат)/i,
 
   },
   {
-    label: 'Забой',
-    key: 'bottom',
+    text: 'Забой',
+    value: 'bottom',
     regex: /(bott|md|забой|глуб)/i,
 
   },
   {
-    label: 'Альтитуда',
-    key: 'alt',
+    text: 'Альтитуда',
+    value: 'alt',
     regex: /(alt|альт)/i,
   },
   {
-    label: 'X',
-    key: 'x',
+    text: 'X',
+    value: 'x',
     regex: /(^x|^х)/i,
   },
   {
-    label: 'Y',
-    key: 'y',
+    text: 'Y',
+    value: 'y',
     regex: /(^y|^у)/i,
   },
   {
-    label: 'Широта',
-    key: 'lat',
+    text: 'Широта',
+    value: 'lat',
     regex: /(lat|шир)/i,
   },
   {
-    label: 'Долгота',
-    key: 'lng',
+    text: 'Долгота',
+    value: 'lng',
     regex: /(lng|long|долг)/i,
   },
 ];
 
 const inclinometry = [
   {
-    label: 'Скважина',
-    key: 'well',
+    text: 'Скважина',
+    value: 'well',
     required: true,
     regex: /(well|скв)/i,
   },
   {
-    label: 'Глубина',
-    key: 'md',
+    text: 'Глубина',
+    value: 'md',
     required: true,
     regex: /(md|depth|глуб)/i,
   },
   {
-    label: 'Угол',
-    key: 'inc',
+    text: 'Угол',
+    value: 'inc',
     regex: /(inc|угол)/i,
   },
   {
-    label: 'Азимут',
-    key: 'azi',
+    text: 'Азимут',
+    value: 'azi',
     regex: /(azi|азим)/i,
   },
 ];
 
 const mer = [
   {
-    label: 'Скважина',
-    key: 'well',
+    text: 'Скважина',
+    value: 'well',
     required: true,
     regex: /(well|скв)/i,
   },
   {
-    label: 'Дата',
-    key: 'date',
+    text: 'Дата',
+    value: 'date',
     required: true,
     regex: /(date|дата)/i,
   },
   {
-    label: 'Состояние',
-    key: 'status',
+    text: 'Состояние',
+    value: 'status',
     regex: /(stat|сост|стат)/i,
   },
   {
-    label: 'Дебит',
-    key: 'rate',
+    text: 'Дебит',
+    value: 'rate',
     regex: /(rate|дебит|закач)/i,
   },
   {
-    label: 'Добыча',
-    key: 'production',
+    text: 'Добыча',
+    value: 'production',
     regex: /(prod|добыча)/i,
   },
   {
-    label: 'Суток работы',
-    key: 'work_days',
+    text: 'Суток работы',
+    value: 'work_days',
     regex: /(days|work|суток|дней)/i,
   },
 ];
 
 const rates = [
   {
-    label: 'Скважина',
-    key: 'well',
+    text: 'Скважина',
+    value: 'well',
     required: true,
     regex: /(well|скв)/i,
   },
   {
-    label: 'Дата',
-    key: 'date',
+    text: 'Дата',
+    value: 'date',
     required: true,
     regex: /(date|дата)/i,
   },
   {
-    label: 'Дебит',
-    key: 'rate',
+    text: 'Дебит',
+    value: 'rate',
     regex: /(rate|дебит|закач)/i,
   },
   {
-    label: 'Динамический уровень',
-    key: 'dynamic',
+    text: 'Динамический уровень',
+    value: 'dynamic',
     regex: /(dynam|дин)/i,
   },
   {
-    label: 'Статический уровень',
-    key: 'static',
+    text: 'Статический уровень',
+    value: 'static',
     regex: /(stat|стат)/i,
   },
   {
-    label: 'Давление',
-    key: 'pressure',
+    text: 'Давление',
+    value: 'pressure',
     regex: /(press|^p$|давл|^р$)/i,
   },
 ];
 
 const zones = [
   {
-    label: 'Скважина',
-    key: 'well',
+    text: 'Скважина',
+    value: 'well',
     required: true,
     regex: /(well|скв)/i,
   },
   {
-    label: 'Название',
-    key: 'name',
+    text: 'Название',
+    value: 'name',
     required: true,
     regex: /(name|zone|plast|пласт|свита|ярус)/i,
   },
   {
-    label: 'Кровля',
-    key: 'top_md',
+    text: 'Кровля',
+    value: 'top_md',
     regex: /(top|кровл)/i,
   },
   {
-    label: 'Подошва',
-    key: 'bot_md',
+    text: 'Подошва',
+    value: 'bot_md',
     regex: /(bot|подошв)/i,
   },
   {
-    label: 'Кровля АО',
-    key: 'top_tvd',
+    text: 'Кровля АО',
+    value: 'top_tvd',
     regex: /(toptvd|top_tvd|ао)/i,
   },
   {
-    label: 'Подошва АО',
-    key: 'bot_tvd',
+    text: 'Подошва АО',
+    value: 'bot_tvd',
     regex: /(bottvd|bot_tvd|ао)/i,
   },
   {
-    label: 'Толщина',
-    key: 'h',
+    text: 'Толщина',
+    value: 'h',
     regex: /(^h|толщ|мощн)/i,
   },
 ];
 
 const cases = [
   {
-    label: 'Скважина',
-    key: 'well',
+    text: 'Скважина',
+    value: 'well',
     required: true,
     regex: /(well|скв)/i,
   },
   {
-    label: 'Название',
-    key: 'name',
+    text: 'Название',
+    value: 'name',
     required: true,
     regex: /(name|назв|тип)/i,
   },
   {
-    label: 'Диаметр',
-    key: 'diameter',
+    text: 'Диаметр',
+    value: 'diameter',
     regex: /(diam|диам)/i,
   },
   {
-    label: 'Длина',
-    key: 'length',
+    text: 'Длина',
+    value: 'length',
     regex: /(length|длин)/i,
   },
   {
-    label: 'От',
-    key: 'top_md',
+    text: 'От',
+    value: 'top_md',
     regex: /(top_md|от)/i,
   },
   {
-    label: 'До',
-    key: 'bot_md',
+    text: 'До',
+    value: 'bot_md',
     regex: /(bot_md|до)/i,
   },
   {
-    label: 'Зацементирована',
-    key: 'cemented',
+    text: 'Зацементирована',
+    value: 'cemented',
     regex: /(^cement|цемент)/i,
   },
   {
-    label: 'Кровля цемента',
-    key: 'cement_top',
+    text: 'Кровля цемента',
+    value: 'cement_top',
     regex: /(^cement_top|кровля)/i,
   },
 ];
 
 const perforations = [
   {
-    label: 'Скважина',
-    key: 'well',
+    text: 'Скважина',
+    value: 'well',
     required: true,
     regex: /(well|скв)/i,
   },
   {
-    label: 'Тип перфоратора',
-    key: 'perforator_type',
+    text: 'Тип перфоратора',
+    value: 'perforator_type',
     required: true,
     regex: /(perforato|тип)/i,
   },
   {
-    label: 'Диаметр отверстия',
-    key: 'hole_diameter',
+    text: 'Диаметр отверстия',
+    value: 'hole_diameter',
     regex: /(diam|диам)/i,
   },
   {
-    label: 'Отверстий на погонный метр',
-    key: 'holes_per_meter',
+    text: 'Отверстий на погонный метр',
+    value: 'holes_per_meter',
     regex: /(holes|отве)/i,
   },
   {
-    label: 'От',
-    key: 'top_md',
+    text: 'От',
+    value: 'top_md',
     regex: /(top_md|от)/i,
   },
   {
-    label: 'До',
-    key: 'bot_md',
+    text: 'До',
+    value: 'bot_md',
     regex: /(bot_md|до)/i,
   },
 ];
 
 const pumps = [
   {
-    label: 'Скважина',
-    key: 'well',
+    text: 'Скважина',
+    value: 'well',
     required: true,
     regex: /(well|скв)/i,
   },
   {
-    label: 'Марка',
-    key: 'name',
+    text: 'Марка',
+    value: 'name',
     required: true,
     regex: /(name|марка)/i,
   },
   {
-    label: 'Глубина установки',
-    key: 'md',
+    text: 'Глубина установки',
+    value: 'md',
     regex: /(md|глуб)/i,
   },
   {
-    label: 'Производительность',
-    key: 'rate',
+    text: 'Производительность',
+    value: 'rate',
     regex: /(rate|произ)/i,
   },
   {
-    label: 'Диаметр',
-    key: 'diameter',
+    text: 'Диаметр',
+    value: 'diameter',
     regex: /(diam|диам)/i,
   },
 
@@ -336,23 +336,23 @@ const pumps = [
 
 const coordinates = [
   {
-    label: 'X',
-    key: 'x',
+    text: 'X',
+    value: 'x',
     regex: /(^x|^х)/i,
   },
   {
-    label: 'Y',
-    key: 'y',
+    text: 'Y',
+    value: 'y',
     regex: /(^y|^у)/i,
   },
   {
-    label: 'Широта',
-    key: 'lat',
+    text: 'Широта',
+    value: 'lat',
     regex: /(lat|шир)/i,
   },
   {
-    label: 'Долгота',
-    key: 'lng',
+    text: 'Долгота',
+    value: 'lng',
     regex: /(lng|long|долг)/i,
   },
 ];
