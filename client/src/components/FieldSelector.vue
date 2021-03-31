@@ -8,7 +8,7 @@
           Выберите месторождение
         </v-card-title>
 
-        <v-card-text class="pb-0">
+        <v-card-text class="pb-0 mt-3">
           <v-select
             v-if="fields"
             v-model="selectedFieldId"

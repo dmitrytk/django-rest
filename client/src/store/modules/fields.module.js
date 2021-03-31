@@ -49,6 +49,15 @@ export default {
     },
   },
   actions: {
+    async checkCurrentField(context) {
+      if (!context.state.field) {
+        const lastFieldId = localStorage.getItem('lastFieldId');
+        if (lastFieldId) await context.dispatch('fetchField', lastFieldId);
+        else {
+          context.commit('setSelectionVisible', true);
+        }
+      }
+    },
     async fetchFields({ commit }) {
       const fields = await FieldService.findAll();
       commit('setFields', fields.data);

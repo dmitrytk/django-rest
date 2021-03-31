@@ -10,20 +10,24 @@
           </v-btn>
         </div>
       </v-card-title>
+      <v-card-text>
+        <v-btn-toggle
+          v-model="link"
+          color="primary accent-3"
+          group
+          tile>
+          <v-btn to="/main/db" value="wells">
+            Скважины
+          </v-btn>
+          <v-btn to="/main/db/field" value="field">
+            Данные месторождения
+          </v-btn>
+
+        </v-btn-toggle>
+      </v-card-text>
     </v-card>
 
-    <v-row>
-      <v-col class="mx-3 pr-0" lg="3">
-        <v-card class="pa-3">
-          <WellList/>
-        </v-card>
-      </v-col>
-      <v-col class="mr-3">
-        <v-card class="pa-3">
-          <WellDataTabs/>
-        </v-card>
-      </v-col>
-    </v-row>
+    <Wells/>
 
   </v-container>
 </template>
@@ -32,19 +36,20 @@
 
 import FieldSelector from '@/components/FieldSelector.vue';
 import { mapActions, mapGetters } from 'vuex';
-import WellList from '@/components/WellList.vue';
-import WellDataTabs from '@/components/WellDataTabs.vue';
+import Wells from './db/Wells.vue';
 
 export default {
   name: 'Database',
-  components: { WellDataTabs, WellList, FieldSelector },
+  components: {
+    Wells, FieldSelector,
+  },
   data() {
-    return {};
+    return {
+      link: 'wells',
+    };
   },
   mounted() {
-    if (!this.field) {
-      this.setSelectionVisible(true);
-    }
+    this.checkCurrentField();
   },
   computed: {
     ...mapGetters('fields', [
@@ -52,9 +57,14 @@ export default {
       'fields',
       'selectionVisible',
     ]),
+    ...mapGetters('wells', [
+      'wells',
+      'well',
+    ]),
   },
   methods: {
     ...mapActions('fields', [
+      'checkCurrentField',
       'setSelectionVisible',
 
     ]),
