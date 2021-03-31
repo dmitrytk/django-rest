@@ -1,6 +1,6 @@
-import { destroyToken, getToken, saveToken } from '@/common/jwt';
-import AuthService from '../../service/auth.service';
-import router from '../../router';
+import { destroyToken, getToken, saveToken } from '@/commons/jwt';
+import AuthService from '@/services/auth.service';
+import router from '@/router';
 
 export default {
   namespaced: true,

@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import WellService from '../../service/well.service';
-import FieldService from '../../service/field.service';
+import WellService from '@/services/well.service';
+import FieldService from '@/services/field.service';
 
 export default {
   namespaced: true,

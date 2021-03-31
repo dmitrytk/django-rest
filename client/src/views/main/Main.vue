@@ -2,7 +2,7 @@
   <v-app>
     <!--    Side Nav    -->
     <v-navigation-drawer v-model="drawer" app>
-      <v-subheader>Main menu</v-subheader>
+      <v-subheader>Меню</v-subheader>
       <v-list flat nav>
         <v-list-item-group color="primary">
           <v-list-item
