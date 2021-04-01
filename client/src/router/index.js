@@ -28,6 +28,10 @@ const routes = [
                 path: 'wells',
                 component: () => import(/* webpackChunkName: "main-db-wells" */ '../views/db/Wells.vue'),
               },
+              {
+                path: 'field',
+                component: () => import(/* webpackChunkName: "main-db-field" */ '../views/db/Field.vue'),
+              },
             ],
           },
           {

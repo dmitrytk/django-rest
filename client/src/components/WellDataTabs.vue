@@ -15,6 +15,7 @@
       </v-tab-item>
       <GenericTableTab v-for="(table, index) in tables"
                        :key="index"
+                       :parentId="well.id"
                        :tableName="table.value"
                        parent="wells"/>
     </v-tabs-items>
@@ -23,7 +24,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import tables from '@/util/databaseTables';
 import WellForm from '@/components/forms/WellForm.vue';
 import GenericTableTab from './GenericTableTab.vue';
 
@@ -33,7 +33,6 @@ export default {
   data() {
     return {
       tab: null,
-      incHeader: tables.inclinometry,
       tables: [
         { text: 'Инклинометрия', value: 'inclinometry' },
         { text: 'Режимы', value: 'rates' },

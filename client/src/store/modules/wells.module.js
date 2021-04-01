@@ -55,6 +55,12 @@ export default {
     },
   },
   actions: {
+    async checkCurrentWells(context) {
+      if (!context.state.wells) {
+        const lastFieldId = localStorage.getItem('lastFieldId');
+        if (lastFieldId) await context.dispatch('fetchWells', lastFieldId);
+      }
+    },
     async fetchWell(context, id) {
       context.commit('setWellLoading', true);
       const well = await WellService.findOne(id);

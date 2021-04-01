@@ -26,19 +26,28 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import WellList from '@/components/WellList.vue';
 import WellDataTabs from '@/components/WellDataTabs.vue';
 
 export default {
   name: 'Wells',
   components: { WellDataTabs, WellList },
+  mounted() {
+    if (!this.wells) this.checkCurrentWells();
+  },
   computed: {
     ...mapGetters('wells', [
       'wells',
       'well',
     ]),
   },
+  methods: {
+    ...mapActions('wells', [
+      'checkCurrentWells',
+    ]),
+  },
+
 };
 </script>
 
