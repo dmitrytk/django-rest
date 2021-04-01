@@ -89,6 +89,14 @@
 
 import { appName } from '@/commons/config';
 
+const routeGuardMain = async (to, from, next) => {
+  if (to.path === '/main') {
+    next('/main/dashboard');
+  } else {
+    next();
+  }
+};
+
 export default {
   name: 'Main',
   data() {
@@ -108,10 +116,13 @@ export default {
       ],
     };
   },
-  methods: {
-    logout() {
-      console.log('Logout');
-    },
+  beforeRouteEnter(to, from, next) {
+    routeGuardMain(to, from, next);
   },
+
+  beforeRouteUpdate(to, from, next) {
+    routeGuardMain(to, from, next);
+  },
+
 };
 </script>

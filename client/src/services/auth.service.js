@@ -1,4 +1,3 @@
-import authHeaders from '@/commons/auth-header';
 import http from '@/commons/http';
 
 class AuthService {
@@ -7,7 +6,7 @@ class AuthService {
   }
 
   static getUserProfile() {
-    return http.get('/users/me/', authHeaders());
+    return http.get('/users/me/');
   }
 }
 
