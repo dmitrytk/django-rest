@@ -16,7 +16,7 @@
           color="primary accent-3"
           group
           tile>
-          <v-btn to="/main/db" value="wells">
+          <v-btn to="/main/db/wells" value="wells">
             Скважины
           </v-btn>
           <v-btn to="/main/db/field" value="field">
@@ -27,7 +27,7 @@
       </v-card-text>
     </v-card>
 
-    <Wells/>
+    <router-view></router-view>
 
   </v-container>
 </template>
@@ -36,12 +36,11 @@
 
 import FieldSelector from '@/components/FieldSelector.vue';
 import { mapActions, mapGetters } from 'vuex';
-import Wells from './db/Wells.vue';
 
 export default {
   name: 'Database',
   components: {
-    Wells, FieldSelector,
+    FieldSelector,
   },
   data() {
     return {

@@ -18,27 +18,33 @@ const routes = [
           },
           {
             path: 'import',
-            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/Import.vue'),
+            component: () => import(/* webpackChunkName: "main-import" */ '../views/Import.vue'),
           },
           {
             path: 'db',
-            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/Database.vue'),
+            component: () => import(/* webpackChunkName: "main-db" */ '../views/Database.vue'),
+            children: [
+              {
+                path: 'wells',
+                component: () => import(/* webpackChunkName: "main-db-wells" */ '../views/db/Wells.vue'),
+              },
+            ],
           },
           {
             path: 'tools/calculator',
-            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/tools/Calculator.vue'),
+            component: () => import(/* webpackChunkName: "main-tools-calculator" */ '../views/tools/Calculator.vue'),
           },
           {
             path: 'tools/sql',
-            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/tools/SQLGenerator.vue'),
+            component: () => import(/* webpackChunkName: "main-tools-sql" */ '../views/tools/SQLGenerator.vue'),
           },
           {
             path: 'tools/converter',
-            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/tools/CoordinateConverter.vue'),
+            component: () => import(/* webpackChunkName: "main-tools-converter" */ '../views/tools/CoordinateConverter.vue'),
           },
           {
             path: 'tools/decline',
-            component: () => import(/* webpackChunkName: "main-dashboard" */ '../views/tools/Decline.vue'),
+            component: () => import(/* webpackChunkName: "main-tools-decline" */ '../views/tools/Decline.vue'),
           },
         ],
       },

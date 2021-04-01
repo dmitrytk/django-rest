@@ -65,8 +65,7 @@
           <v-list-item
             v-for="n in 2"
             :key="n"
-            @click="() => {}"
-          >
+            @click="() => {}">
             <v-list-item-title>Option {{ n }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -98,7 +97,7 @@ export default {
       drawer: null,
       items: [
         { title: 'Главная', icon: 'mdi-home', to: '/main/dashboard' },
-        { title: 'База данных', icon: 'mdi-database', to: '/main/db' },
+        { title: 'База данных', icon: 'mdi-database', to: '/main/db/wells' },
         { title: 'Импорт', icon: 'mdi-application-import', to: '/main/import' },
       ],
       tools: [
