@@ -55,7 +55,7 @@
       <!--      BUTTONS      -->
       <v-row>
         <v-col>
-          <v-btn :disabled="!data" class="mr-3" variant="primary" @click="calculate">
+          <v-btn :disabled="!data" class="mr-3" color="primary" @click="calculate">
             <v-icon>mdi-play</v-icon>
             Рассчитать
           </v-btn>

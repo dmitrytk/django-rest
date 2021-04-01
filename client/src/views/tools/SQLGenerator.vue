@@ -52,7 +52,7 @@
         <div>
           <v-btn :disabled="input.length===0"
                  class="mr-3 mt-3"
-                 variant="primary"
+                 color="primary"
                  @click="generate">
             <v-icon>mdi-play</v-icon>
             Генерировать SQL

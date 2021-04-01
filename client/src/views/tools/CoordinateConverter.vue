@@ -77,7 +77,7 @@
       <!-- BUTTONS -->
       <div class="text-left">
         <v-btn :disabled="!inData" class="mr-3 mt-3"
-               variant="primary"
+               color="primary"
                @click="convert">
           <v-icon>mdi-play</v-icon>
           Конвертировать
