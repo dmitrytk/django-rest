@@ -32,13 +32,6 @@ npm run serve
 ```
 
 ### Run by Docker
-Populate environment variables 
-```
-chmod +x ./scripts/docker_dev_setup.sh
-./scripts/docker_dev_setup.sh
-```
-
-Run Docker containers
 ```
 docker-compose up -d
 ```
