@@ -7,7 +7,7 @@
 #### Requirements
 
 - Python 3.7+
-- PostgreSQL 11+
+- PostgreSQL 11+. PSQL command line tool
 - Node.js 12+
 
 Clone repository.
@@ -17,67 +17,39 @@ git clone git@github.com:dmitrytk/horizon.git
 cd horizon
 ```
 
-Create Postgresql database for project.
-
-Create and activate Python virtual environment.
+Setup development environment and run Django development server
 
 ```
-cd server
-python3 -m venv venv
-source venv/bin/activate
+chmod +x ./scripts/local_setup.sh
+./scripts/local_setup.sh
 ```
 
-Install Python requirements.
-
-```
-pip install -r requirements/local.txt
-```
-
-Create server/config/.env file and populate environment variables.
-
-```
-DJANGO_DEBUG=1
-DJANGO_SECRET_KEY=<your_secret_key>
-POSTGRES_DB=<db_name>
-POSTGRES_USER=<db_user>
-POSTGRES_PASSWORD=<db_password>
-POSTGRES_HOST=<db_host>
-POSTGRES_PORT=<db_port>
-```
-
-Create client/.env file and populate environment variables.
-
-```
-VUE_APP_NAME=<app_name>
-VUE_APP_ENV=development
-```
-
-Migrate and create superuser.
-
-```
-python manage.py migrate --settings=config.settings.local
-python manage.py createsuperuser --settings=config.settings.local
-```
-
-Install Node dependencies.
-
-```
-cd client
-npm install
-```
-
-Run development server.
-
-```
-cd server
-python manage.py runserver --settings=config.settings.local
-```
+Run Vue development server
 
 ```
 cd client
 npm run serve
 ```
 
+### Run by Docker
+Populate environment variables 
+```
+chmod +x ./scripts/docker_dev_setup.sh
+./scripts/docker_dev_setup.sh
+```
+
+Run Docker containers
+```
+docker-compose up -d
+```
+
+Migrate and create Django superuser
+```
+docker exec -it horizon_server bash
+export DJANGO_SETTINGS_MODULE=config.settings.local
+python manage.py migrate
+python manage.py createsuperuser
+```
 
 ### License
 

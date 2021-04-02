@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'users.apps.UsersConfig',
 ]
-ALLOWED_HOSTS = []
 
 SITE_ID = 1
 

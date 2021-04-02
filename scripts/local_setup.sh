@@ -1,10 +1,9 @@
 #!/bin/bash
 
-mkdir -p .envs/.local .envs/.prod
-
-# Read environment variables
-echo "Input development environment variables"
-
+# Read development environment variables
+echo "
+### Input development env variables ###
+"
 read -p "POSTGRES_USER [postgres]: " POSTGRES_USER
 POSTGRES_USER=${POSTGRES_USER:-postgres}
 
@@ -26,23 +25,7 @@ POSTGRES_PORT=${POSTGRES_PORT:-5432}
 read -p "VUE_APP_NAME [Horizon]: " VUE_APP_NAME
 VUE_APP_NAME=${VUE_APP_NAME:-Horizon}
 
-
-
-# Write environment variables to files
-cat > .envs/.local/.django <<EOL
-DJANGO_READ_DOT_ENV_FILE=0
-DJANGO_DEBUG=1
-DJANGO_SECRET_KEY=$(openssl rand -hex 32)
-EOL
-
-cat > .envs/.local/.postgres <<EOL
-POSTGRES_USER=${POSTGRES_USER}
-POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-POSTGRES_DB=${POSTGRES_DB}
-POSTGRES_HOST=db
-POSTGRES_PORT=${POSTGRES_PORT}
-EOL
-
+# Write development environment variables to files
 cat > server/config/.env <<EOL
 DJANGO_DEBUG=1
 DJANGO_SECRET_KEY=$(openssl rand -hex 32)
@@ -60,25 +43,41 @@ EOL
 
 
 # Create PostgreSQL database
-psql -U $POSTGRES_USER -c "CREATE DATABASE $POSTGRES_DB;"
+echo "
+### Create PostgreSQL database ###
+"
+psql -U "$POSTGRES_USER" -c "CREATE DATABASE $POSTGRES_DB;"
 
 
 # Install npm dependencies
-cd client
+echo "
+### Install npm dependencies ###
+"
+cd client || exit
 npm install
 
 # Create virtual environment and install requirements
-cd ../server
+echo "
+### Create Python virtual environment and install requirements ###
+"
+cd ../server || exit
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements/local.txt
 
 # Migrate and create superuser
+echo "
+### Migrate and create superuser ###
+"
 export DJANGO_SETTINGS_MODULE=config.settings.local
+python manage.py flush
 python manage.py migrate
 python manage.py createsuperuser
 
 # Run Django development server
+echo "
+### Run Django development server ###
+"
 python manage.py runserver
 
 

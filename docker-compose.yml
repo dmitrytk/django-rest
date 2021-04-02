@@ -29,8 +29,6 @@ services:
       - server
     volumes:
       - ./client:/app
-    env_file:
-      - .envs/.local/.vue
     ports:
       - 8080:8080
     command: npm run serve
