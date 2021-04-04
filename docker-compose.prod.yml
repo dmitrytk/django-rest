@@ -14,7 +14,7 @@ services:
       - .envs/.prod/.postgres
     ports:
       - 8000:8000
-    command: gunicorn --bind 0.0.0.0:8000 config.wsgi --env DJANGO_SETTINGS_MODULE=config.settings.local
+    command: gunicorn --bind 0.0.0.0:8000 config.wsgi:application --env DJANGO_SETTINGS_MODULE=config.settings.local
 
 
 
