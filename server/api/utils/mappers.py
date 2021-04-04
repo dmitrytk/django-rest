@@ -1,3 +1,7 @@
+"""
+Covert JSON batch load row to list
+"""
+
 def map_inc(data: dict) -> list:
     keys = ['well', 'md', 'inc', 'azi', ]
     return [data.get(key, None) for key in keys]

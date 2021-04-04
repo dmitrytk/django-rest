@@ -15,6 +15,7 @@ from api.utils.validators import validate_batch_data
 
 
 def _invalid_data_error(serializer: Optional[Serializer] = None) -> Response:
+    """Return 422 Status and serializer errors"""
     payload = {'message': 'Некорректные данные'}
     if serializer is not None:
         payload['errors'] = serializer.errors
@@ -170,16 +171,19 @@ def load_coordinates(data: dict) -> Response:
 
 
 def _get_well_names(data: List[dict]) -> List[str]:
+    """Return well names list from input data"""
     return [row['well'] for row in data]
 
 
 def _create_new_wells(field_id: int, well_names: List[str]) -> None:
+    """Create new wells if not exists"""
     return Well.objects.bulk_create(
         [Well(name=well_name, field_id=field_id) for well_name in well_names], ignore_conflicts=True
     )
 
 
 def _delete_old_inc(field_id: int, well_name_list: List[str]) -> None:
+    """Delete old inclinometry for loaded wells"""
     return Inclinometry.objects \
         .filter(well__field_id=field_id, well__name__in=well_name_list) \
         .delete()
