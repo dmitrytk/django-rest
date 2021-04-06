@@ -1,62 +1,69 @@
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APITestCase
 
-from api.models import Field, Inclinometry, Mer, Rate, FieldCoordinate, Zone, Well
+from api.models import Field, Well, Inclinometry, Mer, Rate, FieldCoordinate, Zone
+from api.tests.populate import populate_db
 
 
 class TestFieldApi(APITestCase):
-    client = APIClient()
-    fixtures = ['api.json']
-    field_name = 'Filat'
-    new_field_name = 'New Filat'
-    field_list_url = '/api/fields/'
-    field_detail_url = '/api/fields/1/'
-    field_wells_url = '/api/fields/1/wells/'
-    field_inc_url = '/api/fields/1/inclinometry/'
-    field_mer_url = '/api/fields/1/mer/'
-    field_rates_url = '/api/fields/1/rates/'
-    field_coordinates_url = '/api/fields/1/coordinates/'
-    field_zones_url = '/api/fields/1/zones/'
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.field_name, cls.field_id, cls.well_name, cls.well_id = populate_db()
+        cls.new_field_name = 'Ваделыпское'
+        cls.update_field_name = 'Западно-Салымское'
+        # URLS
+        cls.field_list_url = '/api/fields/'
+        cls.field_detail_url = f'/api/fields/{cls.field_id}/'
+        cls.field_wells_url = f'/api/fields/{cls.field_id}/wells/'
+        cls.field_inc_url = f'/api/fields/{cls.field_id}/inclinometry/'
+        cls.field_mer_url = f'/api/fields/{cls.field_id}/mer/'
+        cls.field_rates_url = f'/api/fields/{cls.field_id}/rates/'
+        cls.field_coordinates_url = f'/api/fields/{cls.field_id}/coordinates/'
+        cls.field_zones_url = f'/api/fields/{cls.field_id}/zones/'
 
     def test_field_list(self):
         # Post field
-        response = self.client.post(self.field_list_url, {'name': self.field_name}, format='json')
+        response = self.client.post(self.field_list_url, {'name': self.new_field_name}, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data['name'], self.field_name)
+        self.assertEqual(response.data['name'], self.new_field_name)
         print("Done")
 
         # Get all fields
         response = self.client.get(self.field_list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 3)
+        self.assertEqual(len(response.data), 2)
 
+    #
     def test_field_detail(self):
         # Get field
         response = self.client.get(self.field_detail_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Update field
-        response = self.client.put(self.field_detail_url, {'name': self.new_field_name}, format='json')
+        response = self.client.put(self.field_detail_url, {'name': self.update_field_name}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Delete one field
         response = self.client.delete(self.field_detail_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Field.objects.count(), 1)
+        self.assertEqual(Field.objects.count(), 0)
 
     def test_field_wells(self):
         # Get wells
         response = self.client.get(self.field_wells_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
 
         # Delete wells
         response = self.client.delete(self.field_wells_url)
-        self.assertEqual(Well.objects.count(), 1)
+        self.assertEqual(Well.objects.count(), 0)
 
     def test_field_inc(self):
         # Get inc
         response = self.client.get(self.field_inc_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
 
         # Delete inc
         response = self.client.delete(self.field_inc_url)
@@ -66,6 +73,7 @@ class TestFieldApi(APITestCase):
         # Get mer
         response = self.client.get(self.field_mer_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
 
         # Delete mer
         response = self.client.delete(self.field_mer_url)
@@ -75,6 +83,7 @@ class TestFieldApi(APITestCase):
         # Get rate
         response = self.client.get(self.field_rates_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
 
         # Delete rate
         response = self.client.delete(self.field_rates_url)
@@ -84,16 +93,18 @@ class TestFieldApi(APITestCase):
         # Get coordinates
         response = self.client.get(self.field_coordinates_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
 
         # Delete coordinates
         response = self.client.delete(self.field_coordinates_url)
         self.assertEqual(FieldCoordinate.objects.count(), 0)
 
     def test_field_zones(self):
-        # Get rate
+        # Get zones
         response = self.client.get(self.field_zones_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
 
-        # Delete rate
+        # Delete zones
         response = self.client.delete(self.field_zones_url)
         self.assertEqual(Zone.objects.count(), 0)

@@ -105,3 +105,8 @@ class WellPumpSerializer(serializers.ModelSerializer):
     class Meta:
         model = WellPump
         fields = '__all__'
+
+
+class BatchSerializer(serializers.Serializer):
+    field_id = serializers.IntegerField()
+    rows = serializers.ListField()

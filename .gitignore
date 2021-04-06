@@ -10,3 +10,5 @@ static
 
 .idea
 .vscode
+
+.pytest_cache

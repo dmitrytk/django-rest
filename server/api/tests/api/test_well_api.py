@@ -2,45 +2,51 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from api.models import Well, Inclinometry, Mer, Rate, Zone
+from api.tests.populate import populate_db
 
 
 class TestFieldApi(APITestCase):
-    fixtures = ['api.json']
-    new_well_name = '1P'
-    well_list_url = '/api/wells/'
-    well_detail_url = '/api/wells/1/'
-    well_inc_url = '/api/wells/1/inclinometry/'
-    well_mer_url = '/api/wells/1/mer/'
-    well_rates_url = '/api/wells/1/rates/'
-    well_coordinates_url = '/api/wells/1/coordinates/'
-    well_zones_url = '/api/wells/1/zones/'
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.field_name, cls.field_id, cls.well_name, cls.well_id = populate_db()
+
+        cls.new_well_name = '1P'
+        # URLS
+        cls.well_list_url = '/api/wells/'
+        cls.well_detail_url = f'/api/wells/{cls.well_id}/'
+        cls.well_inc_url = f'/api/wells/{cls.well_id}/inclinometry/'
+        cls.well_mer_url = f'/api/wells/{cls.well_id}/mer/'
+        cls.well_rates_url = f'/api/wells/{cls.well_id}/rates/'
+        cls.well_coordinates_url = f'/api/wells/{cls.well_id}/coordinates/'
+        cls.well_zones_url = f'/api/wells/{cls.well_id}/zones/'
 
     # BASIC CRUD
     def test_well_list(self):
         response = self.client.get(self.well_list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 3)
+        self.assertEqual(len(response.data), 1)
 
     def test_well_detail(self):
         response = self.client.get(self.well_detail_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['name'], '99R')
+        self.assertEqual(response.data['name'], self.well_name)
 
     def test_well_create(self):
-        response = self.client.post(self.well_list_url, data={'name': self.new_well_name, 'field': 1})
+        response = self.client.post(self.well_list_url, data={'name': self.new_well_name, 'field': self.field_id})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data['name'], self.new_well_name)
 
     def test_well_update(self):
         response = self.client.put(self.well_detail_url,
-                                   data={'name': '1z', 'field': 1, 'pad': '1', 'type': 'разведочная'})
+                                   data={'name': '1z', 'field': self.field_id, 'pad': '1', 'type': 'разведочная'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['name'], '1z')
 
     def test_well_delete(self):
         response = self.client.delete(self.well_detail_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Well.objects.count(), 2)
+        self.assertEqual(Well.objects.count(), 0)
 
     # GET CHILD OBJECTS
     def test_get_well_inclinometry(self):

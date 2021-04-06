@@ -74,6 +74,9 @@ class Inclinometry(models.Model):
     class Meta:
         db_table = 'inclinometry'
 
+    def __str__(self):
+        return f'md={self.md}   inc={self.inc}  azi={self.azi}'
+
 
 class AbstractRateModel(models.Model):
     """Generic production data"""
@@ -133,7 +136,7 @@ class WellCase(models.Model):
     """Inclinometry model"""
 
     well = models.ForeignKey(
-        Well, related_name='well_cases', on_delete=models.CASCADE)
+        Well, related_name='cases', on_delete=models.CASCADE)
     name = models.CharField(max_length=70)
     diameter = models.FloatField()
     length = models.FloatField(null=True)
@@ -143,22 +146,23 @@ class WellCase(models.Model):
     cement_top = models.FloatField(null=True)
 
     class Meta:
-        db_table = 'well_cases'
+        db_table = 'cases'
+        unique_together = ('name', 'well',)
 
 
 class WellPerforation(models.Model):
     """Inclinometry model"""
 
     well = models.ForeignKey(
-        Well, related_name='well_perforations', on_delete=models.CASCADE)
-    perforator_type = models.CharField(max_length=70)
+        Well, related_name='perforations', on_delete=models.CASCADE)
+    perforator_type = models.CharField(max_length=70, null=True)
     hole_diameter = models.FloatField(null=True)
     holes_per_meter = models.FloatField(null=True)
-    top_md = models.FloatField(null=True)
-    bot_md = models.FloatField(null=True)
+    top_md = models.FloatField()
+    bot_md = models.FloatField()
 
     class Meta:
-        db_table = 'well_perforations'
+        db_table = 'perforations'
 
 
 class WellPump(models.Model):
@@ -172,4 +176,4 @@ class WellPump(models.Model):
     diameter = models.FloatField(null=True)
 
     class Meta:
-        db_table = 'well_pumps'
+        db_table = 'pumps'

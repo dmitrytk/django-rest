@@ -1,49 +1,42 @@
-from rest_framework.decorators import api_view
+from rest_framework import viewsets
+from rest_framework.decorators import action
 
 from api.services import batch_service
 
 
-@api_view(['POST'])
-def load_wells(request):
-    print(request.data)
-    return batch_service.load_wells(request.data)
+class BatchViewSet(viewsets.ViewSet):
+    @action(detail=False, methods=['post'])
+    def wells(self, request, *args, **kwargs):
+        return batch_service.load_wells(request.data)
 
+    @action(detail=False, methods=['post'])
+    def inclinometry(self, request, *args, **kwargs):
+        return batch_service.load_inclinometry(request.data)
 
-@api_view(['POST'])
-def load_inclinometry(request):
-    return batch_service.load_inclinometry(request.data)
+    @action(detail=False, methods=['post'])
+    def mer(self, request, *args, **kwargs):
+        return batch_service.load_mer(request.data)
 
+    @action(detail=False, methods=['post'])
+    def rates(self, request, *args, **kwargs):
+        return batch_service.load_rates(request.data)
 
-@api_view(['POST'])
-def load_mer(request):
-    return batch_service.load_mer(request.data)
+    @action(detail=False, methods=['post'])
+    def zones(self, request, *args, **kwargs):
+        return batch_service.load_zones(request.data)
 
+    @action(detail=False, methods=['post'])
+    def coordinates(self, request, *args, **kwargs):
+        return batch_service.load_coordinates(request.data)
 
-@api_view(['POST'])
-def load_rates(request):
-    return batch_service.load_rates(request.data)
+    @action(detail=False, methods=['post'])
+    def cases(self, request, *args, **kwargs):
+        return batch_service.load_cases(request.data)
 
+    @action(detail=False, methods=['post'])
+    def perforations(self, request, *args, **kwargs):
+        return batch_service.load_perforations(request.data)
 
-@api_view(['POST'])
-def load_zones(request):
-    return batch_service.load_zones(request.data)
-
-
-@api_view(['POST'])
-def load_cases(request):
-    return batch_service.load_cases(request.data)
-
-
-@api_view(['POST'])
-def load_perforations(request):
-    return batch_service.load_perforations(request.data)
-
-
-@api_view(['POST'])
-def load_pumps(request):
-    return batch_service.load_pumps(request.data)
-
-
-@api_view(['POST'])
-def load_coordinates(request):
-    return batch_service.load_coordinates(request.data)
+    @action(detail=False, methods=['post'])
+    def pumps(self, request, *args, **kwargs):
+        return batch_service.load_pumps(request.data)

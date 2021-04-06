@@ -1,27 +1,12 @@
-from django.urls import path, include
 from rest_framework import routers
 
-from api.views import field_views, batch_views, well_views
-from api.views.sandbox_views import sandbox
+from api.views import field_views, batch_views, well_views, sandbox_views
 
 router = routers.SimpleRouter()
-router.register(r'fields', field_views.FieldViewSet)
-router.register(r'wells', well_views.WellViewSet)
+router.register(r'fields', field_views.FieldViewSet, basename='fields')
+router.register(r'wells', well_views.WellViewSet, basename='wells')
+router.register(r'batch', batch_views.BatchViewSet, basename='batch')
+router.register(r'sandbox', sandbox_views.SandboxViewSet, basename='sandbox')
 
-urlpatterns = [
-    path('', include(router.urls)),
-
-    # Batch URLs
-    path('batch/wells/', batch_views.load_wells),
-    path('batch/inclinometry/', batch_views.load_inclinometry),
-    path('batch/mer/', batch_views.load_mer),
-    path('batch/rates/', batch_views.load_rates),
-    path('batch/zones/', batch_views.load_zones),
-    path('batch/cases/', batch_views.load_cases),
-    path('batch/perforations/', batch_views.load_perforations),
-    path('batch/pumps/', batch_views.load_pumps),
-    path('batch/coordinates/', batch_views.load_coordinates),
-
-    # Sandbox url
-    path('sandbox/', sandbox),
-]
+app_name = "api"
+urlpatterns = router.urls

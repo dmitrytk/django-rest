@@ -1,25 +1,29 @@
 from django.test import TestCase
 
-from api.models import Inclinometry, Mer, Rate, Well, Zone, FieldCoordinate
-from api.services.batch_service import load_inclinometry, load_mer, load_rates, _create_new_wells, _delete_old_inc, \
-    load_zones, _delete_old_coordinates, load_coordinates, load_wells
+from api.models import Inclinometry, FieldCoordinate, Well, Mer, Rate, Zone, WellPump, WellCase, WellPerforation
+from api.services.batch_service import _delete_old_inc, _delete_old_coordinates, _create_new_wells, load_wells, \
+    load_inclinometry, load_mer, load_rates, load_zones, load_coordinates, load_pumps, load_cases, load_perforations
+from api.tests.populate import populate_db
 
 
 class TestBatchService(TestCase):
-    fixtures = ['api.json']
-    well_name = '99R'
 
-    def test_delete_old_inc(self):
-        _delete_old_inc(1, [self.well_name, '1P'])
+    @classmethod
+    def setUpTestData(cls):
+        cls.field_name, cls.well_name = populate_db()
+
+    def test__delete_old_inc(self):
+        _delete_old_inc(1, {self.well_name})
         self.assertEqual(Inclinometry.objects.count(), 0)  # 2 - 2 = 0
 
-    def test_delete_old_coordinates(self):
+    def test__delete_old_coordinates(self):
+        self.assertEqual(FieldCoordinate.objects.count(), 2)
         _delete_old_coordinates(1)
-        self.assertEqual(FieldCoordinate.objects.count(), 0)  # 3 - 3 = 0
+        self.assertEqual(FieldCoordinate.objects.count(), 0)  # 2 - 2 = 0
 
-    def test_create_new_wells(self):
-        _create_new_wells(1, [self.well_name, '1P', '999'])
-        self.assertEqual(Well.objects.count(), 5)  # 3 + 2 = 5
+    def test__create_new_wells(self):
+        _create_new_wells(1, {self.well_name, '1P', '999'})  # first well will be skipped
+        self.assertEqual(Well.objects.count(), 3)  # 1 + 2 = 3
 
     def test_load_wells(self):
         data = {
@@ -30,7 +34,7 @@ class TestBatchService(TestCase):
             ]
         }
         load_wells(data)
-        self.assertEqual(Well.objects.count(), 4)  # 3 + 1 = 4  old wells will be updated
+        self.assertEqual(Well.objects.count(), 2)  # 1 + 1 = 2  old well will be updated
         self.assertEqual(Well.objects.filter(name=self.well_name).first().bottom, 3000)
         self.assertEqual(Well.objects.last().name, '1P')
 
@@ -44,7 +48,7 @@ class TestBatchService(TestCase):
             ]
         }
         load_inclinometry(data)
-        self.assertEqual(Inclinometry.objects.count(), 3)  # old inclinometry will be deleted 0 + 3 = 2
+        self.assertEqual(Inclinometry.objects.count(), 3)  # old inclinometry will be deleted 0 + 3 = 3
 
     def test_load_mer(self):
         data = {
@@ -91,4 +95,39 @@ class TestBatchService(TestCase):
             ]
         }
         load_coordinates(data)
-        self.assertEqual(FieldCoordinate.objects.all().count(), 2)
+        self.assertEqual(FieldCoordinate.objects.all().count(), 2)  # old coordinates will be deleted
+
+    def test_load_pumps(self):
+        data = {
+            'field_id': 1,
+            'rows': [
+                {'well': self.well_name, 'name': '1100WR', 'md': 1200},
+                {'well': '1P', 'name': '800Z'},  # add new well
+            ]
+        }
+        load_pumps(data)
+        self.assertEqual(WellPump.objects.all().count(), 2)  # 1 + 1 = 2 old pump will be overwritten
+        self.assertEqual(WellPump.objects.first().md, 1200)
+
+    def test_load_cases(self):
+        data = {
+            'field_id': 1,
+            'rows': [
+                {'well': self.well_name, 'name': 'кондуктор', 'diameter': 324.0, 'top_md': 0, 'bot_md': 1300},
+                {'well': '1P', 'name': 'направление', 'diameter': 425.0, },  # add new well
+            ]
+        }
+        response = load_cases(data)
+        self.assertEqual(WellCase.objects.count(), 3)  # 2 + 1 = 3 old case will be overwritten
+
+    def test_load_perforations(self):
+        data = {
+            'field_id': 1,
+            'rows': [
+                {'well': self.well_name, 'perforator_type': 'ЗПКМ', 'top_md': 1250.0, 'bot_md': 1260.0},
+                {'well': '1P', 'perforator_type': 'UltraJet', 'top_md': 1250.0, 'bot_md': 1260.0},  # add new well
+            ]
+        }
+        response = load_perforations(data)
+        print(response)
+        self.assertEqual(WellPerforation.objects.count(), 4)  # 2 + 2 = 4

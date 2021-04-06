@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Set
 
 from django.db import transaction
 from rest_framework import status
@@ -170,22 +170,22 @@ def load_coordinates(data: dict) -> Response:
         return _invalid_data_error(serializer)
 
 
-def _get_well_names(data: List[dict]) -> List[str]:
+def _get_well_names(data: List[dict]) -> Set[str]:
     """Return well names list from input data"""
-    return [row['well'] for row in data]
+    return {row['well'] for row in data}
 
 
-def _create_new_wells(field_id: int, well_names: List[str]) -> None:
+def _create_new_wells(field_id: int, well_names: Set[str]) -> None:
     """Create new wells if not exists"""
     return Well.objects.bulk_create(
         [Well(name=well_name, field_id=field_id) for well_name in well_names], ignore_conflicts=True
     )
 
 
-def _delete_old_inc(field_id: int, well_name_list: List[str]) -> None:
+def _delete_old_inc(field_id: int, well_names: Set[str]) -> None:
     """Delete old inclinometry for loaded wells"""
     return Inclinometry.objects \
-        .filter(well__field_id=field_id, well__name__in=well_name_list) \
+        .filter(well__field_id=field_id, well__name__in=well_names) \
         .delete()
 
 
