@@ -1,6 +1,6 @@
 import pytest
 
-from api.utils.mappers import map_inc, map_mer, map_rate, map_coordinate, map_case
+from api.utils.mappers import map_inc, map_mer, map_rate, map_coordinate, map_case, map_mer_view, map_rates_view
 from api.utils.validators import validate_batch_data
 
 pytestmark = pytest.mark.unit
@@ -26,6 +26,27 @@ class TestMappers:
     def test_map_case(self):
         data = {'well': '99R', 'name': 'Case_0', 'diameter': 325}
         assert map_case(data) == ['99R', 'Case_0', 325, None, None, None, None, None]
+
+    def test_map_mer_view(self):
+        data = ('01.01.2020', 'in work', None, None, None)
+        expected = {'date': '01.01.2020',
+                    'status': 'in work',
+                    'rate': None,
+                    'production': None,
+                    'work_days': None
+                    }
+        assert map_mer_view(data) == expected
+
+    def test_map_range_view(self):
+        data = ('01.01.2020', 'in work', None, None, None, None)
+        expected = {'date': '01.01.2020',
+                    'status': 'in work',
+                    'rate': None,
+                    'dynamic_level': None,
+                    'static_level': None,
+                    'pressure': None
+                    }
+        assert map_rates_view(data) == expected
 
 
 class TestValidators:

@@ -65,7 +65,6 @@ COORDINATE_LOAD = """INSERT INTO field_coordinates
 # VIEWS QUERIES
 RATES_RANGE = """WITH r AS (SELECT * FROM rates r WHERE r.well_id = %s)
 SELECT
-    w.name AS well,
     TO_CHAR(rng.date, 'dd.mm.yyyy') AS date,
     r.status,
     r.rate,
@@ -80,12 +79,10 @@ FROM GENERATE_SERIES(
     (SELECT MAX(date) FROM r),
     '1 day'::INTERVAL) dd) AS rng
 ON rng.date = r.date
-JOIN wells w ON w.id = r.well_id
 """
 
 MER_RANGE = """WITH m AS (SELECT * FROM mer m WHERE m.well_id = %s)
 SELECT
-    w.name AS well,
     TO_CHAR(rng.date, 'dd.mm.yyyy') AS date,
     m.status,
     m.rate,
@@ -95,8 +92,7 @@ FROM m
 RIGHT JOIN
 (SELECT date_trunc('day', dd):: DATE AS date
 FROM GENERATE_SERIES(
-    (SELECT min(DATE) FROM m),
-    (SELECT MAX(date) FROM m),
+    (SELECT MIN(m.date) FROM m),
+    (SELECT MAX(m.date) FROM m),
     '1 month'::INTERVAL) dd) AS rng
-ON rng.date = m.date
-JOIN wells w ON w.id = m.well_id"""
+ON rng.date = m.date"""

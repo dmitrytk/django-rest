@@ -2,6 +2,7 @@
 Covert JSON batch load row to list
 """
 
+
 def map_inc(data: dict) -> list:
     keys = ['well', 'md', 'inc', 'azi', ]
     return [data.get(key, None) for key in keys]
@@ -44,10 +45,10 @@ def map_pump(data: dict) -> list:
 
 # Map ranged Views
 def map_mer_view(data: tuple) -> dict:
-    keys = ['well', 'date', 'status', 'rate', 'production', 'work_days']
+    keys = ['date', 'status', 'rate', 'production', 'work_days']
     return {key: data[index] for index, key in enumerate(keys)}
 
 
 def map_rates_view(data: tuple) -> dict:
-    keys = ['well', 'date', 'status', 'rate', 'dynamic_level', 'static_level', 'pressure']
+    keys = ['date', 'status', 'rate', 'dynamic_level', 'static_level', 'pressure']
     return {key: data[index] for index, key in enumerate(keys)}
