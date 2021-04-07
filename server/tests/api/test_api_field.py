@@ -11,9 +11,9 @@ class TestFieldApi:
     def test_field_list(self, api_client, field):
         field_list_url = '/api/fields/'
         # Post field
-        response = api_client.post(field_list_url, {'name': 'new_field_name'})
+        response = api_client.post(field_list_url, {'name': 'New_Field'})
         assert response.status_code == status.HTTP_201_CREATED
-        assert response.data['name'] == 'new_field_name'
+        assert response.data['name'] == 'New_Field'
 
         # Get all fields
         response = api_client.get(field_list_url)
@@ -29,9 +29,9 @@ class TestFieldApi:
         assert response.data['name'] == field.name
 
         # Update field
-        response = api_client.put(field_detail_url, {'name': 'new_field_name'})
+        response = api_client.put(field_detail_url, {'name': 'New_Field'})
         assert response.status_code == status.HTTP_200_OK
-        assert response.data['name'] == 'new_field_name'
+        assert response.data['name'] == 'New_Field'
 
         # Delete one field
         response = api_client.delete(field_detail_url)
