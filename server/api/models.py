@@ -9,7 +9,7 @@ class Field(models.Model):
     location = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f'Field {self.name}'
 
     class Meta:
         db_table = 'fields'
@@ -22,6 +22,9 @@ class Project(models.Model):
     number = models.CharField(max_length=255, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     deadline = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f'Project {self.name}'
 
     class Meta:
         db_table = 'projects'
@@ -37,6 +40,9 @@ class FieldCoordinate(models.Model):
 
     class Meta:
         db_table = 'field_coordinates'
+
+    def __str__(self):
+        return f'lat={self.lat} lng={self.lng}  x={self.x}  y={self.y}'
 
 
 class Well(models.Model):
@@ -54,12 +60,12 @@ class Well(models.Model):
     x = models.FloatField(null=True)
     y = models.FloatField(null=True)
 
-    class Meta:
-        db_table = 'wells'
-        unique_together = ('name', 'field',)
-
     def __str__(self):
-        return self.name
+        return f'Well {self.name} bottom={self.bottom}'
+
+    class Meta:
+        unique_together = ('name', 'field',)
+        db_table = 'wells'
 
 
 class Inclinometry(models.Model):
@@ -86,6 +92,9 @@ class AbstractRateModel(models.Model):
     date = models.DateField()
     status = models.CharField(max_length=50, null=True)
     rate = models.FloatField(null=True)
+
+    def __str__(self):
+        return f'date={self.date}   rate={self.rate}'
 
     class Meta:
         abstract = True
@@ -129,7 +138,7 @@ class Zone(models.Model):
         unique_together = ('name', 'well',)
 
     def __str__(self):
-        return self.name
+        return f'Zone: {self.name}  top_md={self.top_md}    bot_md={self.bot_md}'
 
 
 class WellCase(models.Model):
@@ -144,6 +153,9 @@ class WellCase(models.Model):
     bot_md = models.FloatField(null=True)
     cemented = models.BooleanField(null=True)
     cement_top = models.FloatField(null=True)
+
+    def __str__(self):
+        return f'Case: {self.name}  diameter={self.diameter}'
 
     class Meta:
         db_table = 'cases'
@@ -161,6 +173,9 @@ class WellPerforation(models.Model):
     top_md = models.FloatField()
     bot_md = models.FloatField()
 
+    def __str__(self):
+        return f'Perforation: top_md={self.top_md}  bot_md={self.bot_md}'
+
     class Meta:
         db_table = 'perforations'
 
@@ -174,6 +189,9 @@ class WellPump(models.Model):
     md = models.FloatField(null=True)
     rate = models.FloatField(null=True)
     diameter = models.FloatField(null=True)
+
+    def __str__(self):
+        return f'Pump: {self.name}  md={self.md}'
 
     class Meta:
         db_table = 'pumps'

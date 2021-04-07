@@ -1,7 +1,5 @@
 import pytest
-from django.forms import model_to_dict
 
-from api.models import Well
 from api.utils.mappers import map_inc, map_mer, map_rate, map_coordinate, map_case
 from api.utils.validators import validate_batch_data
 
@@ -28,10 +26,6 @@ class TestMappers:
     def test_map_case(self):
         data = {'well': '99R', 'name': 'Case_0', 'diameter': 325}
         assert map_case(data) == ['99R', 'Case_0', 325, None, None, None, None, None]
-        field = Well(name='Field_0')
-        dc = model_to_dict(field)
-        print(dc)
-        assert False
 
 
 class TestValidators:
