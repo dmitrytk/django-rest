@@ -2,7 +2,6 @@ import datetime
 import random
 
 import factory
-import factory.fuzzy as fuzzy
 from factory.django import DjangoModelFactory
 
 
@@ -33,11 +32,8 @@ class MerFactory(DjangoModelFactory):
     class Meta:
         model = 'api.Mer'
 
-    rate = factory.LazyAttribute(lambda x: random.random() * 100)
-    date = fuzzy.FuzzyDate(
-        start_date=datetime.date(2010, 1, 1),
-        end_date=datetime.date.today(),
-    )
+    date = factory.Sequence(lambda n: datetime.date(2010, 1, 1) + datetime.timedelta(days=n * 31))
+    rate = factory.LazyAttribute(lambda x: random.random() * 1000)
     well = factory.SubFactory(WellFactory)
 
 
@@ -45,11 +41,8 @@ class RateFactory(DjangoModelFactory):
     class Meta:
         model = 'api.Rate'
 
+    date = factory.Sequence(lambda n: datetime.date(2010, 1, 1) + datetime.timedelta(days=n))
     rate = factory.LazyAttribute(lambda x: random.random() * 100)
-    date = fuzzy.FuzzyDate(
-        start_date=datetime.date(2010, 1, 1),
-        end_date=datetime.date.today(),
-    )
     well = factory.SubFactory(WellFactory)
 
 

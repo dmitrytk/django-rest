@@ -171,8 +171,9 @@ def load_coordinates(data: dict) -> Response:
 
 
 def _get_well_names(data: List[dict]) -> Set[str]:
-    """Return well names list from input data"""
-    return {row['well'] for row in data}
+    """Return well names set from input data"""
+    result = {well_name for row in data if (well_name := row.get('well')) is not None}
+    return result
 
 
 def _create_new_wells(field_id: int, well_names: Set[str]) -> None:

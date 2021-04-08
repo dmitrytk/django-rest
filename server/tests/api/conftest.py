@@ -1,3 +1,5 @@
+from typing import List
+
 import pytest
 
 from api.models import Inclinometry, Field, Well, Mer, Rate, FieldCoordinate, Zone, WellCase, WellPump, WellPerforation
@@ -11,45 +13,45 @@ def field() -> Field:
 
 
 @pytest.fixture
-def well(field) -> Well:
+def well(field: Field) -> Well:
     return WellFactory(field=field)
 
 
 @pytest.fixture
-def coordinates(field) -> FieldCoordinate:
+def coordinates(field: Field) -> List[FieldCoordinate]:
     return CoordinateFactory.create_batch(10, field=field)
 
 
 @pytest.fixture
-def inc(well) -> Inclinometry:
+def inc(well: Well) -> List[Inclinometry]:
     return IncFactory.create_batch(10, well=well)
 
 
 @pytest.fixture
-def mer(well) -> Mer:
+def mer(well: Well) -> List[Mer]:
     return MerFactory.create_batch(10, well=well)
 
 
 @pytest.fixture
-def rates(well) -> Rate:
+def rates(well: Well) -> List[Rate]:
     return RateFactory.create_batch(10, well=well)
 
 
 @pytest.fixture
-def zones(well) -> Zone:
+def zones(well: Well) -> List[Zone]:
     return ZoneFactory.create_batch(10, well=well)
 
 
 @pytest.fixture
-def cases(well) -> WellCase:
+def cases(well: Well) -> List[WellCase]:
     return CaseFactory.create_batch(10, well=well)
 
 
 @pytest.fixture
-def pump(well) -> WellPump:
+def pump(well: Well) -> WellPump:
     return PumpFactory(well=well)
 
 
 @pytest.fixture
-def perforations(well) -> WellPerforation:
+def perforations(well: Well) -> List[WellPerforation]:
     return PerforationFactory.create_batch(10, well=well)

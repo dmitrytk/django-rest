@@ -1,5 +1,6 @@
 import pytest
 
+from api.services.batch_service import _get_well_names
 from api.utils.mappers import map_inc, map_mer, map_rate, map_coordinate, map_case, map_mer_view, map_rates_view
 from api.utils.validators import validate_batch_data
 
@@ -7,6 +8,17 @@ pytestmark = pytest.mark.unit
 
 
 class TestMappers:
+
+    def test__get_well_names(self):
+        data = [
+            {'well': '99R', 'md': 10},
+            {'well': '100R', 'md': 10},
+            {'well': '99R', 'md': 10},
+            {'md': 10},
+        ]
+        expected = {'99R', '100R'}
+        assert _get_well_names(data) == expected
+
     def test_map_inc(self):
         data = {'well': '99R', 'md': 10, 'azi': 45.36}
         assert map_inc(data) == ['99R', 10, None, 45.36]
