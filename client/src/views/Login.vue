@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-main>
     <v-container fill-height fluid>
       <v-layout align-center justify-center>
         <v-flex md4 sm8 xs12>
@@ -11,26 +11,28 @@
             <v-card-text>
               <v-form @keyup.enter="submit">
                 <v-text-field v-model="username"
-                              label="Login"
+                              label="Имя пользователя"
                               name="login"
-                              prepend-icon="person" type="text"
+                              prepend-inner-icon="mdi-account"
                               @keyup.enter="submit"></v-text-field>
                 <v-text-field id="password"
                               v-model="password"
-                              label="Password"
+                              label="Пароль"
                               name="password"
-                              prepend-icon="lock"
+                              prepend-inner-icon="mdi-lock"
                               type="password"
                               @keyup.enter="submit"></v-text-field>
               </v-form>
               <div v-if="logInError">
                 <v-alert :value="logInError" transition="fade-transition" type="error">
-                  Incorrect email or password
+                  Неверное имя пользоваетля или пароль.
                 </v-alert>
               </div>
-              <v-flex class="caption text-xs-right">
-                <router-link to="/recover-password">Forgot your password?</router-link>
-              </v-flex>
+              <!--              <v-flex class="caption text-xs-right">-->
+              <!--                <router-link to="/recover-password">-->
+              <!--                  Forgot your password?-->
+              <!--                </router-link>-->
+              <!--              </v-flex>-->
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -40,7 +42,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-  </v-content>
+  </v-main>
 </template>
 
 <script>

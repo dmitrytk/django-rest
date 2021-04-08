@@ -19,24 +19,30 @@ def _invalid_data_error(serializer: Optional[Serializer] = None) -> Response:
     payload = {'message': 'Некорректные данные'}
     if serializer is not None:
         payload['errors'] = serializer.errors
+        print(serializer.errors)
     return Response(payload, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 @transaction.atomic
 def load_wells(data: dict) -> Response:
+    print('load wells is called')
     if not validate_batch_data(data):
+        print(data)
+        print('Not validated')
         return _invalid_data_error()
     for row in data['rows']:
         row['field'] = data['field_id']
 
     serializer = WellSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
+        print("Serializer is valid")
         well_names = set([well['name'] for well in data['rows']])
         old_wells = Well.objects.filter(field_id=data['field_id'], name__in=well_names)
         serializer.update(old_wells, serializer.validated_data)
         return Response({'message': f'Загружено скважин: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
+        print("Serializer is not valid")
         return _invalid_data_error(serializer)
 
 

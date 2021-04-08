@@ -1,4 +1,5 @@
 import http from '@/commons/http';
+import authHeaders from '../commons/auth-header';
 
 class AuthService {
   static login(credentials) {
@@ -6,7 +7,7 @@ class AuthService {
   }
 
   static getUserProfile() {
-    return http.get('/users/me/');
+    return http.get('/users/me/', authHeaders());
   }
 }
 

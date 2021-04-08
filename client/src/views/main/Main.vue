@@ -88,6 +88,7 @@
 <script>
 
 import { appName } from '@/commons/config';
+import { mapActions } from 'vuex';
 
 const routeGuardMain = async (to, from, next) => {
   if (to.path === '/main') {
@@ -122,6 +123,12 @@ export default {
 
   beforeRouteUpdate(to, from, next) {
     routeGuardMain(to, from, next);
+  },
+
+  methods: {
+    ...mapActions('auth', [
+      'logout',
+    ]),
   },
 
 };

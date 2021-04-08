@@ -1,71 +1,72 @@
 import http from '@/commons/http';
+import authHeaders from '../commons/auth-header';
 
 class FieldService {
   // BASIC
   static findAll() {
-    return http.get('/fields/');
+    return http.get('/fields/', authHeaders());
   }
 
   static findOne(id) {
-    return http.get(`/fields/${id}/`);
+    return http.get(`/fields/${id}/`, authHeaders());
   }
 
   static create(data) {
-    return http.post('/fields/', data);
+    return http.post('/fields/', data, authHeaders());
   }
 
   static update(id, data) {
-    return http.put(`/fields/${id}/`, data);
+    return http.put(`/fields/${id}/`, data, authHeaders());
   }
 
   // GET CHILD OBJECTS
   static getWells(id) {
-    return http.get(`/fields/${id}/wells/`);
+    return http.get(`/fields/${id}/wells/`, authHeaders());
   }
 
   static getInclinometry(id) {
-    return http.get(`/fields/${id}/inclinometry/`);
+    return http.get(`/fields/${id}/inclinometry/`, authHeaders());
   }
 
   static getMer(id) {
-    return http.get(`/fields/${id}/mer/`);
+    return http.get(`/fields/${id}/mer/`, authHeaders());
   }
 
   static getRates(id) {
-    return http.get(`/fields/${id}/rates/`);
+    return http.get(`/fields/${id}/rates/`, authHeaders());
   }
 
   static getZones(id) {
-    return http.get(`/fields/${id}/zones/`);
+    return http.get(`/fields/${id}/zones/`, authHeaders());
   }
 
   static getCoordinates(id) {
-    return http.get(`/fields/${id}/coordinates/`);
+    return http.get(`/fields/${id}/coordinates/`, authHeaders());
   }
 
   // DELETE CHILD OBJECTS
   static deleteWells(id) {
-    return http.delete(`/fields/${id}/wells/`);
+    return http.delete(`/fields/${id}/wells/`, authHeaders());
   }
 
   static deleteInclinometry(id) {
-    return http.delete(`/fields/${id}/inclinometry/`);
+    return http.delete(`/fields/${id}/inclinometry/`, authHeaders());
   }
 
   static deleteMer(id) {
-    return http.delete(`/fields/${id}/mer/`);
+    return http.delete(`/fields/${id}/mer/`, authHeaders());
   }
 
   static deleteRates(id) {
-    return http.delete(`/fields/${id}/rates/`);
+    return http.delete(`/fields/${id}/rates/`, authHeaders());
   }
 
   static deleteZones(id) {
-    return http.delete(`/fields/${id}/zones/`);
+    return http.delete(`/fields/${id}/zones/`, authHeaders());
   }
 
   static deleteCoordinates(id) {
-    return http.delete(`/fields/${id}/coordinates/`);
+    return http.delete(`/fields/${id}/coordinates/`, authHeaders());
   }
 }
 

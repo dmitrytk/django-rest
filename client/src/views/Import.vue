@@ -126,8 +126,8 @@ export default {
         rows: data,
       };
       BatchService.load(this.selectedDataType, payload)
-        .then((res) => {
-          console.log(res.data.message);
+        .then(() => {
+          console.log(payload);
           this.fetchField(this.field.id);
           this.fetchWells(this.field.id);
           if (this.well) {
@@ -136,6 +136,7 @@ export default {
           this.$router.push('/main/db/wells');
         })
         .catch((err) => {
+          console.log(payload);
           console.log(err);
         });
     },

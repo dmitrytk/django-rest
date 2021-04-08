@@ -16,8 +16,8 @@ export default {
     setToken(state, token) {
       state.token = token;
     },
-    setLoggedIn(state) {
-      state.isLoggedIn = true;
+    setLoggedIn(state, payload) {
+      state.isLoggedIn = payload;
     },
     setLogInError(state, payload) {
       state.logInError = payload;
@@ -33,7 +33,6 @@ export default {
         const response = await AuthService.login(credentials);
         const token = response.data.access;
         if (token) {
-          console.log('login success');
           saveToken(token);
           context.commit('setToken', token);
           context.commit('setLoggedIn', true);
@@ -42,6 +41,7 @@ export default {
           await context.dispatch('routeLoggedIn');
         }
       } catch (err) {
+        context.commit('setLogInError', true);
         await context.dispatch('checkApiError', err);
       }
     },
@@ -55,12 +55,9 @@ export default {
         console.log(err);
       }
     },
-    async logout({ commit }) {
-      console.log('logout');
-      destroyToken();
-      commit('setToken', null);
-      commit('setLoggedIn', false);
-      router.push('/');
+    async logout(context) {
+      await context.dispatch('removeLogIn');
+      await context.dispatch('routeLogOut');
     },
     async checkLoggedIn(context) {
       if (!context.state.isLoggedIn) {
@@ -78,16 +75,27 @@ export default {
             context.commit('setLoggedIn', true);
             context.commit('setUserProfile', response.data);
           } catch (error) {
-            await context.dispatch('logout');
+            await context.dispatch('removeLogIn');
           }
         } else {
-          await context.dispatch('logout');
+          await context.dispatch('removeLogIn');
         }
       }
     },
+    async removeLogIn({ commit }) {
+      destroyToken();
+      commit('setToken', '');
+      commit('setLoggedIn', false);
+    },
     // eslint-disable-next-line no-unused-vars
     routeLoggedIn(context) {
-      router.push('/db');
+      router.push('/main');
+    },
+    // eslint-disable-next-line no-unused-vars
+    routeLogOut(context) {
+      if (router.currentRoute.path !== '/login') {
+        router.push('/login');
+      }
     },
     async checkApiError(context, payload) {
       if (payload.response.status === 401) {

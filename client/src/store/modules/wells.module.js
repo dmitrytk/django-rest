@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import WellService from '@/services/well.service';
 import FieldService from '@/services/field.service';
 
@@ -62,82 +61,150 @@ export default {
       }
     },
     async fetchWell(context, id) {
-      context.commit('setWellLoading', true);
-      const well = await WellService.findOne(id);
-      context.dispatch('fetchWellData', id);
-      context.commit('setWell', well.data);
-      context.commit('setWellLoading', false);
+      try {
+        context.commit('setWellLoading', true);
+        const well = await WellService.findOne(id);
+        context.dispatch('fetchWellData', id);
+        context.commit('setWell', well.data);
+        context.commit('setWellLoading', false);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async deleteWell(context, id) {
-      return WellService.delete(id);
+    async deleteWell({ dispatch }, id) {
+      try {
+        WellService.delete(id);
+      } catch (err) {
+        dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchWells({ commit }, fieldId) {
-      commit('setWellsLoading', true);
-      const wells = await FieldService.getWells(fieldId);
-      commit('setWells', wells.data);
-      commit('setWellsLoading', false);
+    async fetchWells(context, fieldId) {
+      try {
+        context.commit('setWellsLoading', true);
+        const wells = await FieldService.getWells(fieldId);
+        context.commit('setWells', wells.data);
+        context.commit('setWellsLoading', false);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchWellData(context, id) {
-      context.dispatch('fetchInclinometry', id);
-      context.dispatch('fetchMer', id);
-      context.dispatch('fetchRates', id);
-      context.dispatch('fetchZones', id);
-      context.dispatch('fetchCases', id);
-      context.dispatch('fetchPerforations', id);
-      context.dispatch('fetchPumps', id);
+    async fetchWellData({ dispatch }, id) {
+      dispatch('fetchInclinometry', id);
+      dispatch('fetchMer', id);
+      dispatch('fetchRates', id);
+      dispatch('fetchZones', id);
+      dispatch('fetchCases', id);
+      dispatch('fetchPerforations', id);
+      dispatch('fetchPumps', id);
     },
 
     // GET CHILD OBJECTS
-    async fetchInclinometry({ commit }, id) {
-      const res = await WellService.getInclinometry(id);
-      commit('setInclinometry', res.data);
+    async fetchInclinometry(context, id) {
+      try {
+        const res = await WellService.getInclinometry(id);
+        context.commit('setInclinometry', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchMer({ commit }, id) {
-      const res = await WellService.getMer(id);
-      commit('setMer', res.data);
+    async fetchMer(context, id) {
+      try {
+        const res = await WellService.getMer(id);
+        context.commit('setMer', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchRates({ commit }, id) {
-      const res = await WellService.getRates(id);
-      commit('setRates', res.data);
+    async fetchRates(context, id) {
+      try {
+        const res = await WellService.getRates(id);
+        context.commit('setRates', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchZones({ commit }, id) {
-      const res = await WellService.getZones(id);
-      commit('setZones', res.data);
+    async fetchZones(context, id) {
+      try {
+        const res = await WellService.getZones(id);
+        context.commit('setZones', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchCases({ commit }, id) {
-      const res = await WellService.getCases(id);
-      commit('setCases', res.data);
+    async fetchCases(context, id) {
+      try {
+        const res = await WellService.getCases(id);
+        context.commit('setCases', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchPerforations({ commit }, id) {
-      const res = await WellService.getPerforations(id);
-      commit('setPerforations', res.data);
+    async fetchPerforations(context, id) {
+      try {
+        const res = await WellService.getPerforations(id);
+        context.commit('setPerforations', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchPumps({ commit }, id) {
-      const res = await WellService.getPumps(id);
-      commit('setPumps', res.data);
+    async fetchPumps(context, id) {
+      try {
+        const res = await WellService.getPumps(id);
+        context.commit('setPumps', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
 
     // DELETE CHILD OBJECTS
-    async deleteInclinometry(context, id) {
-      await WellService.deleteInclinometry(id);
+    async deleteInclinometry({ dispatch }, id) {
+      try {
+        await WellService.deleteInclinometry(id);
+      } catch (err) {
+        dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async deleteMer(context, id) {
-      await WellService.deleteMer(id);
+    async deleteMer({ dispatch }, id) {
+      try {
+        await WellService.deleteMer(id);
+      } catch (err) {
+        dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async deleteRates(context, id) {
-      await WellService.deleteRates(id);
+    async deleteRates({ dispatch }, id) {
+      try {
+        await WellService.deleteRates(id);
+      } catch (err) {
+        dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async deleteZones(context, id) {
-      await WellService.deleteZones(id);
+    async deleteZones({ dispatch }, id) {
+      try {
+        await WellService.deleteZones(id);
+      } catch (err) {
+        dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async deleteCases(context, id) {
-      await WellService.deleteCases(id);
+    async deleteCases({ dispatch }, id) {
+      try {
+        await WellService.deleteCases(id);
+      } catch (err) {
+        dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async deletePerforations(context, id) {
-      await WellService.deletePerforations(id);
+    async deletePerforations({ dispatch }, id) {
+      try {
+        await WellService.deletePerforations(id);
+      } catch (err) {
+        dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async deletePumps(context, id) {
-      await WellService.deletePumps(id);
+    async deletePumps({ dispatch }, id) {
+      try {
+        await WellService.deletePumps(id);
+      } catch (err) {
+        dispatch('auth/checkApiError', err, { root: true });
+      }
     },
 
     async updateWell(context, data) {
@@ -145,10 +212,8 @@ export default {
         const well = await WellService.update(data.id, data);
         await context.dispatch('fetchWell', well.data.id);
         await context.dispatch('fetchWells', well.data.field);
-        Vue.toasted.show('Сохранено');
       } catch (err) {
-        Vue.toasted.show('Ошибка');
-        console.log(err);
+        context.dispatch('auth/checkApiError', err, { root: true });
       }
     },
   },

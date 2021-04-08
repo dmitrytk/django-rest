@@ -58,69 +58,125 @@ export default {
         }
       }
     },
-    async fetchFields({ commit }) {
-      const fields = await FieldService.findAll();
-      commit('setFields', fields.data);
+    async fetchFields(context) {
+      try {
+        const fields = await FieldService.findAll();
+        context.commit('setFields', fields.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
     async fetchField(context, id) {
-      const field = await FieldService.findOne(id);
-      localStorage.setItem('lastFieldId', field.data.id);
-      context.commit('setField', field.data);
-      context.commit('setSelectionVisible', false);
-      context.dispatch('fetchFieldData', id);
+      try {
+        const field = await FieldService.findOne(id);
+        localStorage.setItem('lastFieldId', field.data.id);
+        context.commit('setField', field.data);
+        context.commit('setSelectionVisible', false);
+        context.dispatch('fetchFieldData', id);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
     async fetchFieldData(context, id) {
-      context.dispatch('fetchInclinometry', id);
-      context.dispatch('fetchMer', id);
-      context.dispatch('fetchRates', id);
-      context.dispatch('fetchZones', id);
-      context.dispatch('fetchCoordinates', id);
+      try {
+        context.dispatch('fetchInclinometry', id);
+        context.dispatch('fetchMer', id);
+        context.dispatch('fetchRates', id);
+        context.dispatch('fetchZones', id);
+        context.dispatch('fetchCoordinates', id);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
     async updateField(context, data) {
-      const field = await FieldService.update(data.id, data);
-      context.commit('setField', field.data);
-      await context.dispatch('fetchFields');
+      try {
+        const field = await FieldService.update(data.id, data);
+        context.commit('setField', field.data);
+        await context.dispatch('fetchFields');
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchInclinometry({ commit }, id) {
-      const res = await FieldService.getInclinometry(id);
-      commit('setInclinometry', res.data);
+    async fetchInclinometry(context, id) {
+      try {
+        const res = await FieldService.getInclinometry(id);
+        context.commit('setInclinometry', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchMer({ commit }, id) {
-      const res = await FieldService.getMer(id);
-      commit('setMer', res.data);
+    async fetchMer(context, id) {
+      try {
+        const res = await FieldService.getMer(id);
+        context.commit('setMer', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchRates({ commit }, id) {
-      const res = await FieldService.getRates(id);
-      commit('setRates', res.data);
+    async fetchRates(context, id) {
+      try {
+        const res = await FieldService.getRates(id);
+        context.commit('setRates', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchZones({ commit }, id) {
-      const res = await FieldService.getZones(id);
-      commit('setZones', res.data);
+    async fetchZones(context, id) {
+      try {
+        const res = await FieldService.getZones(id);
+        context.commit('setZones', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
-    async fetchCoordinates({ commit }, id) {
-      const res = await FieldService.getCoordinates(id);
-      commit('setCoordinates', res.data);
+    async fetchCoordinates(context, id) {
+      try {
+        const res = await FieldService.getCoordinates(id);
+        context.commit('setCoordinates', res.data);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
 
     // DELETE CHILD OBJECTS
     async deleteInclinometry(context, id) {
-      await FieldService.deleteInclinometry(id);
+      try {
+        await FieldService.deleteInclinometry(id);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
     async deleteMer(context, id) {
-      await FieldService.deleteMer(id);
+      try {
+        await FieldService.deleteMer(id);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
     async deleteRates(context, id) {
-      await FieldService.deleteRates(id);
+      try {
+        await FieldService.deleteRates(id);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
     async deleteZones(context, id) {
-      await FieldService.deleteZones(id);
+      try {
+        await FieldService.deleteZones(id);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
     async deleteCoordinates(context, id) {
-      await FieldService.deleteCoordinates(id);
+      try {
+        await FieldService.deleteCoordinates(id);
+      } catch (err) {
+        context.dispatch('auth/checkApiError', err, { root: true });
+      }
     },
 
-    setSelectionVisible({ commit }, payload) {
-      commit('setSelectionVisible', payload);
+    setSelectionVisible(context, payload) {
+      context.commit('setSelectionVisible', payload);
     },
   },
   getters: {

@@ -14,6 +14,5 @@ def get_raw_view(query: str, query_params: List[Any], mapper: Callable) -> List[
     with connection.cursor() as cursor:
         cursor.execute(query, query_params)
         rows = cursor.fetchall()
-        print(rows)
         data = [mapper(row) for row in rows]
     return data
