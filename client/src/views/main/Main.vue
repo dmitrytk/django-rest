@@ -110,7 +110,7 @@ export default {
         { title: 'Импорт', icon: 'mdi-application-import', to: '/main/import' },
       ],
       tools: [
-        ['Ковертер координат', '/main/tools/converter'],
+        ['Конвертер координат', '/main/tools/converter'],
         ['Расчет понижений', '/main/tools/decline'],
         ['SQL Генератор', '/main/tools/sql'],
         ['Калькулятор', '/main/tools/calculator'],
