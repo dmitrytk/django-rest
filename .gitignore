@@ -8,8 +8,7 @@ __pycache__
 # Environments
 venv
 .env
-.envs/*
-!.envs/.local/
+.envs/.prod
 
 # Vuejs
 node_modules

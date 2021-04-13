@@ -1,2 +1,0 @@
-VUE_APP_NAME=Horizon
-VUE_APP_DOMAIN=deephorizon.ru
