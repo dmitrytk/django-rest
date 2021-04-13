@@ -6,8 +6,8 @@
 
 #### Requirements
 
-- Python 3.7+
-- PostgreSQL 11+. PSQL command line tool
+- Python 3.8+
+- PostgreSQL 12+. PSQL command line tool
 - Node.js 12+
 
 Clone repository.
@@ -32,11 +32,13 @@ npm run serve
 ```
 
 ### Run by Docker
+
 ```
 docker-compose up -d
 ```
 
 Migrate and create Django superuser
+
 ```
 docker exec -it horizon_server bash
 export DJANGO_SETTINGS_MODULE=config.settings.local

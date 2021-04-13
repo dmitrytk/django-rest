@@ -17,6 +17,7 @@ class TestBatchApi:
                 {'name': '1P'},
             ]
         }
+        print(reverse('api:batch-wells'))
         response = api_client.post(reverse('api:batch-wells'), data)
         assert response.status_code == status.HTTP_200_OK
         assert response.data['message'] == 'Загружено скважин: 2'

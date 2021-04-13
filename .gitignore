@@ -1,14 +1,25 @@
-venv
+# Django
 __pycache__
+*.pyc
 
+# Unit test
+.pytest_cache
+
+# Environments
+venv
 .env
-.envs./.prod
+.envs/*
+!.envs/.local/
 
+# Vuejs
 node_modules
-dist
-static
+npm-debug.log
 
+# Distribution
+dist
+build
+
+# IDE
 .idea
 .vscode
 
-.pytest_cache

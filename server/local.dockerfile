@@ -14,5 +14,3 @@ RUN apk update \
 RUN pip install --upgrade pip
 COPY ./requirements requirements
 RUN pip install -r ./requirements/local.txt
-
-COPY . .

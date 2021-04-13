@@ -13,9 +13,11 @@ if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
 
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+DEBUG = True
 
-DEBUG = env('DJANGO_DEBUG')
+ROOT_URLCONF = 'config.urls'
+
+SITE_ID = 1
 
 INSTALLED_APPS = [
     # Django apps
@@ -35,8 +37,6 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'users.apps.UsersConfig',
 ]
-
-SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,8 +76,6 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
 }
-
-ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {

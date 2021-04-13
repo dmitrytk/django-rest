@@ -1,3 +1,14 @@
+.idea
+.vscode
+.git
+.gitignore
+*.dockerfile
+.editorconfig
+README.md
+LICENSE
 venv
 __pycache__
+*.pyc
 node_modules
+public
+dist
