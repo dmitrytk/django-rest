@@ -1,13 +1,12 @@
 <template>
-  <b-icon
-    class="clickable text-right"
+  <v-icon
+    color="danger"
     icon="trash-fill"
-    variant="danger"
-    @click="deleteWell"></b-icon>
+    @click="deleteWell"></v-icon>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex';
 
 export default {
   name: 'WellDeleteIcon',
