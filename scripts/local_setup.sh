@@ -26,7 +26,7 @@ read -p "VUE_APP_NAME [Horizon]: " VUE_APP_NAME
 VUE_APP_NAME=${VUE_APP_NAME:-Horizon}
 
 # Write development environment variables to files
-cat > server/config/.env <<EOL
+cat > server/.env <<EOL
 DJANGO_SETTINGS_MODULE=config.settings.local
 DJANGO_DEBUG=1
 DJANGO_SECRET_KEY=$(openssl rand -hex 32)
