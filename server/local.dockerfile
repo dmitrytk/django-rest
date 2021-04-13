@@ -1,17 +1,18 @@
-FROM python:3.9-slim-buster
+FROM python:3.8.3-alpine
 
 WORKDIR /usr/src/app
 
+# set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update -y && apt upgrade -y
-RUN apt-get install -y netcat
+# install psycopg2 dependencies
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
 
+# install dependencies
 RUN pip install --upgrade pip
-COPY ./requirements /usr/src/app/requirements
+COPY ./requirements requirements
 RUN pip install -r ./requirements/local.txt
 
 COPY . .
-
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]

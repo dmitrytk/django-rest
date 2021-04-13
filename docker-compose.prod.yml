@@ -7,6 +7,9 @@ services:
       dockerfile: prod.dockerfile
     image: horizon_server
     container_name: horizon_server
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
     depends_on:
       - db
     env_file:
@@ -14,7 +17,7 @@ services:
       - .envs/.prod/.postgres
     ports:
       - 8000:8000
-    command: gunicorn --bind 0.0.0.0:8000 config.wsgi:application --env DJANGO_SETTINGS_MODULE=config.settings.local
+    command: gunicorn --bind 0.0.0.0:8000 config.wsgi:application
 
 
 
@@ -24,6 +27,9 @@ services:
       dockerfile: prod.dockerfile
     image: horizon_client
     container_name: horizon_client
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+      - media_volume:/home/app/web/mediafiles
     depends_on:
       - server
     env_file:
@@ -40,4 +46,6 @@ services:
       - .envs/.prod/.postgres
 
 volumes:
-  postgres_data: { }
+  postgres_data:
+  static_volume:
+  media_volume:
