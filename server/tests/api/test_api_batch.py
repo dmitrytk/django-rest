@@ -2,7 +2,7 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 
-from api.models import Well, Inclinometry, Mer, Rate, Zone, FieldCoordinate, WellCase, WellPump, WellPerforation
+from api.models import Well, Inclinometry, Mer, Rate, WellHorizon, FieldCoordinate, WellCase, WellPump, WellPerforation
 
 pytestmark = pytest.mark.django_db
 
@@ -17,7 +17,6 @@ class TestBatchApi:
                 {'name': '1P'},
             ]
         }
-        print(reverse('api:batch-wells'))
         response = api_client.post(reverse('api:batch-wells'), data)
         assert response.status_code == status.HTTP_200_OK
         assert response.data['message'] == 'Загружено скважин: 2'
@@ -37,13 +36,16 @@ class TestBatchApi:
         assert response.data['message'] == 'Загружено инклинометрии: 3'
         assert Inclinometry.objects.count() == 3
 
-    def test_load_mer(self, api_client, field, well, mer):
+    def test_load_mer(self, api_client, well, well_work_type, well_state, mer):
         data = {
-            'field_id': field.id,
+            'field_id': well.field.id,
             'rows': [
-                {'well': well.name, 'date': '01.01.2000'},
-                {'well': well.name, 'date': '01.01.2000'},  # duplicate date will be overwritten
-                {'well': '1P', 'date': '01.01.2000'},  # add new well
+                {'well': well.name, 'date': '01.01.2000', 'state': well_state.value_full,
+                 'work_type': well_work_type.value_full},
+                {'well': well.name, 'date': '01.01.2000', 'state': well_state.value_full,
+                 'work_type': well_work_type.value_full},  # duplicate date will be overwritten
+                {'well': '1P', 'date': '01.01.2000', 'state': well_state.value_full,
+                 'work_type': well_work_type.value_full},  # add new well
             ]
         }
         response = api_client.post(reverse('api:batch-mer'), data)
@@ -51,11 +53,11 @@ class TestBatchApi:
         assert response.data['message'] == 'Загружено МЭР: 3'
         assert Mer.objects.all().count() == 12
 
-    def test_load_rates(self, api_client, field, well, rates):
+    def test_load_rates(self, api_client, well, well_work_type, rates):
         data = {
-            'field_id': field.id,
+            'field_id': well.field.id,
             'rows': [
-                {'well': well.name, 'date': '01.01.2000', 'rate': 256.78, 'status': 'work'},
+                {'well': well.name, 'date': '01.01.2000', 'rate': 256.78, 'work_type': well_work_type.value_full},
                 {'well': well.name, 'date': '01.01.2000'},
                 {'well': '1P', 'date': '01.01.2000'},  # add new well
             ]
@@ -65,19 +67,19 @@ class TestBatchApi:
         assert response.data['message'] == 'Загружено режимных наблюдений: 3'
         assert Rate.objects.all().count() == 13
 
-    def test_load_zones(self, api_client, field, well, zones):
+    def test_load_horizons(self, api_client, well, horizon, well_horizon):
         data = {
-            'field_id': field.id,
+            'field_id': well.field.id,
             'rows': [
-                {'well': well.name, 'name': 'pk1', 'top_md': 1500.25},
-                {'well': well.name, 'name': 'pk2', 'top_md': 1550.26},
-                {'well': '1P', 'name': 'uvat', 'top_md': 860.25},  # add new well
+                # duplicate horizon will be overwritten
+                {'well': well.name, 'horizon': horizon.value_full, 'top_md': 1500.25},
+                {'well': '1P', 'horizon': horizon.value_full, 'top_md': 860.25},  # add new well
             ]
         }
         response = api_client.post(reverse('api:batch-zones'), data)
         assert response.status_code == status.HTTP_200_OK
-        assert response.data['message'] == 'Загружено пластов: 3'
-        assert Zone.objects.all().count() == 13
+        assert response.data['message'] == 'Загружено пластов: 2'
+        assert WellHorizon.objects.all().count() == 2
 
     def test_load_coordinates(self, api_client, field, coordinates):
         data = {

@@ -23,7 +23,7 @@ class BatchViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=['post'])
     def zones(self, request, *args, **kwargs):
-        return batch_service.load_zones(request.data)
+        return batch_service.load_horizons(request.data)
 
     @action(detail=False, methods=['post'])
     def coordinates(self, request, *args, **kwargs):

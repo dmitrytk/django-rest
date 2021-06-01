@@ -42,11 +42,11 @@ class FieldViewSet(viewsets.ModelViewSet):
             return field_service.delete_field_rates(self.get_object().id)
 
     @action(detail=True, methods=['get', 'delete'])
-    def zones(self, request, *args, **kwargs):
+    def horizons(self, request, *args, **kwargs):
         if request.method == 'GET':
-            return field_service.get_field_zones(self.get_object().id)
+            return field_service.get_field_horizons(self.get_object().id)
         elif request.method == 'DELETE':
-            return field_service.delete_field_zones(self.get_object().id)
+            return field_service.delete_field_horizons(self.get_object().id)
 
     @action(detail=True, methods=['get', 'delete'])
     def coordinates(self, request, *args, **kwargs):

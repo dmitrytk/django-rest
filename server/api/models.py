@@ -15,21 +15,6 @@ class Field(models.Model):
         db_table = 'fields'
 
 
-class Project(models.Model):
-    field = models.OneToOneField(
-        Field, on_delete=models.CASCADE)
-    name = models.TextField(unique=True)
-    number = models.CharField(max_length=255, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    deadline = models.DateField(null=True, blank=True)
-
-    def __str__(self):
-        return f'Project {self.name}'
-
-    class Meta:
-        db_table = 'projects'
-
-
 class FieldCoordinate(models.Model):
     field = models.ForeignKey(
         Field, related_name='coordinates', on_delete=models.CASCADE)
@@ -51,7 +36,7 @@ class Well(models.Model):
     field = models.ForeignKey(
         Field, related_name='wells', on_delete=models.CASCADE)
     pad = models.CharField(max_length=70, null=True)
-    type = models.CharField(max_length=200, null=True)
+    type = models.CharField(max_length=70, null=True)
     status = models.CharField(max_length=200, null=True)
     alt = models.FloatField(null=True)
     bottom = models.FloatField(null=True)
@@ -61,7 +46,7 @@ class Well(models.Model):
     y = models.FloatField(null=True)
 
     def __str__(self):
-        return f'Well {self.name} bottom={self.bottom}'
+        return f'{self.name}'
 
     class Meta:
         unique_together = ('name', 'field',)
@@ -69,8 +54,6 @@ class Well(models.Model):
 
 
 class Inclinometry(models.Model):
-    """Inclinometry model"""
-
     well = models.ForeignKey(
         Well, related_name='inc', on_delete=models.CASCADE)
     md = models.FloatField()
@@ -81,64 +64,94 @@ class Inclinometry(models.Model):
         db_table = 'inclinometry'
 
     def __str__(self):
-        return f'md={self.md}   inc={self.inc}  azi={self.azi}'
+        return f'well={self.well} md={self.md}   inc={self.inc}  azi={self.azi}'
 
 
-class AbstractRateModel(models.Model):
-    """Generic production data"""
-
-    well = models.ForeignKey(
-        Well, on_delete=models.CASCADE)
-    date = models.DateField()
-    status = models.CharField(max_length=50, null=True)
-    rate = models.FloatField(null=True)
+class WellState(models.Model):
+    value_short = models.CharField(max_length=5)
+    value_full = models.CharField(max_length=50)
 
     def __str__(self):
-        return f'date={self.date}   rate={self.rate}'
+        return f'{self.value_full}'
 
     class Meta:
-        abstract = True
+        db_table = 'well_states'
 
 
-class Mer(AbstractRateModel):
-    """Month production report model"""
+class WellWorkType(models.Model):
+    value_short = models.CharField(max_length=5)
+    value_full = models.CharField(max_length=50)
 
+    def __str__(self):
+        return f'{self.value_full}'
+
+    class Meta:
+        db_table = 'well_work_types'
+
+
+class Mer(models.Model):
+    well = models.ForeignKey(
+        Well, related_name='mer', on_delete=models.CASCADE)
+    date = models.DateField()
     production = models.FloatField(null=True)
-    work_days = models.IntegerField(null=True)
+    work_hours = models.FloatField(null=True)
+    work_type = models.ForeignKey(WellWorkType, related_name='mer_work_type', on_delete=models.DO_NOTHING, null=True)
+    state = models.ForeignKey(WellState, related_name='mer_state', on_delete=models.DO_NOTHING, null=True)
+
+    def __str__(self):
+        return f'well={self.well} date={self.date} production={self.production} work_type={self.work_type} state={self.state}'
 
     class Meta:
-        db_table = 'mer'
         unique_together = ('well', 'date',)
+        db_table = 'mer'
 
 
-class Rate(AbstractRateModel):
-    """Daily production model"""
-
-    pressure = models.FloatField(null=True)
+class Rate(models.Model):
+    well = models.ForeignKey(
+        Well, related_name='rate', on_delete=models.CASCADE)
+    date = models.DateField()
+    rate = models.FloatField(null=True)
     dynamic_level = models.FloatField(null=True)
     static_level = models.FloatField(null=True)
+    pressure = models.FloatField(null=True)
+    work_type = models.ForeignKey(WellWorkType, related_name='rate_work_type', on_delete=models.DO_NOTHING, null=True)
+
+    def __str__(self):
+        return f'well={self.well} date={self.date} rate={self.rate} work_type={self.work_type}'
 
     class Meta:
         db_table = 'rates'
 
 
-class Zone(models.Model):
-    """Geological Zone/Layer model"""
-
-    well = models.ForeignKey(Well, on_delete=models.CASCADE)
-    name = models.CharField(max_length=70)
-    top_md = models.FloatField(null=True)
-    bot_md = models.FloatField(null=True)
-    top_tvd = models.FloatField(null=True)
-    bot_tvd = models.FloatField(null=True)
-    h = models.FloatField(null=True)
-
-    class Meta:
-        db_table = 'zones'
-        unique_together = ('name', 'well',)
+class Horizon(models.Model):
+    field = models.ForeignKey(
+        Field, on_delete=models.CASCADE)
+    value_short = models.CharField(max_length=10)
+    value_full = models.CharField(max_length=70)
 
     def __str__(self):
-        return f'Zone: {self.name}  top_md={self.top_md}    bot_md={self.bot_md}'
+        return f'{self.value_full}'
+
+    class Meta:
+        db_table = 'horizons'
+
+
+class WellHorizon(models.Model):
+    horizon = models.ForeignKey(
+        Horizon, on_delete=models.CASCADE)
+    well = models.ForeignKey(
+        Well, on_delete=models.CASCADE)
+    top_md = models.FloatField(null=True)
+    bot_md = models.FloatField(null=True)
+    top_tvdss = models.FloatField(null=True)
+    bot_tvdss = models.FloatField(null=True)
+
+    def __str__(self):
+        return f'name={self.horizon} top_md={self.top_md} bot_md={self.bot_md} top_tvdss={self.top_tvdss} bot_tvdss={self.bot_tvdss}'
+
+    class Meta:
+        unique_together = ('well', 'horizon',)
+        db_table = 'well_horizons'
 
 
 class WellCase(models.Model):

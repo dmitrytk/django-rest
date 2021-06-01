@@ -93,7 +93,7 @@ class TestFieldApi:
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert Rate.objects.count() == 0
 
-    def test_well_zones(self, api_client, well, zones):
+    def test_well_zones(self, api_client, well, horizones):
         well_zones_url = f'/api/wells/{well.id}/zones/'
 
         # Get Zones

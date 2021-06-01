@@ -10,16 +10,16 @@ from tests.api.factories import MerFactory, RateFactory
 pytestmark = pytest.mark.django_db
 
 
-class TestBatchService:
+class TestRawService:
 
-    def test_mer_view(self, well):
-        MerFactory(well=well, date=datetime.date(2020, 1, 1))
-        MerFactory(well=well, date=datetime.date(2020, 5, 1))
+    def test_mer_view(self, well, well_work_type, well_state):
+        MerFactory(well=well, date=datetime.date(2020, 1, 1), state=well_state, work_type=well_work_type)
+        MerFactory(well=well, date=datetime.date(2020, 5, 1), state=well_state, work_type=well_work_type)
         data = get_raw_view(queries.MER_RANGE, [well.id], mappers.map_mer_view)
         assert len(data) == 5
 
-    def test_rates_view(self, well):
-        RateFactory(well=well, date=datetime.date(2020, 1, 1))
-        RateFactory(well=well, date=datetime.date(2020, 1, 20))
+    def test_rates_view(self, well, well_work_type):
+        RateFactory(well=well, date=datetime.date(2020, 1, 1), work_type=well_work_type)
+        RateFactory(well=well, date=datetime.date(2020, 1, 20), work_type=well_work_type)
         data = get_raw_view(queries.RATES_RANGE, [well.id], mappers.map_rates_view)
         assert len(data) == 20

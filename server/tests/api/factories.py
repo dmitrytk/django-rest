@@ -28,13 +28,31 @@ class IncFactory(DjangoModelFactory):
     well = factory.SubFactory(WellFactory)
 
 
+class WellStateFactory(DjangoModelFactory):
+    value_full = factory.Sequence(lambda n: f'State_{n}')
+    value_short = factory.Sequence(lambda n: f's_{n}')
+
+    class Meta:
+        model = 'api.WellState'
+
+
+class WellWorkTypeFactory(DjangoModelFactory):
+    value_full = factory.Sequence(lambda n: f'Work_{n}')
+    value_short = factory.Sequence(lambda n: f'w_{n}')
+
+    class Meta:
+        model = 'api.WellWorkType'
+
+
 class MerFactory(DjangoModelFactory):
     class Meta:
         model = 'api.Mer'
 
     date = factory.Sequence(lambda n: datetime.date(2010, 1, 1) + datetime.timedelta(days=n * 31))
-    rate = factory.LazyAttribute(lambda x: random.random() * 1000)
+    production = factory.LazyAttribute(lambda x: random.random() * 1000)
     well = factory.SubFactory(WellFactory)
+    work_type = factory.SubFactory(WellWorkTypeFactory)
+    state = factory.SubFactory(WellStateFactory)
 
 
 class RateFactory(DjangoModelFactory):
@@ -44,16 +62,26 @@ class RateFactory(DjangoModelFactory):
     date = factory.Sequence(lambda n: datetime.date(2010, 1, 1) + datetime.timedelta(days=n))
     rate = factory.LazyAttribute(lambda x: random.random() * 100)
     well = factory.SubFactory(WellFactory)
+    work_type = factory.SubFactory(WellWorkTypeFactory)
 
 
-class ZoneFactory(DjangoModelFactory):
+class HorizonFactory(DjangoModelFactory):
     class Meta:
-        model = 'api.Zone'
+        model = 'api.Horizon'
 
-    name = factory.Sequence(lambda n: f'Zone_{n}')
+    value_short = factory.Sequence(lambda n: f'z_{n}')
+    value_full = factory.Sequence(lambda n: f'Zone_{n}')
+    field = factory.SubFactory(FieldFactory)
+
+
+class WellHorizonFactory(DjangoModelFactory):
+    class Meta:
+        model = 'api.WellHorizon'
+
+    horizon = factory.SubFactory(HorizonFactory)
+    well = factory.SubFactory(WellFactory)
     top_md = factory.LazyAttribute(lambda x: random.random() * 10000)
     bot_md = factory.LazyAttribute(lambda obj: obj.top_md + 10)
-    well = factory.SubFactory(WellFactory)
 
 
 class CoordinateFactory(DjangoModelFactory):

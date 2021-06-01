@@ -35,7 +35,7 @@ class WellViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get', 'delete'])
     def zones(self, request, *args, **kwargs):
         if request.method == 'GET':
-            return well_service.get_well_zones(self.get_object().id)
+            return well_service.get_well_horizons(self.get_object().id)
         elif request.method == 'DELETE':
             return well_service.delete_well_zones(self.get_object().id)
 

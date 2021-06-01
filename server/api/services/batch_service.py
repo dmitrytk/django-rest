@@ -7,49 +7,54 @@ from rest_framework.serializers import Serializer
 
 from api import queries
 from api.models import Inclinometry, Well, FieldCoordinate
-from api.serializers import IncSerializer, MerSerializer, RateSerializer, ZoneSerializer, FieldCoordinateSerializer, \
-    WellSerializer, WellCaseSerializer, WellPerforationSerializer, WellPumpSerializer
+from api.serializers import IncSerializer, MerSerializer, RateSerializer, FieldCoordinateSerializer, \
+    WellSerializer, WellCaseSerializer, WellPerforationSerializer, WellPumpSerializer, WellHorizonSerializer
 from api.services.raw_sql_service import batch_load
 from api.utils import mappers
 from api.utils.validators import validate_batch_data
 
 
-def _invalid_data_error(serializer: Optional[Serializer] = None) -> Response:
+def get_error_details(errors: dict) -> dict:
+    """Get detailed error message from DRF ErrorDetail"""
+    result = {'errors count': len(errors), 'errors': []}
+    for err in errors:
+        for key, value in err.items():
+            k = key
+            v = "\t".join([vv for vv in value])
+            result['errors'].append(f'{k}: {v}')
+    return result
+
+
+def invalid_data_error(serializer: Optional[Serializer] = None) -> Response:
     """Return 422 Status and serializer errors"""
     payload = {'message': 'Некорректные данные'}
     if serializer is not None:
-        payload['errors'] = serializer.errors
-        print(serializer.errors)
+        payload['errors'] = get_error_details(serializer.errors)
     return Response(payload, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 @transaction.atomic
 def load_wells(data: dict) -> Response:
-    print('load wells is called')
     if not validate_batch_data(data):
-        print(data)
-        print('Not validated')
-        return _invalid_data_error()
+        return invalid_data_error()
     for row in data['rows']:
         row['field'] = data['field_id']
 
     serializer = WellSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
-        print("Serializer is valid")
         well_names = set([well['name'] for well in data['rows']])
         old_wells = Well.objects.filter(field_id=data['field_id'], name__in=well_names)
         serializer.update(old_wells, serializer.validated_data)
         return Response({'message': f'Загружено скважин: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
-        print("Serializer is not valid")
-        return _invalid_data_error(serializer)
+        return invalid_data_error(serializer)
 
 
 @transaction.atomic
 def load_inclinometry(data: dict) -> Response:
     if not validate_batch_data(data):
-        return _invalid_data_error()
+        return invalid_data_error()
     field_id = data['field_id']
     serializer = IncSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
@@ -60,29 +65,32 @@ def load_inclinometry(data: dict) -> Response:
         return Response({'message': f'Загружено инклинометрии: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
-        return _invalid_data_error(serializer)
+        return invalid_data_error(serializer)
 
 
 @transaction.atomic
 def load_mer(data: dict) -> Response:
     if not validate_batch_data(data):
-        return _invalid_data_error()
+        print('not valid')
+        return invalid_data_error()
     field_id = data['field_id']
     serializer = MerSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
+
         wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
         batch_load(queries.MER_LOAD, [(field_id, *mappers.map_mer(row)) for row in serializer.validated_data])
         return Response({'message': f'Загружено МЭР: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
-        return _invalid_data_error(serializer)
+        print(serializer.errors)
+        return invalid_data_error(serializer)
 
 
 @transaction.atomic
 def load_rates(data: dict) -> Response:
     if not validate_batch_data(data):
-        return _invalid_data_error()
+        return invalid_data_error()
     field_id = data['field_id']
     serializer = RateSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
@@ -92,29 +100,29 @@ def load_rates(data: dict) -> Response:
         return Response({'message': f'Загружено режимных наблюдений: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
-        return _invalid_data_error(serializer)
+        return invalid_data_error(serializer)
 
 
 @transaction.atomic
-def load_zones(data: dict) -> Response:
+def load_horizons(data: dict) -> Response:
     if not validate_batch_data(data):
-        return _invalid_data_error()
+        return invalid_data_error()
     field_id = data['field_id']
-    serializer = ZoneSerializer(data=data['rows'], many=True)
+    serializer = WellHorizonSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
         wells = _get_well_names(data['rows'])
         _create_new_wells(field_id, wells)
-        batch_load(queries.ZONE_LOAD, [(field_id, *mappers.map_zone(row)) for row in serializer.validated_data])
+        batch_load(queries.HORIZON_LOAD, [(field_id, *mappers.map_horizon(row)) for row in serializer.validated_data])
         return Response({'message': f'Загружено пластов: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
-        return _invalid_data_error(serializer)
+        return invalid_data_error(serializer)
 
 
 @transaction.atomic
 def load_cases(data: dict) -> Response:
     if not validate_batch_data(data):
-        return _invalid_data_error()
+        return invalid_data_error()
     field_id = data['field_id']
     serializer = WellCaseSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
@@ -124,13 +132,13 @@ def load_cases(data: dict) -> Response:
         return Response({'message': f'Загружено обсадных колонн: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
-        return _invalid_data_error(serializer)
+        return invalid_data_error(serializer)
 
 
 @transaction.atomic
 def load_perforations(data: dict) -> Response:
     if not validate_batch_data(data):
-        return _invalid_data_error()
+        return invalid_data_error()
     field_id = data['field_id']
     serializer = WellPerforationSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
@@ -141,13 +149,13 @@ def load_perforations(data: dict) -> Response:
         return Response({'message': f'Загружено интервалов перфорации: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
-        return _invalid_data_error(serializer)
+        return invalid_data_error(serializer)
 
 
 @transaction.atomic
 def load_pumps(data: dict) -> Response:
     if not validate_batch_data(data):
-        return _invalid_data_error()
+        return invalid_data_error()
     field_id = data['field_id']
     serializer = WellPumpSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
@@ -157,13 +165,13 @@ def load_pumps(data: dict) -> Response:
         return Response({'message': f'Загружено насосов: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
-        return _invalid_data_error(serializer)
+        return invalid_data_error(serializer)
 
 
 @transaction.atomic
 def load_coordinates(data: dict) -> Response:
     if not validate_batch_data(data):
-        return _invalid_data_error()
+        return invalid_data_error()
     field_id = data['field_id']
     serializer = FieldCoordinateSerializer(data=data['rows'], many=True)
     if serializer.is_valid():
@@ -173,12 +181,12 @@ def load_coordinates(data: dict) -> Response:
         return Response({'message': f'Загружено координат: {len(serializer.validated_data)}'},
                         status=status.HTTP_200_OK)
     else:
-        return _invalid_data_error(serializer)
+        return invalid_data_error(serializer)
 
 
 def _get_well_names(data: List[dict]) -> Set[str]:
     """Return well names set from input data"""
-    result = {well_name for row in data if (well_name := row.get('well')) is not None}
+    result = {row.get('well') for row in data if row.get('well') is not None}
     return result
 
 

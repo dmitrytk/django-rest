@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from api.models import Field, Well, Inclinometry, Mer, Rate, FieldCoordinate, Zone, WellCase, WellPump, WellPerforation
+from api.models import Field, Well, Inclinometry, Mer, Rate, FieldCoordinate, WellCase, WellPump, WellPerforation, \
+    WellHorizon, Horizon
 
 
 class FieldSerializer(serializers.ModelSerializer):
@@ -44,7 +45,7 @@ class WellSerializer(serializers.ModelSerializer):
 
 
 class IncSerializer(serializers.ModelSerializer):
-    well = serializers.CharField(required=False)
+    well = serializers.CharField()
 
     class Meta:
         model = Inclinometry
@@ -54,6 +55,8 @@ class IncSerializer(serializers.ModelSerializer):
 class MerSerializer(serializers.ModelSerializer):
     well = serializers.CharField()
     date = serializers.DateField(format='%d.%m.%Y')
+    work_type = serializers.CharField(required=False)
+    state = serializers.CharField(required=False)
 
     class Meta:
         model = Mer
@@ -63,6 +66,7 @@ class MerSerializer(serializers.ModelSerializer):
 class RateSerializer(serializers.ModelSerializer):
     well = serializers.CharField()
     date = serializers.DateField(format='%d.%m.%Y')
+    work_type = serializers.CharField(required=False)
 
     class Meta:
         model = Rate
@@ -75,11 +79,20 @@ class FieldCoordinateSerializer(serializers.ModelSerializer):
         exclude = ('field',)
 
 
-class ZoneSerializer(serializers.ModelSerializer):
-    well = serializers.CharField()
+class HorizonSerializer(serializers.ModelSerializer):
+    field = serializers.CharField()
 
     class Meta:
-        model = Zone
+        model = Horizon
+        fields = '__all__'
+
+
+class WellHorizonSerializer(serializers.ModelSerializer):
+    well = serializers.CharField()
+    horizon = serializers.CharField()
+
+    class Meta:
+        model = WellHorizon
         fields = '__all__'
 
 

@@ -1,8 +1,9 @@
 import pytest
 
-from api.models import Inclinometry, FieldCoordinate, Well, Mer, Rate, Zone, WellPump, Field, WellCase, WellPerforation
+from api.models import Inclinometry, FieldCoordinate, Well, Field, Mer, Rate, WellHorizon, WellPump, WellCase, \
+    WellPerforation
 from api.services.batch_service import _delete_old_inc, _delete_old_coordinates, _create_new_wells, load_wells, \
-    load_inclinometry, load_mer, load_rates, load_zones, load_coordinates, load_pumps, load_cases, load_perforations
+    load_inclinometry, load_mer, load_rates, load_horizons, load_coordinates, load_pumps, load_cases, load_perforations
 
 pytestmark = pytest.mark.django_db
 
@@ -49,23 +50,28 @@ class TestBatchService:
         load_inclinometry(data)
         assert Inclinometry.objects.count() == 3
 
-    def test_load_mer(self, well, mer):
+    def test_load_mer(self, well, well_work_type, well_state, mer):
+        print(well_state.value_full)
+        print(well_work_type.value_full)
         data = {
             'field_id': well.field.id,
             'rows': [
-                {'well': well.name, 'date': '01.01.2000'},
-                {'well': well.name, 'date': '01.01.2000'},  # duplicate date will be overwritten
-                {'well': '1P', 'date': '01.01.2000'},  # add new well
+                {'well': well.name, 'date': '01.01.2000', 'state': well_state.value_full,
+                 'work_type': well_work_type.value_full},
+                {'well': well.name, 'date': '01.01.2000', 'state': well_state.value_full,
+                 'work_type': well_work_type.value_full},  # duplicate date will be overwritten
+                {'well': '1P', 'date': '01.01.2000', 'state': well_state.value_full,
+                 'work_type': well_work_type.value_full},  # add new well
             ]
         }
         load_mer(data)
-        assert Mer.objects.all().count() == 12  # 10 + 1 + 1 = 4
+        assert Mer.objects.all().count() == 12  # 10 + 1 + 1 = 12
 
-    def test_load_rates(self, well, rates):
+    def test_load_rates(self, well, well_work_type, rates):
         data = {
             'field_id': well.field.id,
             'rows': [
-                {'well': well.name, 'date': '01.01.2000', 'rate': 256.78, 'status': 'work'},
+                {'well': well.name, 'date': '01.01.2000', 'rate': 256.78, 'work_type': well_work_type.value_full},
                 {'well': well.name, 'date': '01.01.2000'},
                 {'well': '1P', 'date': '01.01.2000'},  # add new well
             ]
@@ -73,17 +79,17 @@ class TestBatchService:
         load_rates(data)
         assert Rate.objects.all().count() == 13  # 10 + 2 + 1 = 13
 
-    def test_load_zones(self, well, zones):
+    def test_load_horizons(self, well, horizon, well_horizon):
         data = {
             'field_id': well.field.id,
             'rows': [
-                {'well': well.name, 'name': 'pk1', 'top_md': 1500.25},
-                {'well': well.name, 'name': 'pk2', 'top_md': 1550.26},
-                {'well': '1P', 'name': 'uvat', 'top_md': 860.25},  # add new well
+                # duplicate horizon will be overwritten
+                {'well': well.name, 'horizon': horizon.value_full, 'top_md': 1500.25},
+                {'well': '1P', 'horizon': horizon.value_full, 'top_md': 860.25},  # add new well
             ]
         }
-        load_zones(data)
-        assert Zone.objects.all().count() == 13  # 10 + 2 + 1 = 13
+        load_horizons(data)
+        assert WellHorizon.objects.all().count() == 2  # 1 + 1 = 2
 
     def test_load_coordinates(self, field, coordinates):
         data = {

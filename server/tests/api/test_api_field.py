@@ -1,7 +1,7 @@
 import pytest
 from rest_framework import status
 
-from api.models import Field, Well, Inclinometry, Mer, Rate, FieldCoordinate, Zone
+from api.models import Field, Well, Inclinometry, Mer, Rate, FieldCoordinate, Horizon
 
 pytestmark = pytest.mark.django_db
 
@@ -98,14 +98,14 @@ class TestFieldApi:
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert FieldCoordinate.objects.count() == 0
 
-    def test_field_zones(self, api_client, field, zones):
-        field_zones_url = f'/api/fields/{field.id}/zones/'
+    def test_field_horizons(self, api_client, field, horizon):
+        field_zones_url = f'/api/fields/{field.id}/horizons/'
         # Get zones
         response = api_client.get(field_zones_url)
         assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 10
+        assert len(response.data) == 1
 
         # Delete zones
         response = api_client.delete(field_zones_url)
         assert response.status_code == status.HTTP_204_NO_CONTENT
-        assert Zone.objects.count() == 0
+        assert Horizon.objects.count() == 0

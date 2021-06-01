@@ -9,12 +9,12 @@ def map_inc(data: dict) -> list:
 
 
 def map_mer(data: dict) -> list:
-    keys = ['well', 'date', 'status', 'rate', 'production', 'work_days', ]
+    keys = ['well', 'date', 'production', 'work_hours', 'work_type', 'state', ]
     return [data.get(key, None) for key in keys]
 
 
 def map_rate(data: dict) -> list:
-    keys = ['well', 'date', 'status', 'rate', 'dynamic_level', 'static_level', 'production', ]
+    keys = ['well', 'date', 'rate', 'dynamic_level', 'static_level', 'pressure', 'work_type', ]
     return [data.get(key, None) for key in keys]
 
 
@@ -23,8 +23,8 @@ def map_coordinate(data: dict) -> list:
     return [data.get(key, None) for key in keys]
 
 
-def map_zone(data: dict) -> list:
-    keys = ['well', 'name', 'top_md', 'bot_md', 'top_tvd', 'bot_tvd', 'h', ]
+def map_horizon(data: dict) -> list:
+    keys = ['well', 'horizon', 'top_md', 'bot_md', 'top_tvdss', 'bot_tvdss', ]
     return [data.get(key, None) for key in keys]
 
 
@@ -45,10 +45,10 @@ def map_pump(data: dict) -> list:
 
 # Map ranged Views
 def map_mer_view(data: tuple) -> dict:
-    keys = ['date', 'status', 'rate', 'production', 'work_days']
+    keys = ['date', 'work_type', 'state', 'production', 'work_hours']
     return {key: data[index] for index, key in enumerate(keys)}
 
 
 def map_rates_view(data: tuple) -> dict:
-    keys = ['date', 'status', 'rate', 'dynamic_level', 'static_level', 'pressure']
+    keys = ['date', 'work_type', 'rate', 'dynamic_level', 'static_level', 'pressure']
     return {key: data[index] for index, key in enumerate(keys)}

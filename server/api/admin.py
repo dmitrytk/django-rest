@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from api.models import Field, Well, Inclinometry, Zone, Rate, Mer, WellCase, WellPerforation, WellPump
+from api.models import Field, Well, Inclinometry, Horizon, Rate, Mer, WellCase, WellPerforation, WellPump
 
 admin.site.register(Field)
 admin.site.register(Well)
 admin.site.register(Inclinometry)
-admin.site.register(Zone)
+admin.site.register(Horizon)
 admin.site.register(Rate)
 admin.site.register(Mer)
 admin.site.register(WellCase)
