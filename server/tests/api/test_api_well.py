@@ -3,13 +3,13 @@ import datetime
 import pytest
 from rest_framework import status
 
-from api.models import Well, Inclinometry, Mer, Rate, Zone, WellPerforation, WellPump, WellCase
+from api.models import Well, Inclinometry, Mer, Rate, WellPerforation, WellPump, WellCase, WellHorizon
 from tests.api.factories import WellFactory, MerFactory, RateFactory
 
 pytestmark = pytest.mark.django_db
 
 
-class TestFieldApi:
+class TestWellApi:
 
     # BASIC CRUD
     def test_well_list(self, api_client, well):
@@ -93,18 +93,18 @@ class TestFieldApi:
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert Rate.objects.count() == 0
 
-    def test_well_zones(self, api_client, well, horizones):
-        well_zones_url = f'/api/wells/{well.id}/zones/'
+    def test_well_horizons(self, api_client, well, well_horizon):
+        well_horizons_url = f'/api/wells/{well.id}/horizons/'
 
-        # Get Zones
-        response = api_client.get(well_zones_url)
+        # Get Horizons
+        response = api_client.get(well_horizons_url)
         assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 10
+        assert len(response.data) == 1
 
-        # Delete Zones
-        response = api_client.delete(well_zones_url)
+        # Delete Horizons
+        response = api_client.delete(well_horizons_url)
         assert response.status_code == status.HTTP_204_NO_CONTENT
-        assert Zone.objects.count() == 0
+        assert WellHorizon.objects.count() == 0
 
     def test_well_perforations(self, api_client, well, perforations):
         well_perforations_url = f'/api/wells/{well.id}/perforations/'

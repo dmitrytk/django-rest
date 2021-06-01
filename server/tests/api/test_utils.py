@@ -24,12 +24,12 @@ class TestMappers:
         assert map_inc(data) == ['99R', 10, None, 45.36]
 
     def test_map_mer(self):
-        data = {'well': '99R', 'date': '2020-01-01', 'work_days': 1}
-        assert map_mer(data) == ['99R', '2020-01-01', None, None, None, 1]
+        data = {'well': '99R', 'date': '2020-01-01', 'work_hours': 24}
+        assert map_mer(data) == ['99R', '2020-01-01', None, 24, None, None]
 
     def test_map_rate(self):
         data = {'well': '99R', 'date': '2020-01-01', 'dynamic_level': 45.35}
-        assert map_rate(data) == ['99R', '2020-01-01', None, None, 45.35, None, None]
+        assert map_rate(data) == ['99R', '2020-01-01', None, 45.35, None, None, None]
 
     def test_map_coordinate(self):
         data = {'lat': 68.78, 'lng': 74.45}
@@ -42,17 +42,17 @@ class TestMappers:
     def test_map_mer_view(self):
         data = ('01.01.2020', 'in work', None, None, None)
         expected = {'date': '01.01.2020',
-                    'status': 'in work',
-                    'rate': None,
+                    'work_type': 'in work',
+                    'state': None,
                     'production': None,
-                    'work_days': None
+                    'work_hours': None
                     }
         assert map_mer_view(data) == expected
 
     def test_map_range_view(self):
         data = ('01.01.2020', 'in work', None, None, None, None)
         expected = {'date': '01.01.2020',
-                    'status': 'in work',
+                    'work_type': 'in work',
                     'rate': None,
                     'dynamic_level': None,
                     'static_level': None,
