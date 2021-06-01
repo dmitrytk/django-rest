@@ -15,7 +15,7 @@ export default {
       cases: null,
       perforations: null,
       pumps: null,
-      zones: null,
+      horizons: null,
     }
   ),
   mutations: {
@@ -49,8 +49,8 @@ export default {
     setPumps(state, payload) {
       state.pumps = payload;
     },
-    setZones(state, payload) {
-      state.zones = payload;
+    setHorizons(state, payload) {
+      state.horizons = payload;
     },
   },
   actions: {
@@ -92,7 +92,7 @@ export default {
       dispatch('fetchInclinometry', id);
       dispatch('fetchMer', id);
       dispatch('fetchRates', id);
-      dispatch('fetchZones', id);
+      dispatch('fetchHorizons', id);
       dispatch('fetchCases', id);
       dispatch('fetchPerforations', id);
       dispatch('fetchPumps', id);
@@ -123,10 +123,10 @@ export default {
         context.dispatch('auth/checkApiError', err, { root: true });
       }
     },
-    async fetchZones(context, id) {
+    async fetchHorizons(context, id) {
       try {
-        const res = await WellService.getZones(id);
-        context.commit('setZones', res.data);
+        const res = await WellService.getHorizons(id);
+        context.commit('setHorizons', res.data);
       } catch (err) {
         context.dispatch('auth/checkApiError', err, { root: true });
       }
@@ -178,9 +178,9 @@ export default {
         dispatch('auth/checkApiError', err, { root: true });
       }
     },
-    async deleteZones({ dispatch }, id) {
+    async deleteHorizons({ dispatch }, id) {
       try {
-        await WellService.deleteZones(id);
+        await WellService.deleteHorizons(id);
       } catch (err) {
         dispatch('auth/checkApiError', err, { root: true });
       }
@@ -225,7 +225,7 @@ export default {
     inclinometry: (state) => state.inclinometry,
     mer: (state) => state.mer,
     rates: (state) => state.rates,
-    zones: (state) => state.zones,
+    horizons: (state) => state.horizons,
     cases: (state) => state.cases,
     perforations: (state) => state.perforations,
     pumps: (state) => state.pumps,

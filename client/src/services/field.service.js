@@ -36,8 +36,8 @@ class FieldService {
     return http.get(`/fields/${id}/rates/`, authHeaders());
   }
 
-  static getZones(id) {
-    return http.get(`/fields/${id}/zones/`, authHeaders());
+  static getHorizons(id) {
+    return http.get(`/fields/${id}/horizons/`, authHeaders());
   }
 
   static getCoordinates(id) {
@@ -61,8 +61,8 @@ class FieldService {
     return http.delete(`/fields/${id}/rates/`, authHeaders());
   }
 
-  static deleteZones(id) {
-    return http.delete(`/fields/${id}/zones/`, authHeaders());
+  static deleteHorizons(id) {
+    return http.delete(`/fields/${id}/horizons/`, authHeaders());
   }
 
   static deleteCoordinates(id) {

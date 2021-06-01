@@ -9,7 +9,7 @@ class Field(models.Model):
     location = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return f'Field {self.name}'
+        return f'{self.name}'
 
     class Meta:
         db_table = 'fields'
@@ -123,9 +123,18 @@ class Rate(models.Model):
         db_table = 'rates'
 
 
+class HorizonType(models.Model):
+    name = models.CharField(max_length=70)
+
+    class Meta:
+        db_table = 'horizon_types'
+
+
 class Horizon(models.Model):
     field = models.ForeignKey(
         Field, on_delete=models.CASCADE)
+    type = models.ForeignKey(
+        HorizonType, on_delete=models.CASCADE)
     value_short = models.CharField(max_length=10)
     value_full = models.CharField(max_length=70)
 

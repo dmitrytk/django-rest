@@ -127,14 +127,14 @@ const mer = [
     regex: /(date|дата)/i,
   },
   {
-    text: 'Состояние',
-    value: 'status',
-    regex: /(stat|сост|стат)/i,
+    text: 'Вид работы',
+    value: 'work_type',
+    regex: /(wor|вид|харак)/i,
   },
   {
-    text: 'Дебит',
-    value: 'rate',
-    regex: /(rate|дебит|закач)/i,
+    text: 'Состояние',
+    value: 'state',
+    regex: /(stat|сост)/i,
   },
   {
     text: 'Добыча',
@@ -142,9 +142,9 @@ const mer = [
     regex: /(prod|добыча)/i,
   },
   {
-    text: 'Суток работы',
-    value: 'work_days',
-    regex: /(days|work|суток|дней)/i,
+    text: 'Часов работы',
+    value: 'work_hours',
+    regex: /(hour|час)/i,
   },
 ];
 
@@ -162,18 +162,23 @@ const rates = [
     regex: /(date|дата)/i,
   },
   {
+    text: 'Вид работы',
+    value: 'work_type',
+    regex: /(wor|вид|харак)/i,
+  },
+  {
     text: 'Дебит',
     value: 'rate',
     regex: /(rate|дебит|закач)/i,
   },
   {
     text: 'Динамический уровень',
-    value: 'dynamic',
+    value: 'dynamic_level',
     regex: /(dynam|дин)/i,
   },
   {
     text: 'Статический уровень',
-    value: 'static',
+    value: 'static_level',
     regex: /(stat|стат)/i,
   },
   {
@@ -183,7 +188,18 @@ const rates = [
   },
 ];
 
-const zones = [
+const fieldHorizons = [
+  {
+    text: 'Название',
+    value: 'value_full',
+  },
+  {
+    text: 'Тип',
+    value: 'type',
+  },
+];
+
+const horizons = [
   {
     text: 'Скважина',
     value: 'well',
@@ -192,7 +208,7 @@ const zones = [
   },
   {
     text: 'Название',
-    value: 'name',
+    value: 'horizon',
     required: true,
     regex: /(name|zone|plast|пласт|свита|ярус)/i,
   },
@@ -208,18 +224,13 @@ const zones = [
   },
   {
     text: 'Кровля АО',
-    value: 'top_tvd',
+    value: 'top_tvdss',
     regex: /(toptvd|top_tvd|ао)/i,
   },
   {
     text: 'Подошва АО',
-    value: 'bot_tvd',
+    value: 'bot_tvdss',
     regex: /(bottvd|bot_tvd|ао)/i,
-  },
-  {
-    text: 'Толщина',
-    value: 'h',
-    regex: /(^h|толщ|мощн)/i,
   },
 ];
 
@@ -363,7 +374,8 @@ const tables = {
   inclinometry,
   mer,
   rates,
-  zones,
+  fieldHorizons,
+  horizons,
   cases,
   perforations,
   pumps,

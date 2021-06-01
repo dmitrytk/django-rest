@@ -37,7 +37,7 @@ export default {
         { text: 'Инклинометрия', value: 'inclinometry' },
         { text: 'Режимы', value: 'rates' },
         { text: 'МЭР', value: 'mer' },
-        { text: 'Пласты', value: 'zones' },
+        { text: 'Пласты', value: 'horizons' },
       ],
     };
   },

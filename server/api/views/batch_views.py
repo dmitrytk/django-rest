@@ -22,7 +22,7 @@ class BatchViewSet(viewsets.ViewSet):
         return batch_service.load_rates(request.data)
 
     @action(detail=False, methods=['post'])
-    def zones(self, request, *args, **kwargs):
+    def horizons(self, request, *args, **kwargs):
         return batch_service.load_horizons(request.data)
 
     @action(detail=False, methods=['post'])

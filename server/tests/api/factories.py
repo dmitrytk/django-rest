@@ -65,6 +65,11 @@ class RateFactory(DjangoModelFactory):
     work_type = factory.SubFactory(WellWorkTypeFactory)
 
 
+class HorizonTypeFactory(DjangoModelFactory):
+    class Meta:
+        model = 'api.HorizonType'
+
+
 class HorizonFactory(DjangoModelFactory):
     class Meta:
         model = 'api.Horizon'
@@ -72,6 +77,7 @@ class HorizonFactory(DjangoModelFactory):
     value_short = factory.Sequence(lambda n: f'z_{n}')
     value_full = factory.Sequence(lambda n: f'Zone_{n}')
     field = factory.SubFactory(FieldFactory)
+    type = factory.SubFactory(HorizonTypeFactory)
 
 
 class WellHorizonFactory(DjangoModelFactory):

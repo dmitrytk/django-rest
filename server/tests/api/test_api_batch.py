@@ -76,7 +76,7 @@ class TestBatchApi:
                 {'well': '1P', 'horizon': horizon.value_full, 'top_md': 860.25},  # add new well
             ]
         }
-        response = api_client.post(reverse('api:batch-zones'), data)
+        response = api_client.post(reverse('api:batch-horizons'), data)
         assert response.status_code == status.HTTP_200_OK
         assert response.data['message'] == 'Загружено пластов: 2'
         assert WellHorizon.objects.all().count() == 2

@@ -3,10 +3,10 @@ from typing import List
 import pytest
 
 from api.models import Inclinometry, Field, Well, Mer, Rate, FieldCoordinate, WellCase, WellPump, WellPerforation, \
-    Horizon, WellHorizon, WellWorkType, WellState
+    Horizon, WellHorizon, WellWorkType, WellState, HorizonType
 from tests.api.factories import IncFactory, FieldFactory, WellFactory, MerFactory, RateFactory, CoordinateFactory, \
     CaseFactory, PumpFactory, PerforationFactory, HorizonFactory, WellWorkTypeFactory, WellStateFactory, \
-    WellHorizonFactory
+    WellHorizonFactory, HorizonTypeFactory
 
 
 @pytest.fixture
@@ -50,8 +50,13 @@ def rates(well: Well, well_work_type: WellWorkType) -> List[Rate]:
 
 
 @pytest.fixture
-def horizon(field: Field) -> Horizon:
-    return HorizonFactory(field=field)
+def horizon_type() -> HorizonType:
+    return HorizonTypeFactory()
+
+
+@pytest.fixture
+def horizon(field: Field, horizon_type: HorizonType) -> Horizon:
+    return HorizonFactory(field=field, type=horizon_type)
 
 
 @pytest.fixture

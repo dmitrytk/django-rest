@@ -45,9 +45,9 @@ import { mapActions, mapGetters } from 'vuex';
 import FieldSelector from '@/components/FieldSelector.vue';
 import { getTableData, parseStringTable } from '@/util/table';
 import tables from '@/util/databaseTables';
-import BatchService from '@/services/batch.service';
 import ClearButton from '@/components/buttons/ClearButton.vue';
 import { validateNotEmptyColumns, validateRequiredColumn } from '../util/validator';
+import BatchService from '../services/batch.service';
 
 export default {
   name: 'Import',
@@ -62,7 +62,7 @@ export default {
       selectedColumns: [],
       dataTypes: [
         { value: 'wells', text: 'Скважины' },
-        { value: 'zones', text: 'Пласты' },
+        { value: 'horizons', text: 'Пласты' },
         { value: 'inclinometry', text: 'Инклинометрия' },
         { value: 'rates', text: 'Режимы' },
         { value: 'mer', text: 'МЭР' },
@@ -112,6 +112,14 @@ export default {
       this.setSelectionVisible(true);
     },
 
+    parse() {
+      const { header, body } = parseStringTable(this.content);
+      this.rawColumns = header;
+      this.body = body;
+      this.selectedColumns = new Array(header.length);
+      this.matchColumns();
+    },
+
     matchColumns() {
       this.selectedColumns = this.rawColumns.map((col) => {
         const matched = tables[this.selectedDataType].find((el) => el.regex.test(col));
@@ -125,6 +133,7 @@ export default {
         field_id: this.field.id,
         rows: data,
       };
+      console.log(payload);
       BatchService.load(this.selectedDataType, payload)
         .then(() => {
           console.log(payload);
@@ -139,14 +148,6 @@ export default {
           console.log(payload);
           console.log(err);
         });
-    },
-
-    parse() {
-      const { header, body } = parseStringTable(this.content);
-      this.rawColumns = header;
-      this.body = body;
-      this.selectedColumns = new Array(header.length);
-      this.matchColumns();
     },
 
     clear() {

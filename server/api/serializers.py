@@ -81,6 +81,7 @@ class FieldCoordinateSerializer(serializers.ModelSerializer):
 
 class HorizonSerializer(serializers.ModelSerializer):
     field = serializers.CharField()
+    type = serializers.CharField()
 
     class Meta:
         model = Horizon

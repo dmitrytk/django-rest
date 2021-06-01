@@ -31,8 +31,8 @@ class WellService {
     return http.get(`/wells/${id}/rates/`, authHeaders());
   }
 
-  static getZones(id) {
-    return http.get(`/wells/${id}/zones/`, authHeaders());
+  static getHorizons(id) {
+    return http.get(`/wells/${id}/horizons/`, authHeaders());
   }
 
   static getCases(id) {
@@ -60,8 +60,8 @@ class WellService {
     return http.delete(`/wells/${id}/rates/`, authHeaders());
   }
 
-  static deleteZones(id) {
-    return http.delete(`/wells/${id}/zones/`, authHeaders());
+  static deleteHorizons(id) {
+    return http.delete(`/wells/${id}/horizons/`, authHeaders());
   }
 
   static deleteCases(id) {

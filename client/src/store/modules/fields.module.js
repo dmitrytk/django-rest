@@ -12,7 +12,7 @@ export default {
       inclinometry: null,
       mer: null,
       rates: null,
-      zones: null,
+      horizons: null,
       coordinates: null,
     }
   ),
@@ -41,8 +41,8 @@ export default {
     setRates(state, payload) {
       state.rates = payload;
     },
-    setZones(state, payload) {
-      state.zones = payload;
+    setHorizons(state, payload) {
+      state.horizons = payload;
     },
     setCoordinates(state, payload) {
       state.coordinates = payload;
@@ -82,7 +82,7 @@ export default {
         context.dispatch('fetchInclinometry', id);
         context.dispatch('fetchMer', id);
         context.dispatch('fetchRates', id);
-        context.dispatch('fetchZones', id);
+        context.dispatch('fetchHorizons', id);
         context.dispatch('fetchCoordinates', id);
       } catch (err) {
         context.dispatch('auth/checkApiError', err, { root: true });
@@ -121,10 +121,12 @@ export default {
         context.dispatch('auth/checkApiError', err, { root: true });
       }
     },
-    async fetchZones(context, id) {
+    async fetchHorizons(context, id) {
       try {
-        const res = await FieldService.getZones(id);
-        context.commit('setZones', res.data);
+        const res = await FieldService.getHorizons(id);
+        console.log('fetched horizons:');
+        console.log(res.data);
+        context.commit('setHorizons', res.data);
       } catch (err) {
         context.dispatch('auth/checkApiError', err, { root: true });
       }
@@ -160,9 +162,9 @@ export default {
         context.dispatch('auth/checkApiError', err, { root: true });
       }
     },
-    async deleteZones(context, id) {
+    async deleteHorizons(context, id) {
       try {
-        await FieldService.deleteZones(id);
+        await FieldService.deleteHorizons(id);
       } catch (err) {
         context.dispatch('auth/checkApiError', err, { root: true });
       }
@@ -188,7 +190,7 @@ export default {
     inclinometry: (state) => state.inclinometry,
     mer: (state) => state.mer,
     rates: (state) => state.rates,
-    zones: (state) => state.zones,
+    fieldHorizons: (state) => state.horizons,
     coordinates: (state) => state.coordinates,
   },
 };
